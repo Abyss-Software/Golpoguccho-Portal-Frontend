@@ -1,4 +1,4 @@
-import { Children, useState } from "react";
+import { Children, useState } from 'react';
 import {
   AppShell,
   Navbar,
@@ -7,8 +7,8 @@ import {
   MediaQuery,
   Burger,
   useMantineTheme,
-} from "@mantine/core";
-import { Outlet } from "react-router-dom";
+} from '@mantine/core';
+import { Outlet } from 'react-router-dom';
 
 export default function ClientLayout() {
   const theme = useMantineTheme();
@@ -18,9 +18,9 @@ export default function ClientLayout() {
       styles={{
         main: {
           background:
-            theme.colorScheme === "dark"
+            theme.colorScheme === 'dark'
               ? theme.colors.dark[8]
-              : theme.colors.gray[0],
+              : 'rgb(250 250 250)',
         },
       }}
       navbarOffsetBreakpoint="sm"
@@ -28,7 +28,7 @@ export default function ClientLayout() {
       header={
         <Header height={{ base: 50, md: 70 }} p="md">
           <div
-            style={{ display: "flex", alignItems: "center", height: "100%" }}
+            style={{ display: 'flex', alignItems: 'center', height: '100%' }}
           >
             {/* <MediaQuery largerThan="sm" styles={{ display: "none" }}>
               <Burger
@@ -40,7 +40,7 @@ export default function ClientLayout() {
               />
             </MediaQuery> */}
 
-            <Text>Application header</Text>
+            <Text>Golpoguccho Photography</Text>
           </div>
         </Header>
       }
