@@ -175,7 +175,9 @@ const EventDetailsForm = () => {
                   id="eventTitle"
                   withAsterisk
                   label="Event Title"
-                  error={`errors?.events.${itemIndex}?.eventTitle?.message`}
+                  error={
+                    <>{errors?.events?.[itemIndex]?.eventTitle?.message}</>
+                  }
                 >
                   <Input
                     radius="md"
@@ -193,7 +195,7 @@ const EventDetailsForm = () => {
                   id="eventDate"
                   withAsterisk
                   label="Event Date"
-                  // error={<>{errors?.eventDate?.message}</>}
+                  error={<>{errors?.events?.[itemIndex]?.eventDate?.message}</>}
                 >
                   <Input
                     radius="md"
@@ -211,7 +213,7 @@ const EventDetailsForm = () => {
                   id="eventTime"
                   withAsterisk
                   label="Event Time"
-                  // error={<>{errors?.eventTime?.message}</>}
+                  error={<>{errors?.events?.[itemIndex]?.eventTime?.message}</>}
                 >
                   <Input
                     radius="md"
@@ -229,7 +231,9 @@ const EventDetailsForm = () => {
                   id="eventEndTime"
                   withAsterisk
                   label="Event End Time"
-                  // error={<>{errors?.eventEndTime?.message}</>}
+                  error={
+                    <>{errors?.events?.[itemIndex]?.eventEndTime?.message}</>
+                  }
                 >
                   <Input
                     radius="md"
@@ -280,7 +284,9 @@ const EventDetailsForm = () => {
                   id="numberOfGuests"
                   withAsterisk
                   label="Number of Guests"
-                  // error={<>{errors?.numberOfGuests?.message}</>}
+                  error={
+                    <>{errors?.events?.[itemIndex]?.numberOfGuests?.message}</>
+                  }
                 >
                   <Input
                     radius="md"
@@ -298,7 +304,9 @@ const EventDetailsForm = () => {
                   id="eventVenue"
                   withAsterisk
                   label="Event Venue"
-                  // error={<>{errors?.eventVenue?.message}</>}
+                  error={
+                    <>{errors?.events?.[itemIndex]?.eventVenue?.message}</>
+                  }
                 >
                   <Input
                     radius="md"
@@ -316,7 +324,11 @@ const EventDetailsForm = () => {
                   id="eventVenueAddress"
                   withAsterisk
                   label="Event Venue Address"
-                  // error={<>{errors?.eventVenueAddress?.message}</>}
+                  error={
+                    <>
+                      {errors?.events?.[itemIndex]?.eventVenueAddress?.message}
+                    </>
+                  }
                 >
                   <Textarea
                     placeholder="Venue Address"
@@ -336,7 +348,9 @@ const EventDetailsForm = () => {
                 <Input.Wrapper
                   id="additionalInfo"
                   label="Additional Information (Optional)"
-                  // error={<>{errors?.additionalInfo?.message}</>}
+                  error={
+                    <>{errors?.events?.[itemIndex]?.additionalInfo?.message}</>
+                  }
                 >
                   <Textarea
                     placeholder="Information about the event"
