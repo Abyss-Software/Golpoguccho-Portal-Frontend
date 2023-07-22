@@ -1,3 +1,4 @@
+import { ICreateBooking } from '@/interfaces/createBooking.interface';
 import { Grid, Input, SimpleGrid } from '@mantine/core';
 import React from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
@@ -8,7 +9,7 @@ const PersonalInfo = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useFormContext<ICreateBooking>();
 
   return (
     <div className="pt-10 px-10">
@@ -19,14 +20,14 @@ const PersonalInfo = () => {
             id="fullname"
             withAsterisk
             label="Full Name"
-            error={<>{errors?.firstName?.message}</>}
+            error={<>{errors?.fullName?.message}</>}
           >
             <Input
               radius="md"
               size="lg"
               type="text"
               placeholder="First Name"
-              {...register('firstName', { required: true })}
+              {...register('fullName', { required: true })}
             />
           </Input.Wrapper>
         </Grid.Col>
