@@ -65,7 +65,7 @@ const eventData: EventType[] = [
   // Add more event types and their packages as needed
 ];
 
-const EventTypeSelection = () => {
+const EventDetailsForm = () => {
   const {
     register,
     handleSubmit,
@@ -84,6 +84,7 @@ const EventTypeSelection = () => {
     // Scroll to packages section when event type is selected
     document.getElementById('packagesSection')?.scrollIntoView({
       behavior: 'smooth',
+      block: 'center',
     });
   };
 
@@ -308,4 +309,4 @@ const EventTypeSelection = () => {
   );
 };
 
-export default EventTypeSelection;
+export default EventDetailsForm;
