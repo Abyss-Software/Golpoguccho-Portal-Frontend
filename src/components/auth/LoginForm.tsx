@@ -1,33 +1,35 @@
-import { ILoginPayload } from "@/interfaces/auth.interface";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Button, Checkbox, PasswordInput, TextInput } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import { ILoginPayload } from "@/interfaces/auth.interface";
 import LockPasswordLineIcon from "remixicon-react/LockPasswordLineIcon";
 import MailLineIcon from "remixicon-react/MailLineIcon";
-import Checkbox from "../ui/input/checkbox";
-import Input from "../ui/input/input";
-import { Button } from "@mantine/core";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const {
-    control,
     register,
     handleSubmit,
-    watch,
+
     formState: { errors },
   } = useForm<ILoginPayload>();
-  const onSubmit: SubmitHandler<ILoginPayload> = (data) => navigate("/");
+  const onSubmit: SubmitHandler<ILoginPayload> = (data) => {
+    console.log(data);
+    navigate("/dashboard");
+  };
 
   return (
     <form
       className="w-full flex flex-col gap-3"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Input
+      <TextInput
+        size="lg"
         type="email"
         label="Email"
         placeholder="Your Email"
-        startIcon={MailLineIcon}
+        icon={<MailLineIcon />}
         {...register("email", {
           validate: (value) => !!value.trim() || "Email is required",
           pattern: {
@@ -35,14 +37,13 @@ const LoginForm = () => {
             message: "Email is invalid",
           },
         })}
-        error={!!errors.email}
-        helperText={errors.email?.message}
+        error={!!errors.email && errors.email?.message}
       />
-      <Input
-        type="password"
+      <PasswordInput
+        size="lg"
         label="Password"
         placeholder="Your Password"
-        startIcon={LockPasswordLineIcon}
+        icon={<LockPasswordLineIcon />}
         {...register("password", {
           required: "Password is required",
           minLength: {
@@ -50,25 +51,24 @@ const LoginForm = () => {
             message: "Password must be at least 6 characters",
           },
         })}
-        error={!!errors.password}
-        helperText={errors.password?.message}
+        error={!!errors.password && errors.password?.message}
       />
 
       <div className="flex justify-between font-semibold text-sm">
         <Checkbox label="Remember Me" {...register("rememberMe")} />
-        <a
-          className="text-blue-600 hover:text-blue-700 hover:underline hover:underline-offset-4"
-          href="#"
+        <Link
+          className="no-underline text-primaryColor hover:underline hover:underline-offset-4"
+          to="/auth/forgot-password"
         >
           Forgot Password?
-        </a>
+        </Link>
       </div>
 
       <Button
-        color="teal"
+        color="green"
         radius="sm"
         size="md"
-        className="uppercase mt-2 bg-[#009247]"
+        className="uppercase mt-2"
         type="submit"
       >
         Login
@@ -77,7 +77,7 @@ const LoginForm = () => {
       <div className="mt-2 font-semibold text-sm text-slate-500 text-center md:text-left">
         Don't have an account?{" "}
         <Link
-          className="text-primaryColor hover:underline hover:underline-offset-4"
+          className="no-underline text-primaryColor hover:underline hover:underline-offset-4"
           to="/auth?register=true"
         >
           Register

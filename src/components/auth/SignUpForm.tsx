@@ -1,30 +1,33 @@
-import { ISignupPayload } from "@/interfaces/auth.interface";
+import { Button, PasswordInput, TextInput } from "@mantine/core";
 import { SubmitHandler, useForm } from "react-hook-form";
+
+import { ISignupPayload } from "@/interfaces/auth.interface";
 import { Link } from "react-router-dom";
 import LockPasswordLineIcon from "remixicon-react/LockPasswordLineIcon";
 import MailLineIcon from "remixicon-react/MailLineIcon";
-import Input from "../ui/input/input";
-import { Button } from "@mantine/core";
+import PersonIcon from "remixicon-react/User6LineIcon";
 
 const SignUpForm = () => {
   const {
-    control,
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<ISignupPayload>();
-  const onSubmit: SubmitHandler<ISignupPayload> = (data) => console.log(data);
+
+  const onSubmit: SubmitHandler<ISignupPayload> = (data) => {
+    console.log(data);
+  };
 
   return (
     <form
       className="w-full flex flex-col gap-3"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Input
-        type="text"
+      <TextInput
+        size="lg"
         label="Name"
         placeholder="Your Name"
+        icon={<PersonIcon />}
         {...register("name", {
           validate: (value) => !!value.trim() || "Name is required",
           minLength: {
@@ -32,15 +35,15 @@ const SignUpForm = () => {
             message: "Name must be at least 2 characters",
           },
         })}
-        error={!!errors.name}
-        helperText={errors.name?.message}
+        error={!!errors.name && errors.name?.message}
       />
 
-      <Input
+      <TextInput
+        size="lg"
         type="email"
         label="Email"
         placeholder="Your Email"
-        startIcon={MailLineIcon}
+        icon={<MailLineIcon />}
         {...register("email", {
           validate: (value) => !!value.trim() || "Email is required",
           pattern: {
@@ -48,14 +51,13 @@ const SignUpForm = () => {
             message: "Email is invalid",
           },
         })}
-        error={!!errors.email}
-        helperText={errors.email?.message}
+        error={!!errors.email && errors.email?.message}
       />
-      <Input
-        type="password"
+      <PasswordInput
+        size="lg"
         label="Password"
         placeholder="Your Password"
-        startIcon={LockPasswordLineIcon}
+        icon={<LockPasswordLineIcon />}
         {...register("password", {
           required: "Password is required",
           minLength: {
@@ -63,15 +65,14 @@ const SignUpForm = () => {
             message: "Password must be at least 6 characters",
           },
         })}
-        error={!!errors.password}
-        helperText={errors.password?.message}
+        error={!!errors.password && errors.password?.message}
       />
 
       <Button
-        color="teal"
+        color="green"
         radius="sm"
         size="md"
-        className="uppercase mt-2 bg-[#009247]"
+        className="uppercase mt-2"
         type="submit"
       >
         Register
