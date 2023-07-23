@@ -1,5 +1,4 @@
 import { SideBarConfig } from "@/constants/sideBarConfig";
-import React from "react";
 import { twMerge } from "tailwind-merge";
 
 interface SidebarProps {

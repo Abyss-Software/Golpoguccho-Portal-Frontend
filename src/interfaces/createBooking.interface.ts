@@ -1,4 +1,3 @@
-
 export interface ICreateBooking {
   fullName: string;
   email: string;
@@ -16,7 +15,7 @@ export interface Events {
   eventTypeId: string;
   packageId: string;
   eventTitle: string;
-  eventDate: string;
+  eventDate: Date;
   eventTime: string;
   eventEndTime: string;
   dayOrEvening: string;
