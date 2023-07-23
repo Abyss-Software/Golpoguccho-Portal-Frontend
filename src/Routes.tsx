@@ -1,11 +1,12 @@
-import { Route, Routes } from "react-router-dom";
-import ClientLayout from "./layouts/ClientLayout";
-import DashboardLayout from "./layouts/DashboardLayout";
-import LoginPage from "./pages/Auth/LoginPage";
-import ClientDashboard from "./pages/dashboard/ClientDashboard";
-import Dashboard from "./pages/dashboard/Dashboard";
-import CreateBookingPage from "./pages/Booking/CreateBookingPage";
-import AppShellDemo from "./layouts/AppShell";
+import { Route, Routes } from 'react-router-dom';
+import ClientLayout from './layouts/ClientLayout';
+import DashboardLayout from './layouts/DashboardLayout';
+import LoginPage from './pages/Auth/LoginPage';
+import ClientDashboard from './pages/dashboard/ClientDashboard';
+import Dashboard from './pages/dashboard/Dashboard';
+import CreateBookingPage from './pages/Booking/CreateBookingPage';
+import AppShellDemo from './layouts/AppShell';
+import BookingDetailsPage from './pages/Booking/BookingDetailsPage';
 
 const Router = () => {
   return (
@@ -15,6 +16,7 @@ const Router = () => {
       <Route path="/client" element={<ClientLayout />}>
         <Route path="" element={<ClientDashboard />} />
         <Route path="new-booking" element={<CreateBookingPage />} />
+        <Route path="booking-details" element={<BookingDetailsPage />} />
       </Route>
 
       <Route path="/" element={<AppShellDemo />}>

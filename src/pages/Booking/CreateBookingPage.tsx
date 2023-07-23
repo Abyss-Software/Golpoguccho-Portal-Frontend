@@ -1,33 +1,39 @@
-import { Button, Stepper } from "@mantine/core";
-import { FormProvider, useForm } from "react-hook-form";
+import { Button, Stepper } from '@mantine/core';
+import { FormProvider, useForm } from 'react-hook-form';
 
-import BackIcon from "remixicon-react/ArrowLeftSLineIcon";
-import { CreateBookingValidationSchema } from "@/constants/validation/CreateBookingValidationSchema";
-import EventDetailsForm from "@/components/bookingForm/EventDetailsForm";
-import EventIcon from "remixicon-react/CalendarEventLineIcon";
-import { ICreateBooking } from "@/interfaces/createBooking.interface";
-import NextIcon from "remixicon-react/ArrowRightSLineIcon";
-import PaymentIcon from "remixicon-react/CurrencyLineIcon";
-import PersonalIcon from "remixicon-react/User3LineIcon";
-import PersonalInfoForm from "@/components/bookingForm/PersonalInfoForm";
-import SubmitIcon from "remixicon-react/CheckLineIcon";
-import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import BackIcon from 'remixicon-react/ArrowLeftSLineIcon';
+import { CreateBookingValidationSchema } from '@/constants/validation/CreateBookingValidationSchema';
+import EventDetailsForm from '@/components/bookingForm/EventDetailsForm';
+import EventIcon from 'remixicon-react/CalendarEventLineIcon';
+import { ICreateBooking } from '@/interfaces/createBooking.interface';
+import NextIcon from 'remixicon-react/ArrowRightSLineIcon';
+import PaymentIcon from 'remixicon-react/CurrencyLineIcon';
+import PersonalIcon from 'remixicon-react/User3LineIcon';
+import PersonalInfoForm from '@/components/bookingForm/PersonalInfoForm';
+import SubmitIcon from 'remixicon-react/CheckLineIcon';
+import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import ReviewInfo from '@/components/bookingForm/ReviewInfo';
 
 const timelineContent = [
   {
-    title: "Booking Info",
-    subtitle: "Provide your personal information",
+    title: 'Booking Info',
+    subtitle: 'Provide your personal information',
     icon: <PersonalIcon />,
   },
   {
-    title: "Events",
-    subtitle: "Give details of your events",
+    title: 'Events',
+    subtitle: 'Give details of your events',
     icon: <EventIcon />,
   },
   {
-    title: "Review & Payment",
-    subtitle: "Review and make payment",
+    title: 'Review',
+    subtitle: 'Double check your information',
+    icon: <PaymentIcon />,
+  },
+  {
+    title: 'Payment',
+    subtitle: 'Make advance payment',
     icon: <PaymentIcon />,
   },
 ];
@@ -41,18 +47,18 @@ const CreateBookingPage = () => {
     defaultValues: {
       events: [
         {
-          eventTypeId: "",
-          packageId: "",
-          eventTitle: "",
+          eventTypeId: '',
+          packageId: '',
+          eventTitle: '',
           eventDate: new Date(),
-          eventTime: "",
-          eventEndTime: "",
-          dayOrEvening: "",
-          dhakaOrOutside: "",
+          eventTime: '',
+          eventEndTime: '',
+          dayOrEvening: '',
+          dhakaOrOutside: '',
           numberOfGuests: 0,
-          eventVenue: "",
-          eventVenueAddress: "",
-          additionalInfo: "",
+          eventVenue: '',
+          eventVenueAddress: '',
+          additionalInfo: '',
         },
       ],
     },
@@ -63,16 +69,16 @@ const CreateBookingPage = () => {
       if (
         activeTab === 0 &&
         !(await methods.trigger([
-          "fullName",
-          "email",
-          "contactPrimary",
-          "contactSecondary",
-          "address",
-          "city",
+          'fullName',
+          'email',
+          'contactPrimary',
+          'contactSecondary',
+          'address',
+          'city',
         ]))
       )
         return;
-      else if (activeTab === 1 && !(await methods.trigger(["events"]))) return;
+      else if (activeTab === 1 && !(await methods.trigger(['events']))) return;
 
       setActiveTab((prev) => prev + 1);
     } catch (error) {
@@ -87,10 +93,9 @@ const CreateBookingPage = () => {
   return (
     <FormProvider {...methods}>
       <div className="h-full flex">
-        <div className="px-16 hidden md:block bg-backgroundColor">
+        <div className="px-16 hidden xl:block bg-backgroundColor">
           <Stepper
             active={activeTab}
-            onStepClick={setActiveTab}
             orientation="vertical"
             className="sticky top-28 mx-auto"
           >
@@ -111,11 +116,11 @@ const CreateBookingPage = () => {
         </div>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex-1 space-y-4 overflow-y-scroll px-20 py-5"
+          className="flex-1 space-y-4 overflow-y-scroll px-6 md:px-20 py-5"
         >
           <div
             style={{
-              display: activeTab === 0 ? "block" : "none",
+              display: activeTab === 0 ? 'block' : 'none',
             }}
           >
             <PersonalInfoForm />
@@ -123,22 +128,33 @@ const CreateBookingPage = () => {
 
           <div
             style={{
-              display: activeTab === 1 ? "block" : "none",
+              display: activeTab === 1 ? 'block' : 'none',
             }}
           >
             <EventDetailsForm />
           </div>
 
-          <div className="flex gap-4">
+          {/* <div
+            style={{
+              display: activeTab === 2 ? 'block' : 'none',
+            }}
+          >
+            <ReviewInfo />
+          </div> */}
+
+          {activeTab === 2 && <ReviewInfo />}
+
+          <div className="flex gap-4 py-10">
             <Button
               fullWidth
               type="button"
               size="lg"
-              color="green"
+              color="gray"
               variant="light"
               leftIcon={<BackIcon />}
               disabled={activeTab === 0}
               onClick={() => setActiveTab((prev) => prev - 1)}
+              className="border-gray-500"
             >
               Go Back
             </Button>
@@ -162,6 +178,7 @@ const CreateBookingPage = () => {
                 variant="light"
                 rightIcon={<NextIcon />}
                 onClick={onNextClick}
+                className="border-green-500"
               >
                 Up Next
               </Button>

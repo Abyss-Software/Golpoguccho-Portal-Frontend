@@ -1,9 +1,9 @@
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { Button } from "@mantine/core";
-import EventInfoForm from "./EventInfoForm";
-import EventTypeSelectForm from "./EventTypeSelectForm";
-import { ICreateBooking } from "@/interfaces/createBooking.interface";
+import { Button } from '@mantine/core';
+import EventInfoForm from './EventInfoForm';
+import EventTypeSelectForm from './EventTypeSelectForm';
+import { ICreateBooking } from '@/interfaces/createBooking.interface';
 
 const EventDetailsForm = () => {
   const { control } = useFormContext<ICreateBooking>();
@@ -15,25 +15,26 @@ const EventDetailsForm = () => {
 
   const handleAddEvent = () => {
     append({
-      eventTypeId: "",
-      packageId: "",
-      eventTitle: "",
+      eventTypeId: '',
+      packageId: '',
+      eventTitle: '',
       eventDate: new Date(),
-      eventTime: "",
-      eventEndTime: "",
-      dayOrEvening: "",
-      dhakaOrOutside: "",
+      eventTime: '',
+      eventEndTime: '',
+      dayOrEvening: '',
+      dhakaOrOutside: '',
       numberOfGuests: 0,
-      eventVenue: "",
-      eventVenueAddress: "",
-      additionalInfo: "",
+      eventVenue: '',
+      eventVenueAddress: '',
+      additionalInfo: '',
     });
   };
 
   return (
     <div className="space-y-2">
       {fields.map((field, itemIndex) => (
-        <div className="space-y-4" key={field.id}>
+        <div className="space-y-4 pt-10" key={field.id}>
+          <h1>Event {itemIndex + 1}</h1>
           <EventTypeSelectForm itemIndex={itemIndex} />
 
           <EventInfoForm itemIndex={itemIndex} />
@@ -41,11 +42,13 @@ const EventDetailsForm = () => {
           {fields.length > 1 && (
             <Button
               fullWidth
+              size="md"
               type="button"
               color="red"
+              variant="outline"
               onClick={() => remove(itemIndex)}
             >
-              Delete
+              Remove This Event
             </Button>
           )}
         </div>
@@ -59,7 +62,7 @@ const EventDetailsForm = () => {
         variant="outline"
         onClick={handleAddEvent}
       >
-        Add Event
+        Add Another Event
       </Button>
     </div>
   );
