@@ -12,6 +12,20 @@ const PersonalInfoForm = () => {
   return (
     <div className="space-y-1">
       <h2 className="text-2xl font-bold">Booking Information</h2>
+      <Input.Wrapper
+        id="bookingTitle"
+        withAsterisk
+        label="Title of Booking"
+        description="Give a simple title for referencing. Example: 'Taha and Rivu's Wedding events', 'Golpoguccho Annual Company Event' etc."
+        error={<>{errors?.bookingTitle?.message}</>}
+      >
+        <Input
+          size="lg"
+          type="text"
+          placeholder="Booking Title"
+          {...register("bookingTitle", { required: true })}
+        />
+      </Input.Wrapper>
       <Grid columns={2} gutter={"xl"}>
         <Grid.Col md={2} lg={1}>
           <Input.Wrapper

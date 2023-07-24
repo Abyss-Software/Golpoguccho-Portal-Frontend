@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const CreateBookingValidationSchema = z.object({
+  bookingTitle: z.string().nonempty("Booking Title cannot be empty"),
   fullName: z.string().nonempty("Full name cannot be empty"),
   email: z.string().email(),
   contactPrimary: z

@@ -1,4 +1,5 @@
 export interface ICreateBooking {
+  bookingTitle: string;
   fullName: string;
   email: string;
   contactPrimary: string;
