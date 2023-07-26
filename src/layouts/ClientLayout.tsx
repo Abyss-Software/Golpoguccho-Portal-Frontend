@@ -1,16 +1,20 @@
-import { Children, useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   AppShell,
-  Navbar,
   Header,
   Text,
-  MediaQuery,
-  Burger,
   useMantineTheme,
+  Switch,
+  Group,
 } from '@mantine/core';
 import { Outlet } from 'react-router-dom';
+import SunLineIcon from 'remixicon-react/SunLineIcon';
+import MoonLineIcon from 'remixicon-react/MoonLineIcon';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 export default function ClientLayout() {
+  const { toggleDarkMode, darkMode } = useContext(ThemeContext);
+
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   return (
@@ -26,21 +30,21 @@ export default function ClientLayout() {
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       header={
-        <Header height={{ base: 50, md: 70 }} p="md">
-          <div
-            style={{ display: 'flex', alignItems: 'center', height: '100%' }}
-          >
-            {/* <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-              <Burger
-                opened={opened}
-                onClick={() => setOpened((o) => !o)}
-                size="sm"
-                color={theme.colors.gray[6]}
-                mr="xl"
-              />
-            </MediaQuery> */}
-
+        <Header height={{ base: 50, md: 70 }} p="md" bg={'#009247'}>
+          <div className="text-white flex items-center justify-between h-full">
             <Text>Golpoguccho Photography</Text>
+            <Switch
+              size="md"
+              color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
+              onChange={toggleDarkMode}
+              checked={darkMode}
+              onLabel={
+                <SunLineIcon size="1rem" color={theme.colors.yellow[4]} />
+              }
+              offLabel={
+                <MoonLineIcon size="1rem" color={theme.colors.blue[6]} />
+              }
+            />
           </div>
         </Header>
       }

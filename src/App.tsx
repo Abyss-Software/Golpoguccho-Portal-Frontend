@@ -7,33 +7,35 @@ import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 import './App.css';
 import Router from './Routes';
 import { BrowserRouter } from 'react-router-dom';
-
-// import AppShellExample from "./Components/AppShell";
-// import Buttons from "./Components/Buttons";
-// import Cards from "./Components/Cards";
-// import LightAndDarkModeButton from "./Components/LightDarkButton";
+import { ThemeContext } from './contexts/ThemeContext';
+import { useContext } from 'react';
 
 function App() {
-  // const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
-  //   key: 'mantine-color-scheme',
-  //   defaultValue: 'light',
-  // });
-
-  // const toggleColorScheme = (value?: ColorScheme) =>
-  //   setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
-
-  // useHotkeys([['mod+J', () => toggleColorScheme()]]);
-
+  const { darkMode, toggleDarkMode } = useContext(ThemeContext);
   return (
     <BrowserRouter>
-      {/* <ColorSchemeProvider
-        colorScheme={colorScheme}
-        toggleColorScheme={toggleColorScheme}
+      <MantineProvider
+        theme={{
+          colorScheme: darkMode ? 'dark' : 'light',
+          colors: {
+            brand: [
+              '#EBFBEE',
+              '#D3F9D8',
+              '#B2F2BB',
+              '#8CE99A',
+              '#69DB7C',
+              '#51CF66',
+              '#40C057',
+              '#37B24D',
+              '#2F9E44',
+              '#2B8A3E',
+            ],
+          },
+          primaryColor: 'brand',
+        }}
       >
-        <MantineProvider theme={{ colorScheme }}> */}
-      <Router />
-      {/* </MantineProvider>
-      </ColorSchemeProvider> */}
+        <Router />
+      </MantineProvider>
     </BrowserRouter>
   );
 }

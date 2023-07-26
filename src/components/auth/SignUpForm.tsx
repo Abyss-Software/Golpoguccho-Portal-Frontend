@@ -1,11 +1,11 @@
-import { Button, PasswordInput, TextInput } from "@mantine/core";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Button, PasswordInput, TextInput } from '@mantine/core';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { ISignupPayload } from "@/interfaces/auth.interface";
-import { Link } from "react-router-dom";
-import LockPasswordLineIcon from "remixicon-react/LockPasswordLineIcon";
-import MailLineIcon from "remixicon-react/MailLineIcon";
-import PersonIcon from "remixicon-react/User6LineIcon";
+import { ISignupPayload } from '@/interfaces/auth.interface';
+import { Link } from 'react-router-dom';
+import LockPasswordLineIcon from 'remixicon-react/LockPasswordLineIcon';
+import MailLineIcon from 'remixicon-react/MailLineIcon';
+import PersonIcon from 'remixicon-react/User6LineIcon';
 
 const SignUpForm = () => {
   const {
@@ -28,11 +28,11 @@ const SignUpForm = () => {
         label="Name"
         placeholder="Your Name"
         icon={<PersonIcon />}
-        {...register("name", {
-          validate: (value) => !!value.trim() || "Name is required",
+        {...register('name', {
+          validate: (value) => !!value.trim() || 'Name is required',
           minLength: {
             value: 2,
-            message: "Name must be at least 2 characters",
+            message: 'Name must be at least 2 characters',
           },
         })}
         error={!!errors.name && errors.name?.message}
@@ -44,11 +44,11 @@ const SignUpForm = () => {
         label="Email"
         placeholder="Your Email"
         icon={<MailLineIcon />}
-        {...register("email", {
-          validate: (value) => !!value.trim() || "Email is required",
+        {...register('email', {
+          validate: (value) => !!value.trim() || 'Email is required',
           pattern: {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-            message: "Email is invalid",
+            message: 'Email is invalid',
           },
         })}
         error={!!errors.email && errors.email?.message}
@@ -58,28 +58,22 @@ const SignUpForm = () => {
         label="Password"
         placeholder="Your Password"
         icon={<LockPasswordLineIcon />}
-        {...register("password", {
-          required: "Password is required",
+        {...register('password', {
+          required: 'Password is required',
           minLength: {
             value: 6,
-            message: "Password must be at least 6 characters",
+            message: 'Password must be at least 6 characters',
           },
         })}
         error={!!errors.password && errors.password?.message}
       />
 
-      <Button
-        color="green"
-        radius="sm"
-        size="md"
-        className="uppercase mt-2"
-        type="submit"
-      >
+      <Button radius="sm" size="md" className="uppercase mt-2" type="submit">
         Register
       </Button>
 
       <div className="mt-2 font-semibold text-sm text-slate-500 text-center md:text-left">
-        Already have an account?{" "}
+        Already have an account?{' '}
         <Link
           className="text-primaryColor hover:underline hover:underline-offset-4"
           to="/auth"

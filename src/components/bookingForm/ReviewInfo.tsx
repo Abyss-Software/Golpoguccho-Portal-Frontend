@@ -15,9 +15,7 @@ const ReviewInfo = () => {
   useEffect(() => {
     setTimeout(() => {
       setBookingData(getValues());
-      console.log('not');
-    }, 2000);
-    console.log('done');
+    }, 1500);
   }, []);
 
   if (!bookingData)

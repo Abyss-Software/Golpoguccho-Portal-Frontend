@@ -13,7 +13,7 @@ const Topnav = ({ toggleSidebar, sidebarEnabled }: TopnavProps) => {
   const { darkMode, toggleDarkMode } = useContext(ThemeContext);
 
   return (
-    <nav className="w-screen p-5 z-50 max-h-[64px] flex bg-navLight text-black">
+    <nav className="w-screen p-5 z-50 max-h-[64px] flex bg-red-200 dark  text-black">
       {sidebarEnabled && (
         <button onClick={toggleSidebar}>
           <Menu5LineIcon />

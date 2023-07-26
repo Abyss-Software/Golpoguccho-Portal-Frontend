@@ -1,39 +1,39 @@
-import { Button, Stepper } from "@mantine/core";
-import { FormProvider, useForm } from "react-hook-form";
+import { Button, Stepper } from '@mantine/core';
+import { FormProvider, useForm } from 'react-hook-form';
 
-import BackIcon from "remixicon-react/ArrowLeftSLineIcon";
-import { CreateBookingValidationSchema } from "@/constants/validation/CreateBookingValidationSchema";
-import EventDetailsForm from "@/components/bookingForm/EventDetailsForm";
-import EventIcon from "remixicon-react/CalendarEventLineIcon";
-import { ICreateBooking } from "@/interfaces/createBooking.interface";
-import NextIcon from "remixicon-react/ArrowRightSLineIcon";
-import PaymentIcon from "remixicon-react/CurrencyLineIcon";
-import PersonalIcon from "remixicon-react/User3LineIcon";
-import PersonalInfoForm from "@/components/bookingForm/PersonalInfoForm";
-import SubmitIcon from "remixicon-react/CheckLineIcon";
-import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import ReviewInfo from "@/components/bookingForm/ReviewInfo";
+import BackIcon from 'remixicon-react/ArrowLeftSLineIcon';
+import { CreateBookingValidationSchema } from '@/constants/validation/CreateBookingValidationSchema';
+import EventDetailsForm from '@/components/bookingForm/EventDetailsForm';
+import EventIcon from 'remixicon-react/CalendarEventLineIcon';
+import { ICreateBooking } from '@/interfaces/createBooking.interface';
+import NextIcon from 'remixicon-react/ArrowRightSLineIcon';
+import PaymentIcon from 'remixicon-react/CurrencyLineIcon';
+import PersonalIcon from 'remixicon-react/User3LineIcon';
+import PersonalInfoForm from '@/components/bookingForm/PersonalInfoForm';
+import SubmitIcon from 'remixicon-react/CheckLineIcon';
+import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import ReviewInfo from '@/components/bookingForm/ReviewInfo';
 
 const timelineContent = [
   {
-    title: "Booking Info",
-    subtitle: "Provide your personal information",
+    title: 'Booking Info',
+    subtitle: 'Provide your personal information',
     icon: <PersonalIcon />,
   },
   {
-    title: "Events",
-    subtitle: "Give details of your events",
+    title: 'Events',
+    subtitle: 'Give details of your events',
     icon: <EventIcon />,
   },
   {
-    title: "Review",
-    subtitle: "Double check your information",
+    title: 'Review',
+    subtitle: 'Double check your information',
     icon: <PaymentIcon />,
   },
   {
-    title: "Payment",
-    subtitle: "Make advance payment",
+    title: 'Payment',
+    subtitle: 'Make advance payment',
     icon: <PaymentIcon />,
   },
 ];
@@ -47,18 +47,18 @@ const CreateBookingPage = () => {
     defaultValues: {
       events: [
         {
-          eventTypeId: "",
-          packageId: "",
-          eventTitle: "",
+          eventTypeId: '',
+          packageId: '',
+          eventTitle: '',
           eventDate: new Date(),
-          eventTime: "",
-          eventEndTime: "",
-          dayOrEvening: "",
-          dhakaOrOutside: "",
+          eventTime: '',
+          eventEndTime: '',
+          dayOrEvening: '',
+          dhakaOrOutside: '',
           numberOfGuests: 0,
-          eventVenue: "",
-          eventVenueAddress: "",
-          additionalInfo: "",
+          eventVenue: '',
+          eventVenueAddress: '',
+          additionalInfo: '',
         },
       ],
     },
@@ -69,17 +69,17 @@ const CreateBookingPage = () => {
       if (
         activeTab === 0 &&
         !(await methods.trigger([
-          "bookingTitle",
-          "fullName",
-          "email",
-          "contactPrimary",
-          "contactSecondary",
-          "address",
-          "city",
+          'bookingTitle',
+          'fullName',
+          'email',
+          'contactPrimary',
+          'contactSecondary',
+          'address',
+          'city',
         ]))
       )
         return;
-      else if (activeTab === 1 && !(await methods.trigger(["events"]))) return;
+      else if (activeTab === 1 && !(await methods.trigger(['events']))) return;
 
       setActiveTab((prev) => prev + 1);
     } catch (error) {
@@ -91,7 +91,6 @@ const CreateBookingPage = () => {
     console.log(data);
   };
 
-  console.log(methods.getValues());
   return (
     <FormProvider {...methods}>
       <div className="h-full flex">
@@ -122,7 +121,7 @@ const CreateBookingPage = () => {
         >
           <div
             style={{
-              display: activeTab === 0 ? "block" : "none",
+              display: activeTab === 0 ? 'block' : 'none',
             }}
           >
             <PersonalInfoForm />
@@ -130,7 +129,7 @@ const CreateBookingPage = () => {
 
           <div
             style={{
-              display: activeTab === 1 ? "block" : "none",
+              display: activeTab === 1 ? 'block' : 'none',
             }}
           >
             <EventDetailsForm />
@@ -164,7 +163,6 @@ const CreateBookingPage = () => {
             {activeTab === timelineContent.length ? (
               <Button
                 fullWidth
-                color="green"
                 size="lg"
                 type="submit"
                 rightIcon={<SubmitIcon />}
@@ -176,11 +174,10 @@ const CreateBookingPage = () => {
                 fullWidth
                 type="button"
                 size="lg"
-                color="green"
                 variant="light"
                 rightIcon={<NextIcon />}
                 onClick={onNextClick}
-                className="border-green-500"
+                className="border-primaryColor"
               >
                 Up Next
               </Button>
