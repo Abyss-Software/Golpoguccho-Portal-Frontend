@@ -3,8 +3,6 @@ import {
   AppShell,
   Navbar,
   Header,
-  Footer,
-  Aside,
   Text,
   MediaQuery,
   Burger,
@@ -12,7 +10,7 @@ import {
 } from "@mantine/core";
 import { Outlet } from "react-router-dom";
 
-export default function AppShellDemo() {
+export default function AdminLayout() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   return (
@@ -22,7 +20,7 @@ export default function AppShellDemo() {
           background:
             theme.colorScheme === "dark"
               ? theme.colors.dark[8]
-              : theme.colors.gray[0],
+              : "rgb(250 250 250)",
         },
       }}
       navbarOffsetBreakpoint="sm"
@@ -52,7 +50,7 @@ export default function AppShellDemo() {
               />
             </MediaQuery>
 
-            <Text>Application header</Text>
+            <Text>Golpoguccho Photography</Text>
           </div>
         </Header>
       }
