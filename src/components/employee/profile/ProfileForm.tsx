@@ -1,208 +1,186 @@
-import { ICreateBooking } from '@/interfaces/createBooking.interface';
 import {
   Avatar,
   Button,
   Card,
   FileButton,
-  Grid,
   Group,
-  Input,
-} from '@mantine/core';
-import React, { useRef, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CreateBookingValidationSchema } from '@/constants/validation/CreateBookingValidationSchema';
+  SimpleGrid,
+  TextInput,
+} from "@mantine/core";
+import { useRef, useState } from "react";
+
+import { EmployeeProfileValidationSchema } from "@/constants/validation/EmployeeProfileValidationSchema";
+import { IEmployeeProfile } from "@/interfaces/profile.interface";
+import UserIcon from "remixicon-react/User2FillIcon";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const ProfileForm = () => {
-  const [file, setFile] = useState<File | null>(null);
+  const [image, setImage] = useState<File | null>(null);
   const resetRef = useRef<() => void>(null);
-
-  const clearFile = () => {
-    setFile(null);
-    resetRef.current?.();
-  };
-
-  const methods = useForm<ICreateBooking>({
-    resolver: zodResolver(CreateBookingValidationSchema),
-    shouldUnregister: true,
-    defaultValues: {
-      events: [
-        {
-          eventTypeId: '',
-          packageId: '',
-          eventTitle: '',
-          eventDate: new Date(),
-          eventTime: '',
-          eventEndTime: '',
-          dayOrEvening: '',
-          dhakaOrOutside: '',
-          numberOfGuests: 0,
-          eventVenue: '',
-          eventVenueAddress: '',
-          additionalInfo: '',
-        },
-      ],
-    },
-  });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = methods;
+  } = useForm<IEmployeeProfile>({
+    resolver: zodResolver(EmployeeProfileValidationSchema),
+    shouldUnregister: true,
+  });
 
-  const onSubmit = (data: ICreateBooking) => {
+  const clearFile = () => {
+    setImage(null);
+    resetRef.current?.();
+  };
+
+  const onSubmit = (data: IEmployeeProfile) => {
     console.log(data);
   };
 
-  return (
-    <Card
-      radius="md"
-      shadow="md"
-      withBorder
-      padding={20}
-      className=" flex flex-col items-center justify-center pt-10"
-    >
-      <div className="flex flex-col items-center justify-center gap-4">
-        <Avatar
-          src={file ? URL.createObjectURL(file) : null}
-          alt="Vitaly Rtishchev"
-          color="green"
-          className="h-48 w-48 rounded-full"
-        />
+  const onProfileReset = () => {
+    console.log("reset");
+  };
 
-        <Group position="center">
-          <FileButton
-            resetRef={resetRef}
-            onChange={setFile}
-            accept="image/png,image/jpeg"
+  return (
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex items-center justify-center p-4"
+    >
+      <Card radius="md" shadow="md" className="max-w-5xl w-full">
+        <Card.Section
+          py={"lg"}
+          px={"xl"}
+          className="flex flex-col items-center justify-center gap-4 w-full"
+        >
+          <Avatar
+            src={image ? URL.createObjectURL(image) : null}
+            alt="Vitaly Rtishchev"
+            color="green"
+            size={180}
+            radius={300}
           >
-            {(props) => <Button {...props}>Upload</Button>}
-          </FileButton>
-          <Button disabled={!file} color="red" onClick={clearFile}>
+            <UserIcon size={150} />
+          </Avatar>
+
+          <Group position="center">
+            <FileButton
+              resetRef={resetRef}
+              onChange={setImage}
+              accept="image/png, image/jpeg"
+            >
+              {(props) => (
+                <Button {...props} w={150}>
+                  Upload
+                </Button>
+              )}
+            </FileButton>
+
+            <Button w={150} disabled={!image} color="red" onClick={clearFile}>
+              Reset
+            </Button>
+          </Group>
+
+          {image && <p>Picked file: {image.name}</p>}
+        </Card.Section>
+
+        <Card.Section py={"lg"} px={"xl"}>
+          <h2 className="text-2xl font-bold mb-4">Profile Information</h2>
+
+          <SimpleGrid cols={2} spacing="lg">
+            <TextInput
+              {...register("fullname")}
+              label="Full Name"
+              size="md"
+              placeholder="Your Full Name"
+              error={errors?.fullname && errors?.fullname?.message}
+            />
+
+            <TextInput
+              {...register("email")}
+              type="email"
+              label="Email"
+              size="md"
+              placeholder="Your Email Address"
+              error={errors?.email && errors?.email?.message}
+            />
+
+            <TextInput
+              {...register("contactPrimary")}
+              label="Primary Contact Number"
+              size="md"
+              placeholder="Your Primary Contact Number"
+              error={errors?.contactPrimary && errors?.contactPrimary?.message}
+            />
+
+            <TextInput
+              {...register("contactSecondary")}
+              label="Secondary Contact Number"
+              size="md"
+              placeholder="Your Secondary Contact Number"
+              error={
+                errors?.contactSecondary && errors?.contactSecondary?.message
+              }
+            />
+          </SimpleGrid>
+
+          <TextInput
+            {...register("address")}
+            mt={"lg"}
+            label="Address"
+            size="md"
+            placeholder="Your Address"
+            error={errors?.address && errors?.address?.message}
+          />
+        </Card.Section>
+
+        <Card.Section py={"lg"} px={"xl"}>
+          <SimpleGrid cols={2} spacing="lg">
+            <div>
+              <h1 className="font-semibold text-base">Role</h1>
+              <h4 className="text-sm font-medium">Employee</h4>
+            </div>
+
+            <div>
+              <h1 className="font-semibold text-base">Position</h1>
+              <h4 className="text-sm font-medium">Cinematographer</h4>
+            </div>
+
+            <div>
+              <h1 className="font-semibold text-base">Verification Type</h1>
+              <h4 className="text-sm font-medium">NID</h4>
+            </div>
+
+            <div>
+              <h1 className="font-semibold text-base">Verification ID</h1>
+              <h4 className="text-sm font-medium">123345123</h4>
+            </div>
+
+            <div>
+              <h1 className="font-semibold text-base">Base Salary</h1>
+              <h4 className="text-sm font-medium">10,000$</h4>
+            </div>
+
+            <div>
+              <h1 className="font-semibold text-base">Monthly Salary</h1>
+              <h4 className="text-sm font-medium">5,000$</h4>
+            </div>
+          </SimpleGrid>
+        </Card.Section>
+
+        <Card.Section
+          py={"lg"}
+          px={"xl"}
+          className="flex items-center justify-center gap-4"
+        >
+          <Button color="blue" type="submit" w={150}>
+            Update Profile
+          </Button>
+          <Button color="red" type="button" w={150} onClick={onProfileReset}>
             Reset
           </Button>
-        </Group>
-
-        {file && <p>Picked file: {file.name}</p>}
-      </div>
-
-      <div>
-        <div className="space-y-1">
-          <h2 className="text-2xl font-bold">Booking Information</h2>
-          <Input.Wrapper
-            id="bookingTitle"
-            withAsterisk
-            label="Title of Booking"
-            description="Give a simple title for referencing. Example: 'Taha and Rivu's Wedding events', 'Golpoguccho Annual Company Event' etc."
-            error={<>{errors?.bookingTitle?.message}</>}
-          >
-            <Input
-              size="lg"
-              type="text"
-              placeholder="Booking Title"
-              {...register('bookingTitle', { required: true })}
-            />
-          </Input.Wrapper>
-          <Grid columns={2} gutter={'xl'}>
-            <Grid.Col md={2} lg={1}>
-              <Input.Wrapper
-                id="fullname"
-                withAsterisk
-                label="Full Name"
-                error={<>{errors?.fullName?.message}</>}
-              >
-                <Input
-                  size="lg"
-                  type="text"
-                  placeholder="First Name"
-                  {...register('fullName', { required: true })}
-                />
-              </Input.Wrapper>
-            </Grid.Col>
-            <Grid.Col md={2} lg={1}>
-              <Input.Wrapper
-                id="email"
-                withAsterisk
-                label="Email Address"
-                error={<>{errors?.email?.message}</>}
-              >
-                <Input
-                  size="lg"
-                  type="email"
-                  placeholder="Email"
-                  {...register('email', { required: true })}
-                />
-              </Input.Wrapper>
-            </Grid.Col>
-            <Grid.Col md={2} lg={1}>
-              <Input.Wrapper
-                id="primary Contact Number"
-                withAsterisk
-                label="Primary Contact Number"
-                error={<>{errors?.contactPrimary?.message}</>}
-              >
-                <Input
-                  size="lg"
-                  type="text"
-                  placeholder="Contact Number Primary"
-                  {...register('contactPrimary', { required: true })}
-                />
-              </Input.Wrapper>
-            </Grid.Col>
-            <Grid.Col md={2} lg={1}>
-              <Input.Wrapper
-                id="secondary Contact Number"
-                label="Secondary Contact Number"
-                error={<>{errors?.contactSecondary?.message}</>}
-              >
-                <Input
-                  size="lg"
-                  type="text"
-                  placeholder="Contact Number Secondary"
-                  {...register('contactSecondary', { required: true })}
-                />
-              </Input.Wrapper>
-            </Grid.Col>
-            <Grid.Col md={2} lg={1}>
-              <Input.Wrapper
-                withAsterisk
-                id="address"
-                label="Address"
-                error={<>{errors?.address?.message}</>}
-              >
-                <Input
-                  size="lg"
-                  type="text"
-                  placeholder="Address"
-                  {...register('address', { required: true })}
-                />
-              </Input.Wrapper>
-            </Grid.Col>
-            <Grid.Col md={2} lg={1}>
-              <Input.Wrapper
-                withAsterisk
-                id="city"
-                label="City"
-                error={<>{errors?.city?.message}</>}
-              >
-                <Input
-                  size="lg"
-                  type="text"
-                  placeholder="City"
-                  {...register('city', { required: true })}
-                />
-              </Input.Wrapper>
-            </Grid.Col>
-          </Grid>
-        </div>
-      </div>
-
-      <div className="flex items-center justify-center gap-4 mt-10">
-        <Button color="blue">Update Profile</Button>
-        <Button color="red">Reset</Button>
-      </div>
-    </Card>
+        </Card.Section>
+      </Card>
+    </form>
   );
 };
 
