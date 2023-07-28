@@ -1,5 +1,5 @@
-import { PackageType } from "./EventTypeSelectForm";
-import { twMerge } from "tailwind-merge";
+import { PackageType } from './EventTypeSelectForm';
+import { twMerge } from 'tailwind-merge';
 
 type PackageCardProps = {
   packageOption: PackageType;
@@ -17,8 +17,8 @@ function PackageCard({
   return (
     <div
       className={twMerge(
-        "cursor-pointer bg-white border shadow rounded-lg hover:shadow-lg transition-shadow",
-        selected ? "bg-primaryLighterColor" : error && "bg-red-100"
+        'cursor-pointer bg-paperColor border shadow-md shadow-shadowColor rounded-lg hover:shadow-lg transition-shadow',
+        selected ? 'bg-primaryLighterColor' : error && 'bg-red-100'
       )}
       onClick={onClick}
     >

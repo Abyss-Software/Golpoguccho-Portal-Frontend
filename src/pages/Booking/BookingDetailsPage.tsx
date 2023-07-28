@@ -1,45 +1,45 @@
-import { Accordion } from "@mantine/core";
-import React from "react";
-import CalendarEventLineIcon from "remixicon-react/CalendarEventLineIcon";
+import { Accordion } from '@mantine/core';
+import React from 'react';
+import CalendarEventLineIcon from 'remixicon-react/CalendarEventLineIcon';
 
 const bookingData = {
   events: [
     {
-      eventTitle: "Taha Wedding reception",
-      eventDate: "2023-07-30T18:00:00.000Z",
-      eventTime: "21:00",
-      eventEndTime: "00:00",
-      numberOfGuests: "500",
-      eventVenue: "Random Convention Center",
-      eventVenueAddress: "Random Convention center on random street of dhaka",
-      additionalInfo: "information that is additional\nqazwsx\nplmokn",
-      eventTypeId: "7f77bdd7-185d-49f9-9fa3-f78e8cfc5486",
-      packageId: "62752196-dee4-4f6f-b741-68b4af7aa1cf",
-      dayOrEvening: "evening",
-      dhakaOrOutside: "dhaka",
+      eventTitle: 'Taha Wedding reception',
+      eventDate: '2023-07-30T18:00:00.000Z',
+      eventTime: '21:00',
+      eventEndTime: '00:00',
+      numberOfGuests: '500',
+      eventVenue: 'Random Convention Center',
+      eventVenueAddress: 'Random Convention center on random street of dhaka',
+      additionalInfo: 'information that is additional\nqazwsx\nplmokn',
+      eventTypeId: '7f77bdd7-185d-49f9-9fa3-f78e8cfc5486',
+      packageId: '62752196-dee4-4f6f-b741-68b4af7aa1cf',
+      dayOrEvening: 'evening',
+      dhakaOrOutside: 'dhaka',
     },
     {
-      eventTypeId: "afefcfdb-ab38-465c-bff3-30f5b9c014ed",
-      packageId: "33014292-be4d-4c0e-b9e3-fbe16f5c4e3d",
+      eventTypeId: 'afefcfdb-ab38-465c-bff3-30f5b9c014ed',
+      packageId: '33014292-be4d-4c0e-b9e3-fbe16f5c4e3d',
       eventTitle: "Rivu's Holud Event",
-      eventDate: "2023-07-28T18:00:00.000Z",
-      eventTime: "10:15",
-      eventEndTime: "15:15",
-      dayOrEvening: "day",
-      dhakaOrOutside: "dhaka",
-      numberOfGuests: "200",
-      eventVenue: "roof of someones house",
-      eventVenueAddress: "ranodm 3/5, mirpur 12, dhaka",
-      additionalInfo: "update, index, value, control",
+      eventDate: '2023-07-28T18:00:00.000Z',
+      eventTime: '10:15',
+      eventEndTime: '15:15',
+      dayOrEvening: 'day',
+      dhakaOrOutside: 'dhaka',
+      numberOfGuests: '200',
+      eventVenue: 'roof of someones house',
+      eventVenueAddress: 'ranodm 3/5, mirpur 12, dhaka',
+      additionalInfo: 'update, index, value, control',
     },
   ],
   bookingTitle: "Taha and Rivu's Wedding Ceremony",
-  fullName: "random name",
-  email: "random123@gmail.com",
-  contactPrimary: "0123456789",
-  contactSecondary: "0198765432",
-  address: "5/7 Mirpur 12, Dhaka - 1207",
-  city: "Dhaka",
+  fullName: 'random name',
+  email: 'random123@gmail.com',
+  contactPrimary: '0123456789',
+  contactSecondary: '0198765432',
+  address: '5/7 Mirpur 12, Dhaka - 1207',
+  city: 'Dhaka',
 };
 
 const BookingDetailsPage = () => {
@@ -65,18 +65,18 @@ const BookingDetailsPage = () => {
         </h3>
         <div className="p-4 space-y-1">
           <p>
-            <span className="font-bold">Full Name:</span>{" "}
+            <span className="font-bold">Full Name:</span>{' '}
             {bookingData?.fullName}
           </p>
           <p>
             <span className="font-bold">Email:</span> {bookingData?.email}
           </p>
           <p>
-            <span className="font-bold">Primary Contact:</span>{" "}
+            <span className="font-bold">Primary Contact:</span>{' '}
             {bookingData?.contactPrimary}
           </p>
           <p>
-            <span className="font-bold">Secondary Contact:</span>{" "}
+            <span className="font-bold">Secondary Contact:</span>{' '}
             {bookingData?.contactSecondary}
           </p>
           <p>
@@ -93,72 +93,71 @@ const BookingDetailsPage = () => {
           Events
         </h3>
         <Accordion
-          variant="default"
-          radius="md"
+          variant="contained"
           defaultValue={[`${0}`]}
           transitionDuration={500}
           multiple
         >
           {bookingData?.events?.map((event, index) => (
             <div key={index}>
-              <Accordion.Item value={`${index}`} bg="white">
+              <Accordion.Item value={`${index}`}>
                 <div key={index} className=" p-2  ">
                   <Accordion.Control
                     icon={<CalendarEventLineIcon color="#009247" />}
                   >
                     <h4 className="text-xl font-bold  ">
                       <span className="text-primaryColor">
-                        {" "}
+                        {' '}
                         Event {index + 1}:
-                      </span>{" "}
+                      </span>{' '}
                       {event.eventTitle}
                     </h4>
                   </Accordion.Control>
                   <Accordion.Panel>
                     <div className="space-y-1 px-2">
                       <p>
-                        <span className="font-bold">Event Type:</span>{" "}
+                        <span className="font-bold">Event Type:</span>{' '}
                         {event.eventTypeId}
                       </p>
                       <p>
-                        <span className="font-bold">Package ID:</span>{" "}
+                        <span className="font-bold">Package ID:</span>{' '}
                         {event.packageId}
                       </p>
                       <p>
-                        <span className="font-bold">Event Title:</span>{" "}
+                        <span className="font-bold">Event Title:</span>{' '}
                         {event.eventTitle}
                       </p>
                       <p>
-                        <span className="font-bold">Event Date:</span>{" "}
+                        <span className="font-bold">Event Date:</span>{' '}
                         {event.eventDate}
                       </p>
                       <p>
-                        <span className="font-bold">Event Time:</span>{" "}
+                        <span className="font-bold">Event Time:</span>{' '}
                         {event.eventTime} - {event.eventEndTime}
                       </p>
                       <p>
-                        <span className="font-bold">Day or Evening:</span>{" "}
+                        <span className="font-bold">Day or Evening:</span>{' '}
                         {event.dayOrEvening}
                       </p>
                       <p>
-                        <span className="font-bold">Dhaka or Outside:</span>{" "}
+                        <span className="font-bold">Dhaka or Outside:</span>{' '}
                         {event.dhakaOrOutside}
                       </p>
                       <p>
-                        <span className="font-bold">Number of Guests:</span>{" "}
+                        <span className="font-bold">Number of Guests:</span>{' '}
                         {event.numberOfGuests}
                       </p>
                       <p>
-                        <span className="font-bold">Event Venue:</span>{" "}
+                        <span className="font-bold">Event Venue:</span>{' '}
                         {event.eventVenue}
                       </p>
                       <p>
-                        <span className="font-bold">Event Venue Address:</span>{" "}
+                        <span className="font-bold">Event Venue Address:</span>{' '}
                         {event.eventVenueAddress}
                       </p>
                       {event.additionalInfo && (
                         <p>
-                          <span className="font-bold">Additional Info:</span>{" "}
+                          <span className="font-bold">Additional Info:</span>{' '}
                           {event.additionalInfo}
                         </p>
                       )}
@@ -177,18 +176,18 @@ const BookingDetailsPage = () => {
         </h3>
         <div className="p-4 space-y-1">
           <p>
-            <span className="font-bold">Full Name:</span>{" "}
+            <span className="font-bold">Full Name:</span>{' '}
             {bookingData?.fullName}
           </p>
           <p>
             <span className="font-bold">Email:</span> {bookingData?.email}
           </p>
           <p>
-            <span className="font-bold">Primary Contact:</span>{" "}
+            <span className="font-bold">Primary Contact:</span>{' '}
             {bookingData?.contactPrimary}
           </p>
           <p>
-            <span className="font-bold">Secondary Contact:</span>{" "}
+            <span className="font-bold">Secondary Contact:</span>{' '}
             {bookingData?.contactSecondary}
           </p>
           <p>

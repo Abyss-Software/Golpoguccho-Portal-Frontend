@@ -1,5 +1,5 @@
-import { EventType } from "./EventTypeSelectForm";
-import { twMerge } from "tailwind-merge";
+import { EventType } from './EventTypeSelectForm';
+import { twMerge } from 'tailwind-merge';
 
 type EventTypeCardProps = {
   eventType: EventType;
@@ -18,8 +18,8 @@ function EventTypeCard({
     <div
       onClick={onClick}
       className={twMerge(
-        "bg-white p-2 flex gap-4 rounded-xl shadow items-center cursor-pointer border overflow-hidden hover:shadow-lg transition-shadow",
-        selected ? "bg-primaryLighterColor" : error && "bg-red-100"
+        'bg-paperColor p-2 flex gap-4 rounded-xl shadow-md shadow-shadowColor items-center cursor-pointer border overflow-hidden hover:shadow-lg transition-shadow',
+        selected ? 'bg-primaryLighterColor' : error && 'bg-red-100'
       )}
     >
       <img

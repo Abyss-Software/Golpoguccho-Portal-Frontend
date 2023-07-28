@@ -73,6 +73,10 @@ html {
   /* background: var(--color-background); */
 }
 
+body {
+  overflow-x: hidden;
+}
+
 #root {
   height: 100vh;
   width: 100vw;

@@ -6,13 +6,13 @@ export interface ICreateBooking {
   contactSecondary: string;
   address: string;
   city: string;
-  events: Events[];
+  events: IEvents[];
   totalPayment: number;
   advancePayment?: number;
   duePayment?: number;
 }
 
-export interface Events {
+export interface IEvents {
   eventTypeId: string;
   packageId: string;
   eventTitle: string;

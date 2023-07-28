@@ -24,9 +24,7 @@ export default function AdminLayout() {
       styles={{
         main: {
           background:
-            theme.colorScheme === 'dark'
-              ? theme.colors.dark[8]
-              : 'rgb(250 250 250)',
+            theme.colorScheme === 'dark' ? theme.colors.dark[8] : '#f0f0f0',
         },
       }}
       navbarOffsetBreakpoint="sm"
