@@ -1,11 +1,11 @@
-export interface IProfile {
+export interface IEmployeeProfile {
   id?: number;
   fullname: string;
   email: string;
   contactPrimary: string;
   contactSecondary: string;
   address: string;
-  image: File;
+  image?: File | string;
   position: string; //
   role: string; //
   verificationType: string; //

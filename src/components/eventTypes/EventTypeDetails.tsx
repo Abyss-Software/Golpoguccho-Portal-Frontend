@@ -1,65 +1,50 @@
-import { Button, Text, Image, Accordion } from '@mantine/core';
-import React from 'react';
-import Imgae2LineIcon from 'remixicon-react/Image2LineIcon';
-const EventTypeDetails = ({ selectedEventType }: any) => {
-  return (
-    <div>
-      <div className="flex justify-between items-center">
-        <Text size={'xl'}>
-          <strong>Event Type: {selectedEventType.title}</strong>
-        </Text>
-        <div>
-          <Button
-            radius="sm"
-            size="md"
-            className="uppercase m-4"
-            variant="outline"
-          >
-            Edit
-          </Button>
-          <Button
-            radius="sm"
-            size="md"
-            className="uppercase m-4"
-            variant="outline"
-            color="red"
-          >
-            Delete
-          </Button>
-        </div>
-      </div>
-      <div className="p-4 flex flex-col gap-4">
-        <Image height={250} src={selectedEventType.image} alt="" />
-        <Text size={'md'} weight={400}>
-          <strong>Description:</strong>
-          <br />
-          {selectedEventType.description}
-        </Text>
-        <Accordion variant="contained" transitionDuration={500} multiple>
-          <div className="flex justify-between items-center">
-            <Text size={'md'}>
-              <strong>Packages:</strong>
-            </Text>
+import { Accordion, Button, Image } from "@mantine/core";
+import { IEventType, IPackage } from "@/interfaces/packages.interface";
 
-            <Button
-              radius="sm"
-              size="md"
-              className="uppercase m-4"
-              variant="outline"
-            >
+import Imgae2LineIcon from "remixicon-react/Image2LineIcon";
+
+type EventTypeDetailsProps = {
+  selectedEvent: IEventType;
+};
+
+const EventTypeDetails = ({ selectedEvent }: EventTypeDetailsProps) => {
+  return (
+    <div className="space-y-4">
+      <div className="space-x-4">
+        <Button uppercase variant="outline">
+          Edit
+        </Button>
+        <Button uppercase variant="outline" color="red">
+          Delete
+        </Button>
+      </div>
+      <div className="flex flex-col gap-4">
+        <Image height={250} src={selectedEvent.image} alt="" />
+
+        <div>
+          <h1 className="text-lg font-bold py-2">Description:</h1>
+
+          <p>{selectedEvent.description}</p>
+        </div>
+        <Accordion variant="contained" transitionDuration={500} multiple>
+          <div className="flex justify-between items-center py-4">
+            <h1 className="text-lg font-bold">Packages:</h1>
+
+            <Button uppercase variant="outline">
               Add New Package
             </Button>
           </div>
-          {selectedEventType?.packages?.map((pkg: any, index: number) => (
+          {selectedEvent?.packages?.map((pkg: IPackage, index: number) => (
             <div key={index}>
-              <Accordion.Item value={`${index}`}>
-                <div key={index} className=" p-2  ">
-                  <Accordion.Control icon={<Imgae2LineIcon color="#009247" />}>
-                    <h4 className="text-xl font-bold  ">
+              <Accordion.Item value={index.toString()}>
+                <div key={index} className="p-2">
+                  <Accordion.Control
+                    icon={<Imgae2LineIcon className="text-primaryColor" />}
+                  >
+                    <h4 className="text-xl font-bold">
                       <span className="text-primaryColor">
-                        {' '}
                         Package {index + 1}:
-                      </span>{' '}
+                      </span>{" "}
                       {pkg.title}
                     </h4>
                   </Accordion.Control>
@@ -70,7 +55,7 @@ const EventTypeDetails = ({ selectedEventType }: any) => {
                         <span className="font-bold">Package:</span> {pkg.title}
                       </p>
                       <p>
-                        <span className="font-bold">Description:</span>{' '}
+                        <span className="font-bold">Description:</span>{" "}
                         {pkg.description}
                       </p>
                       <p>

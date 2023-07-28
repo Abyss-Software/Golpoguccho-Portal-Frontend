@@ -1,14 +1,19 @@
-import { Badge, Card, Group, Text, Image } from '@mantine/core';
-import React from 'react';
+import { Badge, Card, Group, Image, Text } from "@mantine/core";
 
-const EventTypesCard = ({ eventType }: any) => {
+import { IEventType } from "@/interfaces/packages.interface";
+
+type EventTypesCardProps = {
+  eventType: IEventType;
+};
+
+const EventTypesCard = ({ eventType }: EventTypesCardProps) => {
   return (
     <Card shadow="sm" padding="xl" radius="md" withBorder>
       <Card.Section>
         <Image src={eventType.image} height={200} alt="Norway" />
       </Card.Section>
       <Group position="apart" mt="md" mb="xs">
-        <Text weight={500} size={'lg'}>
+        <Text weight={500} size={"lg"}>
           {eventType.title}
         </Text>
         <Badge color="green" variant="light">

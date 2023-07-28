@@ -1,11 +1,10 @@
-import CommonDataTable from '@/components/dataTable/CommonDataTable';
-import ProfileCard from '@/components/employee/profile/ProfileCard';
-import { Tabs } from '@mantine/core';
-import React from 'react';
-import { IEvents } from '@/interfaces/createBooking.interface';
+import { eventList, eventsColumns } from "@/constants/dummyData";
 
-import { eventsColumns, eventList } from '@/constants/dummyData';
-import ProfileForm from '@/components/employee/profile/ProfileForm';
+import CommonDataTable from "@/components/dataTable/CommonDataTable";
+import { IEvents } from "@/interfaces/createBooking.interface";
+import ProfileCard from "@/components/employee/profile/ProfileCard";
+import ProfileForm from "@/components/employee/profile/ProfileForm";
+import { Tabs } from "@mantine/core";
 
 const EmployeeDashboard = () => {
   return (
@@ -18,6 +17,7 @@ const EmployeeDashboard = () => {
             <Tabs.Tab value="profile">Profile Details</Tabs.Tab>
             <Tabs.Tab value="earnings">Earnings</Tabs.Tab>
           </Tabs.List>
+
           <Tabs.Panel value="events" pt="xs">
             <CommonDataTable<IEvents>
               data={eventList}
@@ -27,9 +27,11 @@ const EmployeeDashboard = () => {
               }}
             />
           </Tabs.Panel>
+
           <Tabs.Panel value="profile" pt="xs">
             <ProfileForm />
           </Tabs.Panel>
+
           <Tabs.Panel value="earnings" pt="xs">
             <CommonDataTable<IEvents>
               data={eventList}

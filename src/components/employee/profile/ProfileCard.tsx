@@ -1,5 +1,7 @@
-import { Avatar, Card, SimpleGrid } from '@mantine/core';
-import UserIcon from 'remixicon-react/User2FillIcon';
+import { Avatar, Card, SimpleGrid } from "@mantine/core";
+
+import UserIcon from "remixicon-react/User2FillIcon";
+
 const ProfileCard = () => {
   return (
     <Card
@@ -9,7 +11,7 @@ const ProfileCard = () => {
       className="flex max-w-[1000px] mx-auto items-center"
     >
       <Avatar src={null} alt="Vitaly Rtishchev" color="green" size={150}>
-        <UserIcon size={120} />{' '}
+        <UserIcon size={120} />
       </Avatar>
 
       <div className="space-y-5 p-5">
