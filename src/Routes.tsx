@@ -15,6 +15,7 @@ import AdminLayout from './layouts/AppShell';
 import BookingListPage from './pages/BookingList/BookingListPage';
 import EmployeeDashboard from './pages/dashboard/EmployeeDashboard';
 import EventTypesPage from './pages/EventTypes/EventTypesPage';
+import EmployeeListPage from './pages/Employees/EmployeeListPage';
 
 export const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ export const router = createBrowserRouter([
       {
         path: 'event-types',
         element: <EventTypesPage />,
+      },
+      {
+        path: 'employees',
+        element: <EmployeeListPage />,
       },
     ],
   },
