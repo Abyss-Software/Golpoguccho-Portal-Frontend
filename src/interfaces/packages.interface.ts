@@ -1,14 +1,15 @@
 export interface IEventType {
-  id?: number;
+  id?: string;
   title: string;
   description: string;
-  image: File;
+  image: string;
+  packages: IPackage[];
 }
 
 export interface IPackage {
-  id?: number;
+  id?: string;
   title: string;
   description: string;
-  image: File;
+  image: string;
   price: number;
 }
