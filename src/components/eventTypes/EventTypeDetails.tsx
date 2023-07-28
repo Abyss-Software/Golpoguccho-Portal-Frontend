@@ -1,13 +1,17 @@
-import { Accordion, Button, Image } from "@mantine/core";
+import { Accordion, Button, Image, Modal } from "@mantine/core";
 import { IEventType, IPackage } from "@/interfaces/packages.interface";
 
 import Imgae2LineIcon from "remixicon-react/Image2LineIcon";
 
 type EventTypeDetailsProps = {
   selectedEvent: IEventType;
+  onCreatePackageClick: () => void;
 };
 
-const EventTypeDetails = ({ selectedEvent }: EventTypeDetailsProps) => {
+function EventTypeDetails({
+  selectedEvent,
+  onCreatePackageClick,
+}: EventTypeDetailsProps) {
   return (
     <div className="space-y-4">
       <div className="space-x-4">
@@ -30,7 +34,7 @@ const EventTypeDetails = ({ selectedEvent }: EventTypeDetailsProps) => {
           <div className="flex justify-between items-center py-4">
             <h1 className="text-lg font-bold">Packages:</h1>
 
-            <Button uppercase variant="outline">
+            <Button uppercase variant="outline" onClick={onCreatePackageClick}>
               Add New Package
             </Button>
           </div>
@@ -71,6 +75,6 @@ const EventTypeDetails = ({ selectedEvent }: EventTypeDetailsProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default EventTypeDetails;
