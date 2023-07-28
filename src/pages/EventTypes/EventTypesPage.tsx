@@ -1,20 +1,33 @@
-import { Button, Drawer, SimpleGrid } from "@mantine/core";
+import { Button, Drawer, Modal, SimpleGrid } from "@mantine/core";
 
+import EventTypeCreateFrom from "@/components/eventTypes/EventTypeCreateFrom";
 import EventTypeDetails from "@/components/eventTypes/EventTypeDetails";
 import EventTypesCard from "@/components/eventTypes/EventTypesCard";
 import { IEventType } from "@/interfaces/packages.interface";
+import PackageCreateFrom from "@/components/package/PackageCreateFrom";
 import { eventTypesData } from "@/constants/dummyData";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 
 const EventTypesPage = () => {
-  const [opened, { open, close }] = useDisclosure(false);
+  const [openedDrawer, setDrawer] = useDisclosure(false);
+  const [openedEventTypeModal, setEventTypeModal] = useDisclosure(false);
+  const [openedPackageModal, setPackageModal] = useDisclosure(false);
 
   const [selectedEvent, setSelectedEvent] = useState<IEventType>();
 
   const handleEventTypeClick = (eventType: IEventType) => {
     setSelectedEvent(eventType);
-    console.log(eventType);
+    setDrawer.open();
+  };
+
+  const handleAddNewEventType = () => {
+    setEventTypeModal.open();
+  };
+
+  const handleCreatePackageClick = () => {
+    setDrawer.close();
+    setPackageModal.open();
   };
 
   return (
@@ -24,21 +37,57 @@ const EventTypesPage = () => {
           size: "lg",
         }}
         title={
-          <h1 className="font-semibold">Event Type: {selectedEvent?.title}</h1>
+          <p className="text-xl font-semibold">
+            Event Type: {selectedEvent?.title}
+          </p>
         }
         position="right"
-        opened={opened}
-        onClose={close}
+        opened={openedDrawer}
+        onClose={setDrawer.close}
         overlayProps={{ opacity: 0.5, blur: 4 }}
         padding={"lg"}
         size={"xl"}
       >
-        {selectedEvent && <EventTypeDetails selectedEvent={selectedEvent} />}
+        {selectedEvent && (
+          <EventTypeDetails
+            selectedEvent={selectedEvent}
+            onCreatePackageClick={handleCreatePackageClick}
+          />
+        )}
       </Drawer>
+
+      <Modal
+        opened={openedEventTypeModal}
+        onClose={setEventTypeModal.close}
+        size="lg"
+        closeButtonProps={{
+          size: "lg",
+        }}
+        title={<p className="text-lg font-semibold">Create New Event Type</p>}
+      >
+        <EventTypeCreateFrom />
+      </Modal>
+
+      <Modal
+        opened={openedPackageModal}
+        onClose={setPackageModal.close}
+        size="lg"
+        closeButtonProps={{
+          size: "lg",
+        }}
+        title={<p className="text-lg font-semibold">Create New Package</p>}
+      >
+        <PackageCreateFrom />
+      </Modal>
 
       <h1 className="text-2xl font-bold">Event Types</h1>
 
-      <Button radius="sm" size="md" className="uppercase" variant="outline">
+      <Button
+        size="md"
+        uppercase
+        variant="outline"
+        onClick={handleAddNewEventType}
+      >
         Add New Event Type
       </Button>
 
@@ -53,10 +102,8 @@ const EventTypesPage = () => {
       >
         {eventTypesData.map((eventType) => (
           <div
-            onClick={() => {
-              handleEventTypeClick(eventType);
-              open();
-            }}
+            key={eventType.id}
+            onClick={() => handleEventTypeClick(eventType)}
             className="cursor-pointer"
           >
             <EventTypesCard eventType={eventType} />

@@ -1,32 +1,40 @@
-import { Button, CloseButton, Text, TextInput, Textarea } from "@mantine/core";
+import {
+  Button,
+  CloseButton,
+  NumberInput,
+  Text,
+  TextInput,
+  Textarea,
+} from "@mantine/core";
 
 import { Dropzone } from "@mantine/dropzone";
-import { EventTypeCreateValidatorSchema } from "@/constants/validation/EventTypeCreateValidatorSchema";
+import { PackageCreateValidatorSchema } from "@/constants/validation/PackageCreateValidatorSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-type EventTypeCreate = {
+type PackageCreate = {
   title: string;
   description: string;
   image?: File;
+  price: number;
 };
 
-function EventTypeCreateFrom() {
+function PackageCreateFrom() {
   const {
     register,
     handleSubmit,
     setValue,
     watch,
     formState: { errors },
-  } = useForm<EventTypeCreate>({
-    resolver: zodResolver(EventTypeCreateValidatorSchema),
+  } = useForm<PackageCreate>({
+    resolver: zodResolver(PackageCreateValidatorSchema),
   });
 
   const onFileDrop = (files: File[]) => {
     setValue("image", files[0]);
   };
 
-  const onSubmit = (data: EventTypeCreate) => {
+  const onSubmit = (data: PackageCreate) => {
     console.log(data);
   };
 
@@ -72,24 +80,35 @@ function EventTypeCreateFrom() {
       )}
 
       <TextInput
-        {...register("title", { required: true })}
+        {...register("title")}
         size="md"
         label="Title"
-        placeholder="Enter Event Type Title"
+        placeholder="Enter Package Title"
         error={errors?.title && errors?.title?.message}
       />
 
+      <NumberInput
+        {...register("price")}
+        size="md"
+        min={0}
+        max={100000}
+        label="Price"
+        placeholder="Enter Package Price"
+        error={errors?.price && errors?.price?.message}
+        onChange={(value) => setValue("price", value ? value : 0)}
+      />
+
       <Textarea
-        {...register("description", { required: true })}
+        {...register("description")}
         size="md"
         label="Description"
-        placeholder="Enter Event Type Description"
+        placeholder="Enter Package Description"
         error={errors?.description && errors?.description?.message}
       />
 
-      <Button type="submit">Create Event Type</Button>
+      <Button type="submit">Create Package</Button>
     </form>
   );
 }
 
-export default EventTypeCreateFrom;
+export default PackageCreateFrom;
