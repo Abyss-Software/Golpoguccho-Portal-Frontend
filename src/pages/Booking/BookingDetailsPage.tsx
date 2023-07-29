@@ -1,5 +1,6 @@
+import { ThemeContext } from '@/contexts/ThemeContext';
 import { Accordion } from '@mantine/core';
-import React from 'react';
+import React, { useContext } from 'react';
 import CalendarEventLineIcon from 'remixicon-react/CalendarEventLineIcon';
 
 const bookingData = {
@@ -54,6 +55,8 @@ const BookingDetailsPage = () => {
       </div>
     );
 
+  const { darkMode } = useContext(ThemeContext);
+
   return (
     <div className=" mx-auto p-4 lg:p-10">
       <div className="bg-primaryColor text-white p-4 rounded-lg mb-10">
@@ -97,11 +100,12 @@ const BookingDetailsPage = () => {
           defaultValue={[`${0}`]}
           transitionDuration={500}
           multiple
+          className={`${!darkMode && 'bg-[#fafafa]'}`}
         >
           {bookingData?.events?.map((event, index) => (
             <div key={index}>
               <Accordion.Item value={`${index}`}>
-                <div key={index} className=" p-2  ">
+                <div key={index} className=" p-2 ">
                   <Accordion.Control
                     icon={<CalendarEventLineIcon color="#009247" />}
                   >

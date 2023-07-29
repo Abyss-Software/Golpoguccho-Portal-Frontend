@@ -8,10 +8,12 @@ function CommonDataTable<T>({
   data,
   columns,
   handleRowClick,
+  title,
 }: {
   data: T[];
   columns: any;
   handleRowClick: (row: T) => void;
+  title?: string;
 }) {
   const { darkMode } = useContext(ThemeContext);
   const [searchText, setSearchText] = useState('');
@@ -62,6 +64,7 @@ function CommonDataTable<T>({
         fixedHeader
         fixedHeaderScrollHeight="400px"
         subHeader
+        title={title}
         subHeaderComponent={
           <TextInput
             className="w-full md:w-fit"
