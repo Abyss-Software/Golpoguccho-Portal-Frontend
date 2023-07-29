@@ -42,6 +42,15 @@ export default function AdminLayout() {
       header={
         <Header height={{ base: 50, md: 70 }} p="md" bg={'#009247'}>
           <div className="text-white flex items-center justify-between h-full">
+            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+              <Burger
+                opened={opened}
+                onClick={() => setOpened((o) => !o)}
+                size="sm"
+                color="white"
+                mr="xl"
+              />
+            </MediaQuery>
             <Text>Golpoguccho Photography</Text>
             <Switch
               size="md"
