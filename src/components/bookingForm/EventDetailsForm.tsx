@@ -31,9 +31,9 @@ const EventDetailsForm = () => {
   };
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-8">
       {fields.map((field, itemIndex) => (
-        <div className="space-y-2 lg:space-y-4  lg:pt-10" key={field.id}>
+        <div className="space-y-2 lg:space-y-4" key={field.id}>
           <h1>Event {itemIndex + 1}</h1>
           <EventTypeSelectForm itemIndex={itemIndex} />
 
