@@ -5,7 +5,6 @@ import {
   createBrowserRouter,
 } from 'react-router-dom';
 import ClientLayout from './layouts/ClientLayout';
-import DashboardLayout from './layouts/DashboardLayout';
 import LoginPage from './pages/Auth/LoginPage';
 import ClientDashboard from './pages/dashboard/ClientDashboard';
 import Dashboard from './pages/dashboard/AdminDashboard';
@@ -67,7 +66,7 @@ export const router = createBrowserRouter([
         element: <BookingDetailsPage />,
       },
       {
-        path: 'event-types',
+        path: 'packages',
         element: <EventTypesPage />,
       },
       {

@@ -13,12 +13,16 @@ import { Outlet } from 'react-router-dom';
 import SunLineIcon from 'remixicon-react/SunLineIcon';
 import MoonLineIcon from 'remixicon-react/MoonLineIcon';
 import { ThemeContext } from '../contexts/ThemeContext';
+import Sidenav from '@/components/sidebar/Sidenav';
 export default function AdminLayout() {
   const { toggleDarkMode, darkMode } = useContext(ThemeContext);
 
   const theme = useMantineTheme();
 
   const [opened, setOpened] = useState(false);
+  const handlenavbarToggle = () => {
+    setOpened((o) => !o);
+  };
   return (
     <AppShell
       styles={{
@@ -31,12 +35,11 @@ export default function AdminLayout() {
       asideOffsetBreakpoint="sm"
       navbar={
         <Navbar
-          p="md"
           hiddenBreakpoint="sm"
           hidden={!opened}
           width={{ sm: 200, lg: 250 }}
         >
-          <Text>Application navbar</Text>
+          <Sidenav setOpened={handlenavbarToggle} />
         </Navbar>
       }
       header={
