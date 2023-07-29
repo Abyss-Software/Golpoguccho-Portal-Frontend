@@ -1,4 +1,3 @@
-import BookingsTable from '@/components/bookingTable/BookingTable';
 import CommonDataTable from '@/components/dataTable/CommonDataTable';
 import { IBookings } from '@/interfaces/bookings.interface';
 import React from 'react';
@@ -15,14 +14,16 @@ const EmployeeListPage = () => {
   };
 
   return (
-    <Card withBorder shadow="lg" className="mt-2">
-      <h1>List of Employees</h1>
-      <CommonDataTable<IEmployees>
-        data={employeeData}
-        columns={employeesColumns}
-        handleRowClick={handleRowClick}
-      />
-    </Card>
+    <div>
+      <h1 className="text-2xl p-4">List of Employees</h1>
+      <Card withBorder shadow="lg">
+        <CommonDataTable<IEmployees>
+          data={employeeData}
+          columns={employeesColumns}
+          handleRowClick={handleRowClick}
+        />
+      </Card>
+    </div>
   );
 };
 

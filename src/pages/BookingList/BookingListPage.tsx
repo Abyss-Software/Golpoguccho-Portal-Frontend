@@ -1,4 +1,3 @@
-import BookingsTable from '@/components/bookingTable/BookingTable';
 import CommonDataTable from '@/components/dataTable/CommonDataTable';
 import { IBookings } from '@/interfaces/bookings.interface';
 import React from 'react';
@@ -12,14 +11,16 @@ const BookingListPage = () => {
     navigate(`/booking-details`);
   };
   return (
-    <Card withBorder shadow="lg">
-      <h1>List of Bookings</h1>
-      <CommonDataTable<IBookings>
-        data={data}
-        columns={columns}
-        handleRowClick={handleRowClick}
-      />
-    </Card>
+    <div>
+      <h1 className="text-2xl p-4">List of Bookings</h1>
+      <Card withBorder shadow="lg">
+        <CommonDataTable<IBookings>
+          data={data}
+          columns={columns}
+          handleRowClick={handleRowClick}
+        />
+      </Card>
+    </div>
   );
 };
 
