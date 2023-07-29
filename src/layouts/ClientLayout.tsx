@@ -19,18 +19,21 @@ export default function ClientLayout() {
   const [opened, setOpened] = useState(false);
   return (
     <AppShell
+      padding={0}
       styles={{
         main: {
           background:
             theme.colorScheme === 'dark'
               ? theme.colors.dark[8]
               : 'rgb(250 250 250)',
+          padding: '0px',
+          paddingTop: '70px',
         },
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       header={
-        <Header height={{ base: 50, md: 70 }} p="md" bg={'#009247'}>
+        <Header height={70} p="md" bg={'#009247'}>
           <div className="text-white flex items-center justify-between h-full">
             <Text>Golpoguccho Photography</Text>
             <Switch

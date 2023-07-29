@@ -117,7 +117,7 @@ const CreateBookingPage = () => {
         </div>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex-1 space-y-4 overflow-y-scroll px-6 md:px-20 md:py-5"
+          className="flex-1 space-y-4 overflow-y-scroll px-6 md:px-20 py-5"
         >
           <div
             style={{

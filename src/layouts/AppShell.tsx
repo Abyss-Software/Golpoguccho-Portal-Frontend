@@ -38,12 +38,18 @@ export default function AdminLayout() {
           hiddenBreakpoint="sm"
           hidden={!opened}
           width={{ sm: 200, lg: 250 }}
+          style={{ paddingTop: '1rem' }}
         >
           <Sidenav setOpened={handlenavbarToggle} />
         </Navbar>
       }
       header={
-        <Header height={{ base: 50, md: 70 }} p="md" bg={'#009247'}>
+        <Header
+          height={{ base: 50, md: 70 }}
+          p="md"
+          bg={'#009247'}
+          withBorder={false}
+        >
           <div className="text-white flex items-center justify-between h-full">
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger

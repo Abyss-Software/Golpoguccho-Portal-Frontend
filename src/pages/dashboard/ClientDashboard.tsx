@@ -18,7 +18,7 @@ const ClientDashboard = () => {
             />
           </div>
         ) : (
-          <div className="md:pt-10 text-center">
+          <div className="py-5 px-5 md:py-10 text-center space-y-2">
             <h2>Previous Bookings</h2>
             <div className="md:px-10 overflow-auto text-start">
               <PreviousBookings />
