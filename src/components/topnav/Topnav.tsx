@@ -3,6 +3,7 @@ import Menu5LineIcon from 'remixicon-react/Menu5LineIcon';
 import MoonClearLineIcon from 'remixicon-react/MoonClearLineIcon';
 import SunLineIcon from 'remixicon-react/SunLineIcon';
 import { ThemeContext } from '../../contexts/ThemeContext';
+import { Avatar } from '@mantine/core';
 
 interface TopnavProps {
   sidebarEnabled?: boolean;

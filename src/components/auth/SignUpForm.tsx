@@ -2,10 +2,15 @@ import { Button, PasswordInput, TextInput } from '@mantine/core';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { ISignupPayload } from '@/interfaces/auth.interface';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LockPasswordLineIcon from 'remixicon-react/LockPasswordLineIcon';
 import MailLineIcon from 'remixicon-react/MailLineIcon';
 import PersonIcon from 'remixicon-react/User6LineIcon';
+import useAuthAction from '@/hooks/useAuthAction';
+import { useAuthStore } from '@/contexts/authContext';
+import { notifications } from '@mantine/notifications';
+import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
+import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
 
 const SignUpForm = () => {
   const {
@@ -14,8 +19,31 @@ const SignUpForm = () => {
     formState: { errors },
   } = useForm<ISignupPayload>();
 
+  const { signupMutation } = useAuthAction(useAuthStore());
+  const navigate = useNavigate();
   const onSubmit: SubmitHandler<ISignupPayload> = (data) => {
-    console.log(data);
+    signupMutation.mutate(data, {
+      onSuccess: () => {
+        navigate('/');
+        notifications.update({
+          id: 'signup',
+          color: 'green',
+          title: 'Signup success',
+          message: 'Please log in to enter the system',
+          icon: <CheckIcon size="2rem" />,
+        });
+      },
+      onError: (error: any) => {
+        console.log(error);
+        notifications.update({
+          id: 'signup',
+          color: 'red',
+          title: 'Signup failed',
+          message: error?.response?.data?.message || 'Something went wrong',
+          icon: <ErrorIcon size="2rem" />,
+        });
+      },
+    });
   };
 
   return (
@@ -76,7 +104,7 @@ const SignUpForm = () => {
         Already have an account?{' '}
         <Link
           className="text-primaryColor hover:underline hover:underline-offset-4"
-          to="/auth"
+          to="/"
         >
           Login
         </Link>

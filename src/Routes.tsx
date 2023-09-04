@@ -3,6 +3,7 @@ import {
   RouterProvider,
   Routes,
   createBrowserRouter,
+  Navigate,
 } from 'react-router-dom';
 import ClientLayout from './layouts/ClientLayout';
 import LoginPage from './pages/Auth/LoginPage';
@@ -15,15 +16,23 @@ import BookingListPage from './pages/BookingList/BookingListPage';
 import EmployeeDashboard from './pages/dashboard/EmployeeDashboard';
 import EventTypesPage from './pages/EventTypes/EventTypesPage';
 import EmployeeListPage from './pages/Employees/EmployeeListPage';
+import PromoCodesPage from './pages/PromoCodes/PromoCodesPage';
+import AuthGuard from './components/guard/AuthGuard';
+import { UserRoles } from './constants/userRoles';
 
 export const router = createBrowserRouter([
   {
-    path: '/auth',
+    path: '/',
     element: <LoginPage />,
   },
+
   {
     path: '/client',
-    element: <ClientLayout />,
+    element: (
+      <AuthGuard allowedRoles={[UserRoles.CLIENT]}>
+        <ClientLayout />
+      </AuthGuard>
+    ),
     children: [
       {
         path: '',
@@ -41,7 +50,11 @@ export const router = createBrowserRouter([
   },
   {
     path: '/emp',
-    element: <ClientLayout />,
+    element: (
+      <AuthGuard allowedRoles={[UserRoles.EMPLOYEE]}>
+        <ClientLayout />
+      </AuthGuard>
+    ),
     children: [
       {
         path: '',
@@ -50,9 +63,17 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/',
-    element: <AdminLayout />,
+    path: '/admin',
+    element: (
+      <AuthGuard allowedRoles={[UserRoles.ADMIN]}>
+        <AdminLayout />
+      </AuthGuard>
+    ),
     children: [
+      {
+        path: '',
+        element: <Navigate to="/admin/dashboard" />,
+      },
       {
         path: 'dashboard',
         element: <Dashboard />,
@@ -72,6 +93,10 @@ export const router = createBrowserRouter([
       {
         path: 'employees',
         element: <EmployeeListPage />,
+      },
+      {
+        path: 'promos',
+        element: <PromoCodesPage />,
       },
     ],
   },

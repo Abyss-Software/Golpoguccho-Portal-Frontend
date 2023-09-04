@@ -1,6 +1,6 @@
-import { Badge, Card, Group, Image, Text } from "@mantine/core";
+import { Badge, Card, Group, Image, Text } from '@mantine/core';
 
-import { IEventType } from "@/interfaces/packages.interface";
+import { IEventType } from '@/interfaces/packages.interface';
 
 type EventTypesCardProps = {
   eventType: IEventType;
@@ -8,12 +8,12 @@ type EventTypesCardProps = {
 
 const EventTypesCard = ({ eventType }: EventTypesCardProps) => {
   return (
-    <Card shadow="sm" padding="xl" radius="md" withBorder>
+    <Card shadow="sm" padding="xl" radius="md" withBorder className="h-full">
       <Card.Section>
         <Image src={eventType.image} height={200} alt="Norway" />
       </Card.Section>
       <Group position="apart" mt="md" mb="xs">
-        <Text weight={500} size={"lg"}>
+        <Text weight={500} size={'lg'}>
           {eventType.title}
         </Text>
         <Badge color="green" variant="light">

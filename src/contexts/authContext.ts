@@ -1,29 +1,35 @@
-// import { create, useStore } from 'zustand'
+import { UserRoles } from '@/constants/userRoles';
+import storageUtil from '@/utils/storage.util';
+import { create } from 'zustand';
 
-// type IAuthStore = {
-// 	name: string
-// 	role: string
-// 	token: string
-// }
+interface UserInfo {
+  id: string;
+  name: string;
+  role: UserRoles;
+}
 
-// type IAuthStoreActions = {
-// 	setToken: (token: string) => void
-// 	setName: (name: string) => void
-// 	setRole: (role: string) => void
-// }
+export type IAuthStore = {
+  userInfo: UserInfo | null;
+  isLoggedIn: boolean;
 
-// export const useAuthStore = create<IAuthStore & IAuthStoreActions>( () => ({
-// 	name: '',
-// 	role: '',
-// 	token: '',
+  setUserInfo: (userInfo: UserInfo | null) => void;
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
+};
 
-// 	setName: (name: string) => {
-// 		useAuthStore.setState({ name })
-// 	},
-// 	setRole: (role: string) => {
-// 		useAuthStore.setState({ role })
-// 	},
-// 	setToken: (token: string) => {
-// 		useAuthStore.setState({ token })
-// 	}
-// }));
+export const useAuthStore = create<IAuthStore>(() => ({
+  userInfo: storageUtil.getAuthData()?.user || {
+    id: '',
+    name: '',
+    role: '',
+  },
+
+  isLoggedIn: storageUtil.getAuthData() ? true : false,
+
+  setUserInfo: (userInfo: UserInfo | null) => {
+    useAuthStore.setState({ userInfo });
+  },
+
+  setIsLoggedIn: (isLoggedIn: boolean) => {
+    useAuthStore.setState({ isLoggedIn });
+  },
+}));

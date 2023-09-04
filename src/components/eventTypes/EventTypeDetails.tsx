@@ -1,24 +1,37 @@
-import { Accordion, Button, Image, Modal } from "@mantine/core";
-import { IEventType, IPackage } from "@/interfaces/packages.interface";
+import { Accordion, Button, Image, Modal } from '@mantine/core';
+import { IEventType, IPackage } from '@/interfaces/packages.interface';
 
-import Imgae2LineIcon from "remixicon-react/Image2LineIcon";
+import Imgae2LineIcon from 'remixicon-react/Image2LineIcon';
 
 type EventTypeDetailsProps = {
   selectedEvent: IEventType;
   onCreatePackageClick: () => void;
+  onEditClick: (selectedEvent: IEventType) => void;
+  onDeleteClick: (selectedEvent: IEventType) => void;
 };
 
 function EventTypeDetails({
   selectedEvent,
   onCreatePackageClick,
+  onEditClick,
+  onDeleteClick,
 }: EventTypeDetailsProps) {
   return (
     <div className="space-y-4">
       <div className="space-x-4">
-        <Button uppercase variant="outline">
+        <Button
+          uppercase
+          variant="outline"
+          onClick={() => onEditClick(selectedEvent)}
+        >
           Edit
         </Button>
-        <Button uppercase variant="outline" color="red">
+        <Button
+          uppercase
+          variant="outline"
+          color="red"
+          onClick={() => onDeleteClick(selectedEvent)}
+        >
           Delete
         </Button>
       </div>
@@ -48,7 +61,7 @@ function EventTypeDetails({
                     <h4 className="text-xl font-bold">
                       <span className="text-primaryColor">
                         Package {index + 1}:
-                      </span>{" "}
+                      </span>{' '}
                       {pkg.title}
                     </h4>
                   </Accordion.Control>
@@ -59,7 +72,7 @@ function EventTypeDetails({
                         <span className="font-bold">Package:</span> {pkg.title}
                       </p>
                       <p>
-                        <span className="font-bold">Description:</span>{" "}
+                        <span className="font-bold">Description:</span>{' '}
                         {pkg.description}
                       </p>
                       <p>

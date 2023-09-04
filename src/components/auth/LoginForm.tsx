@@ -1,23 +1,36 @@
 import { Button, Checkbox, PasswordInput, TextInput } from '@mantine/core';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-
 import { ILoginPayload } from '@/interfaces/auth.interface';
 import LockPasswordLineIcon from 'remixicon-react/LockPasswordLineIcon';
 import MailLineIcon from 'remixicon-react/MailLineIcon';
+import useAuthAction from '@/hooks/useAuthAction';
+import { useAuthStore } from '@/contexts/authContext';
+import { useEffect } from 'react';
+import { UserRoles } from '@/constants/userRoles';
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-
     formState: { errors },
   } = useForm<ILoginPayload>();
+
+  const { signinMutation } = useAuthAction(useAuthStore());
+  const userInfo = useAuthStore((state) => state.userInfo);
+
   const onSubmit: SubmitHandler<ILoginPayload> = (data) => {
-    console.log(data);
-    navigate('/dashboard');
+    signinMutation.mutate(data);
   };
+
+  useEffect(() => {
+    if (userInfo) {
+      userInfo.role === UserRoles.ADMIN && navigate('/admin');
+      userInfo.role === UserRoles.CLIENT && navigate('/client');
+      userInfo.role === UserRoles.EMPLOYEE && navigate('/emp');
+    }
+  }, [userInfo]);
 
   return (
     <form
@@ -58,7 +71,7 @@ const LoginForm = () => {
         <Checkbox label="Remember Me" {...register('rememberMe')} />
         <Link
           className="no-underline text-primaryColor hover:underline hover:underline-offset-4"
-          to="/auth/forgot-password"
+          to="/forgot-password"
         >
           Forgot Password?
         </Link>
@@ -72,7 +85,7 @@ const LoginForm = () => {
         Don't have an account?{' '}
         <Link
           className="no-underline text-primaryColor hover:underline hover:underline-offset-4"
-          to="/auth?register=true"
+          to="/?register=true"
         >
           Register
         </Link>

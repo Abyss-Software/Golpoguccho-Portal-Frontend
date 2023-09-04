@@ -91,6 +91,9 @@ const CreateBookingPage = () => {
     console.log(data);
   };
 
+  console.log(methods.getValues());
+  console.log(methods.formState.errors);
+
   return (
     <FormProvider {...methods}>
       <div className="h-full flex">
