@@ -5,7 +5,6 @@ import EventTypeCreateFrom, {
 import EventTypeDetails from '@/components/eventTypes/EventTypeDetails';
 import EventTypesCard from '@/components/eventTypes/EventTypesCard';
 import { IEventType } from '@/interfaces/packages.interface';
-import PackageCreateFrom from '@/components/package/PackageCreateFrom';
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
 import { useContext } from 'react';
@@ -15,6 +14,7 @@ import { notifications } from '@mantine/notifications';
 import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
 import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
 import { modals } from '@mantine/modals';
+import PackageCreateForm from '@/components/package/PackageCreateForm';
 
 const EventTypesPage = () => {
   const [openedDrawer, setDrawer] = useDisclosure(false);
@@ -38,11 +38,17 @@ const EventTypesPage = () => {
   };
 
   const handleCreatePackageClick = () => {
-    setDrawer.close();
+    modals.open({
+      title: 'Package',
+      children: <PackageCreateForm />,
+    });
   };
 
-  const { createEventTypeMutation, updateEventTypeMutation } =
-    useEventTypeAction();
+  const {
+    createEventTypeMutation,
+    updateEventTypeMutation,
+    deleteEventTypeMutation,
+  } = useEventTypeAction();
 
   const onEventTypeCreate = (data: EventTypeCreate) => {
     createEventTypeMutation.mutate(data, {
@@ -81,6 +87,7 @@ const EventTypesPage = () => {
             icon: <CheckIcon size="2rem" />,
           });
           modals.closeAll();
+          setDrawer.close();
         },
         onError: (error: any) => {
           notifications.update({
@@ -95,7 +102,32 @@ const EventTypesPage = () => {
     );
   };
 
-  const onEventTypeUpdateClick = (selectedEvent: IEventType) => {
+  const onEventTypeDelete = (id: string) => {
+    deleteEventTypeMutation.mutate(id, {
+      onSuccess: () => {
+        notifications.update({
+          id: 'eventTypeDelete',
+          color: 'green',
+          title: 'Success',
+          message: 'Event Type Deleted',
+          icon: <CheckIcon size="2rem" />,
+        });
+        modals.closeAll();
+        setDrawer.close();
+      },
+      onError: (error: any) => {
+        notifications.update({
+          id: 'eventTypeDelete',
+          color: 'red',
+          title: 'Failed',
+          message: error?.response?.data?.message || 'Something went wrong',
+          icon: <ErrorIcon size="2rem" />,
+        });
+      },
+    });
+  };
+
+  const onUpdateClick = (selectedEvent: IEventType) => {
     modals.open({
       title: 'Update Event Type',
       children: (
@@ -108,15 +140,15 @@ const EventTypesPage = () => {
     });
   };
 
-  const onDelete = () =>
+  const onDeleteClick = (selectedEvent: IEventType) =>
     modals.openConfirmModal({
       title: 'Please confirm your action',
       children: (
         <Text size="sm">Are you sure you want to delete this event type?</Text>
       ),
       labels: { confirm: 'Confirm', cancel: 'Cancel' },
-      onCancel: () => console.log('Cancel'),
-      onConfirm: () => console.log('Confirmed'),
+      onCancel: () => {},
+      onConfirm: () => onEventTypeDelete(selectedEvent.id!),
     });
 
   return (
@@ -141,8 +173,8 @@ const EventTypesPage = () => {
           <EventTypeDetails
             selectedEvent={selectedEvent}
             onCreatePackageClick={handleCreatePackageClick}
-            onEditClick={onEventTypeUpdateClick}
-            onDeleteClick={onDelete}
+            onEditClick={onUpdateClick}
+            onDeleteClick={onDeleteClick}
           />
         )}
       </Drawer>

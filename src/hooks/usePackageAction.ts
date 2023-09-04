@@ -1,14 +1,14 @@
-import { eventTypeApi } from '@/api';
+import { packageApi } from '@/api';
 import { notifications } from '@mantine/notifications';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-function useEventTypeAction() {
+function usePackageAction() {
   const queryClient = useQueryClient();
-  const createEventTypeMutation = useMutation({
-    mutationFn: eventTypeApi.createEventType,
+  const createPackageMutation = useMutation({
+    mutationFn: packageApi.createPackage,
     onMutate: () => {
       notifications.show({
-        id: 'eventTypeCreation',
+        id: 'packageCreation',
         loading: true,
         title: 'Creating new event type...',
         message: 'Please wait',
@@ -21,17 +21,17 @@ function useEventTypeAction() {
     },
   });
 
-  const fetchEventTypes = () =>
+  const fetchPackages = () =>
     useQuery({
       queryKey: ['event-types'],
-      queryFn: async () => await eventTypeApi.getEventTypes(),
+      queryFn: async () => await packageApi.getPackages(),
     });
 
-  const updateEventTypeMutation = useMutation({
-    mutationFn: eventTypeApi.updateEventType,
+  const updatePackageMutation = useMutation({
+    mutationFn: packageApi.updatePackage,
     onMutate: () => {
       notifications.show({
-        id: 'eventTypeUpdate',
+        id: 'packageUpdate',
         loading: true,
         title: 'Updating event type...',
         message: 'Please wait',
@@ -44,11 +44,11 @@ function useEventTypeAction() {
     },
   });
 
-  const deleteEventTypeMutation = useMutation({
-    mutationFn: eventTypeApi.deleteEventType,
+  const deletePackageMutation = useMutation({
+    mutationFn: packageApi.deletePackage,
     onMutate: () => {
       notifications.show({
-        id: 'eventTypeDelete',
+        id: 'packageDelete',
         loading: true,
         title: 'Deleting event type...',
         message: 'Please wait',
@@ -62,11 +62,11 @@ function useEventTypeAction() {
   });
 
   return {
-    createEventTypeMutation,
-    fetchEventTypes,
-    updateEventTypeMutation,
-    deleteEventTypeMutation,
+    createPackageMutation,
+    fetchPackages,
+    updatePackageMutation,
+    deletePackageMutation,
   };
 }
 
-export default useEventTypeAction;
+export default usePackageAction;
