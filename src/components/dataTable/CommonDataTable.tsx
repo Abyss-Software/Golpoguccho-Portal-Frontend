@@ -12,8 +12,8 @@ function CommonDataTable<T>({
 }: {
   data: T[];
   columns: any;
-  handleRowClick: (row: T) => void;
-  title?: string;
+  handleRowClick?: (row: T) => void;
+  title?: any;
 }) {
   const { darkMode } = useContext(ThemeContext);
   const [searchText, setSearchText] = useState('');

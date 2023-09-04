@@ -5,12 +5,12 @@ import {
   Text,
   TextInput,
   Textarea,
-} from "@mantine/core";
+} from '@mantine/core';
 
-import { Dropzone } from "@mantine/dropzone";
-import { PackageCreateValidatorSchema } from "@/constants/validation/PackageCreateValidatorSchema";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Dropzone } from '@mantine/dropzone';
+import { PackageCreateValidatorSchema } from '@/constants/validation/PackageCreateValidatorSchema';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type PackageCreate = {
   title: string;
@@ -19,7 +19,7 @@ type PackageCreate = {
   price: number;
 };
 
-function PackageCreateFrom() {
+function PackageCreateForm() {
   const {
     register,
     handleSubmit,
@@ -31,7 +31,7 @@ function PackageCreateFrom() {
   });
 
   const onFileDrop = (files: File[]) => {
-    setValue("image", files[0]);
+    setValue('image', files[0]);
   };
 
   const onSubmit = (data: PackageCreate) => {
@@ -40,14 +40,14 @@ function PackageCreateFrom() {
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-      {!watch("image") && (
+      {!watch('image') && (
         <Dropzone
           onDrop={onFileDrop}
-          onReject={() => alert("Invalid file")}
+          onReject={() => alert('Invalid file')}
           maxSize={3 * 1024 ** 2}
-          accept={["image/png", "image/jpeg", "image/jpg"]}
+          accept={['image/png', 'image/jpeg', 'image/jpg']}
           maxFiles={1}
-          className={errors?.image && "border-red-500"}
+          className={errors?.image && 'border-red-500'}
         >
           <div className="flex flex-col items-center justify-center">
             <Text size="lg" color="dimmed">
@@ -60,10 +60,10 @@ function PackageCreateFrom() {
         </Dropzone>
       )}
 
-      {watch("image") && (
+      {watch('image') && (
         <div className="relative">
           <img
-            src={URL.createObjectURL(watch("image")!)}
+            src={URL.createObjectURL(watch('image')!)}
             className="w-full h-64 object-cover"
             alt=""
           />
@@ -72,15 +72,15 @@ function PackageCreateFrom() {
             color="red"
             className="absolute top-2 right-2"
             variant="filled"
-            radius={"xl"}
-            size={"lg"}
-            onClick={() => setValue("image", undefined)}
+            radius={'xl'}
+            size={'lg'}
+            onClick={() => setValue('image', undefined)}
           />
         </div>
       )}
 
       <TextInput
-        {...register("title")}
+        {...register('title')}
         size="md"
         label="Title"
         placeholder="Enter Package Title"
@@ -88,18 +88,18 @@ function PackageCreateFrom() {
       />
 
       <NumberInput
-        {...register("price")}
+        {...register('price')}
         size="md"
         min={0}
         max={100000}
         label="Price"
         placeholder="Enter Package Price"
         error={errors?.price && errors?.price?.message}
-        onChange={(value) => setValue("price", value ? value : 0)}
+        onChange={(value) => setValue('price', value ? value : 0)}
       />
 
       <Textarea
-        {...register("description")}
+        {...register('description')}
         size="md"
         label="Description"
         placeholder="Enter Package Description"
@@ -111,4 +111,4 @@ function PackageCreateFrom() {
   );
 }
 
-export default PackageCreateFrom;
+export default PackageCreateForm;

@@ -4,16 +4,18 @@ import DashboardIcon from 'remixicon-react/Dashboard2LineIcon';
 import BookingIcon from 'remixicon-react/CalendarEventLineIcon';
 import EmployeeIcon from 'remixicon-react/TeamLineIcon';
 import PackageIcon from 'remixicon-react/AddBoxLineIcon';
+import PromoIcon from 'remixicon-react/Coupon2LineIcon';
 
 const data = [
-  { label: 'Dashboard', nav: '/dashboard', icon: <DashboardIcon /> },
+  { label: 'Dashboard', nav: '/admin/dashboard', icon: <DashboardIcon /> },
   {
     label: 'Bookings',
-    nav: '/Bookings',
+    nav: '/admin/Bookings',
     icon: <BookingIcon />,
   },
-  { label: 'Employees', nav: '/employees', icon: <EmployeeIcon /> },
-  { label: 'Packages', nav: '/packages', icon: <PackageIcon /> },
+  { label: 'Employees', nav: '/admin/employees', icon: <EmployeeIcon /> },
+  { label: 'Packages', nav: '/admin/packages', icon: <PackageIcon /> },
+  { label: 'Promo Codes', nav: '/admin/promos', icon: <PromoIcon /> },
 ];
 
 const Sidenav = ({ setOpened }: any) => {

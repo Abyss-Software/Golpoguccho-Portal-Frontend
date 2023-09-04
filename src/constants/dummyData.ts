@@ -3,6 +3,7 @@ import { IEvents } from '@/interfaces/createBooking.interface';
 import { IEventType } from '@/interfaces/packages.interface';
 
 import { IEmployees } from '@/interfaces/employees.interface';
+import { IPromoCode } from '@/interfaces/promoCodes.interface';
 export const columns = [
   {
     name: 'Title',
@@ -681,5 +682,104 @@ export const employeeData: IEmployees[] = [
     contactPrimary: '333-444-5555',
     position: 'Operations Manager',
     role: 'Operations',
+  },
+];
+
+export const promoCodeData: IPromoCode[] = [
+  {
+    code: 'CODE1',
+    discountPercentage: '10%',
+    maxUsage: '100',
+    expiryDate: '2023-12-31',
+    status: 'Active',
+    createdAt: '2023-08-15',
+  },
+  {
+    code: 'CODE2',
+    discountPercentage: '20%',
+    maxUsage: '50',
+    expiryDate: '2023-09-30',
+    status: 'Active',
+    createdAt: '2023-08-15',
+  },
+  {
+    code: 'CODE3',
+    discountPercentage: '15%',
+    maxUsage: '200',
+    expiryDate: '2023-11-15',
+    status: 'Active',
+    createdAt: '2023-08-15',
+  },
+  {
+    code: 'CODE4',
+    discountPercentage: '25%',
+    maxUsage: '75',
+    expiryDate: '2023-10-31',
+    status: 'Active',
+    createdAt: '2023-08-15',
+  },
+  {
+    code: 'CODE5',
+    discountPercentage: '30%',
+    maxUsage: '30',
+    expiryDate: '2023-12-15',
+    status: 'Active',
+    createdAt: '2023-08-15',
+  },
+  {
+    code: 'CODE6',
+    discountPercentage: '5%',
+    maxUsage: '500',
+    expiryDate: '2023-11-30',
+    status: 'Active',
+    createdAt: '2023-08-15',
+  },
+  {
+    code: 'CODE7',
+    discountPercentage: '12%',
+    maxUsage: '150',
+    expiryDate: '2023-10-15',
+    status: 'Active',
+    createdAt: '2023-08-15',
+  },
+  {
+    code: 'CODE8',
+    discountPercentage: '18%',
+    maxUsage: '80',
+    expiryDate: '2023-09-15',
+    status: 'Active',
+    createdAt: '2023-08-15',
+  },
+  {
+    code: 'CODE9',
+    discountPercentage: '8%',
+    maxUsage: '250',
+    expiryDate: '2023-11-01',
+    status: 'Active',
+    createdAt: '2023-08-15',
+  },
+  {
+    code: 'CODE10',
+    discountPercentage: '22%',
+    maxUsage: '120',
+    expiryDate: '2023-10-31',
+    status: 'Active',
+    createdAt: '2023-08-15',
+  },
+  {
+    code: 'CODE11',
+    discountPercentage: '17%',
+    maxUsage: '180',
+    expiryDate: '2023-12-31',
+    status: 'Active',
+    createdAt: '2023-08-15',
+  },
+  {
+    code: 'CODE12',
+    discountPercentage: '14%',
+    maxUsage: '100',
+    expiryDate: '2023-09-30',
+    status: 'Active',
+    createdAt: '2023-08-15',
   },
 ];

@@ -9,6 +9,7 @@ import { router } from './Routes';
 import { BrowserRouter, RouterProvider } from 'react-router-dom';
 import { ThemeContext } from './contexts/ThemeContext';
 import { useContext } from 'react';
+import { ModalsProvider } from '@mantine/modals';
 
 function App() {
   const { darkMode, toggleDarkMode } = useContext(ThemeContext);
@@ -33,7 +34,9 @@ function App() {
         primaryColor: 'brand',
       }}
     >
-      <RouterProvider router={router} />
+      <ModalsProvider>
+        <RouterProvider router={router} />
+      </ModalsProvider>
     </MantineProvider>
   );
 }
