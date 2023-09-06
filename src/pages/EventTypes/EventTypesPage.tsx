@@ -20,13 +20,16 @@ const EventTypesPage = () => {
   const [openedDrawer, setDrawer] = useDisclosure(false);
   const { darkMode } = useContext(ThemeContext);
 
-  const { fetchEventTypes } = useEventTypeAction();
+  const { fetchEventTypes, fetchEventTypeById } = useEventTypeAction();
   const { data: eventTypes } = fetchEventTypes();
 
-  const [selectedEvent, setSelectedEvent] = useState<IEventType>();
+  const [selectedEventId, setSelectedEventId] = useState<string>();
+
+  const { data: selectedEvent } = fetchEventTypeById(selectedEventId!);
+  console.log(selectedEvent);
 
   const handleEventTypeClick = (eventType: IEventType) => {
-    setSelectedEvent(eventType);
+    setSelectedEventId(eventType.id);
     setDrawer.open();
   };
 
@@ -34,13 +37,6 @@ const EventTypesPage = () => {
     modals.open({
       title: 'Create Event Type',
       children: <EventTypeCreateFrom onEventTypeCreate={onEventTypeCreate} />,
-    });
-  };
-
-  const handleCreatePackageClick = () => {
-    modals.open({
-      title: 'Package',
-      children: <PackageCreateForm />,
     });
   };
 
@@ -159,7 +155,7 @@ const EventTypesPage = () => {
         }}
         title={
           <p className="text-xl font-semibold">
-            Event Type: {selectedEvent?.title}
+            Event Type: {selectedEvent?.body?.title}
           </p>
         }
         position="right"
@@ -171,8 +167,7 @@ const EventTypesPage = () => {
       >
         {selectedEvent && (
           <EventTypeDetails
-            selectedEvent={selectedEvent}
-            onCreatePackageClick={handleCreatePackageClick}
+            selectedEvent={selectedEvent.body}
             onEditClick={onUpdateClick}
             onDeleteClick={onDeleteClick}
           />

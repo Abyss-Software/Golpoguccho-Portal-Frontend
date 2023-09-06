@@ -27,6 +27,13 @@ function useEventTypeAction() {
       queryFn: async () => await eventTypeApi.getEventTypes(),
     });
 
+  const fetchEventTypeById = (id: string) =>
+    useQuery({
+      queryKey: ['event-type', id],
+      queryFn: async () => await eventTypeApi.getEventTypeById(id),
+      enabled: !!id,
+    });
+
   const updateEventTypeMutation = useMutation({
     mutationFn: eventTypeApi.updateEventType,
     onMutate: () => {
@@ -64,6 +71,7 @@ function useEventTypeAction() {
   return {
     createEventTypeMutation,
     fetchEventTypes,
+    fetchEventTypeById,
     updateEventTypeMutation,
     deleteEventTypeMutation,
   };

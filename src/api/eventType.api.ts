@@ -15,6 +15,11 @@ export class EventTypeApi {
     return res.data;
   }
 
+  async getEventTypeById(id: string) {
+    const res = await httpClient.get('/packages/categories/' + id);
+    return res.data;
+  }
+
   async updateEventType(data: {
     id: string;
     title: string;

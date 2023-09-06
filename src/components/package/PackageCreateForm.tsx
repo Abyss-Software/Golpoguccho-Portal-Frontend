@@ -9,37 +9,66 @@ import {
 
 import { Dropzone } from '@mantine/dropzone';
 import { PackageCreateValidatorSchema } from '@/constants/validation/PackageCreateValidatorSchema';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-type PackageCreate = {
+export type PackageCreate = {
+  id?: string;
   title: string;
   description: string;
-  image?: File;
+  image?: string;
   price: number;
 };
 
-function PackageCreateForm() {
+function PackageCreateForm({
+  onPackageUpdate,
+  onPackageCreate,
+  isUpdate,
+  defaultValues,
+}: {
+  onPackageUpdate?: SubmitHandler<PackageCreate>;
+  onPackageCreate?: SubmitHandler<PackageCreate>;
+  isUpdate?: boolean;
+  defaultValues?: PackageCreate;
+}) {
   const {
     register,
     handleSubmit,
     setValue,
+    getValues,
     watch,
     formState: { errors },
   } = useForm<PackageCreate>({
     resolver: zodResolver(PackageCreateValidatorSchema),
+    defaultValues: defaultValues,
   });
 
-  const onFileDrop = (files: File[]) => {
-    setValue('image', files[0]);
+  const toBase64 = (file: File) => {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+    });
   };
 
-  const onSubmit = (data: PackageCreate) => {
-    console.log(data);
+  const onFileDrop = (files: File[]) => {
+    console.log(files[0]);
+    toBase64(files[0]).then((res: string) => setValue('image', res));
   };
+
+  const onSubmitClick = () => {
+    if (isUpdate) {
+      onPackageUpdate?.(getValues());
+    } else {
+      onPackageCreate?.(getValues());
+    }
+  };
+
+  console.log(getValues(), errors);
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="space-y-4" onSubmit={handleSubmit(onSubmitClick)}>
       {!watch('image') && (
         <Dropzone
           onDrop={onFileDrop}
@@ -63,7 +92,7 @@ function PackageCreateForm() {
       {watch('image') && (
         <div className="relative">
           <img
-            src={URL.createObjectURL(watch('image')!)}
+            src={watch('image')!}
             className="w-full h-64 object-cover"
             alt=""
           />

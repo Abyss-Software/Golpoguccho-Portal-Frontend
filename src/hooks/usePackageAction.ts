@@ -10,20 +10,20 @@ function usePackageAction() {
       notifications.show({
         id: 'packageCreation',
         loading: true,
-        title: 'Creating new event type...',
+        title: 'Creating new package...',
         message: 'Please wait',
         autoClose: false,
         withCloseButton: false,
       });
     },
     onSuccess: (res) => {
-      queryClient.invalidateQueries(['event-types']);
+      queryClient.invalidateQueries(['packages']);
     },
   });
 
   const fetchPackages = () =>
     useQuery({
-      queryKey: ['event-types'],
+      queryKey: ['packages'],
       queryFn: async () => await packageApi.getPackages(),
     });
 
@@ -33,14 +33,14 @@ function usePackageAction() {
       notifications.show({
         id: 'packageUpdate',
         loading: true,
-        title: 'Updating event type...',
+        title: 'Updating Package...',
         message: 'Please wait',
         autoClose: false,
         withCloseButton: false,
       });
     },
     onSuccess: (res) => {
-      queryClient.invalidateQueries(['event-types']);
+      queryClient.invalidateQueries(['packages']);
     },
   });
 
@@ -57,7 +57,7 @@ function usePackageAction() {
       });
     },
     onSuccess: (res) => {
-      queryClient.invalidateQueries(['event-types']);
+      queryClient.invalidateQueries(['packages']);
     },
   });
 
