@@ -1,18 +1,29 @@
-import { httpClient } from '@/utils/httpClient';
+import { IApiResponse } from "@/interfaces/response.interface";
+import { IPackage } from "@/interfaces/packages.interface";
+import { httpClient } from "@/utils/httpClient";
 
 export class PackageApi {
-  async createPackage(data: {
-    title: string;
-    description: string;
-    price: number;
-    image: string;
-  }) {
-    const res = await httpClient.post('/packages/create-package', data);
+  async createPackage(
+    eventTypeId: string,
+    data: {
+      title: string;
+      description: string;
+      price: number;
+      image?: string;
+    }
+  ) {
+    const res = await httpClient.post<IApiResponse<IPackage>>(
+      "/packages/create-package",
+      {
+        ...data,
+        categoryId: eventTypeId,
+      }
+    );
     return res.data;
   }
 
   async getPackages() {
-    const res = await httpClient.get('/packages');
+    const res = await httpClient.get<IApiResponse<IPackage[]>>("/packages");
     return res.data;
   }
 
@@ -21,14 +32,17 @@ export class PackageApi {
     title: string;
     description: string;
     price: number;
-    image: string;
+    image?: string;
   }) {
-    const res = await httpClient.patch(`/packages/${data.id}`, data);
+    const res = await httpClient.patch<IApiResponse<IPackage>>(
+      `/packages/${data.id}`,
+      data
+    );
     return res.data;
   }
 
   async deletePackage(id: string) {
-    const res = await httpClient.delete(`/packages/category/${id}`);
+    const res = await httpClient.delete(`/packages/${id}`);
     return res.data;
   }
 }

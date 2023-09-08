@@ -5,12 +5,13 @@ import {
   Text,
   TextInput,
   Textarea,
-} from '@mantine/core';
+} from "@mantine/core";
+import { SubmitHandler, useForm } from "react-hook-form";
 
-import { Dropzone } from '@mantine/dropzone';
-import { PackageCreateValidatorSchema } from '@/constants/validation/PackageCreateValidatorSchema';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { Dropzone } from "@mantine/dropzone";
+import { PackageCreateValidatorSchema } from "@/constants/validation/PackageCreateValidatorSchema";
+import { toBase64 } from "@/utils/common.util";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export type PackageCreate = {
   id?: string;
@@ -43,18 +44,8 @@ function PackageCreateForm({
     defaultValues: defaultValues,
   });
 
-  const toBase64 = (file: File) => {
-    return new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = reject;
-    });
-  };
-
-  const onFileDrop = (files: File[]) => {
-    console.log(files[0]);
-    toBase64(files[0]).then((res: string) => setValue('image', res));
+  const onFileDrop = async (files: File[]) => {
+    setValue("image", await toBase64(files[0]));
   };
 
   const onSubmitClick = () => {
@@ -65,18 +56,16 @@ function PackageCreateForm({
     }
   };
 
-  console.log(getValues(), errors);
-
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmitClick)}>
-      {!watch('image') && (
+      {!watch("image") && (
         <Dropzone
           onDrop={onFileDrop}
-          onReject={() => alert('Invalid file')}
+          onReject={() => alert("Invalid file")}
           maxSize={3 * 1024 ** 2}
-          accept={['image/png', 'image/jpeg', 'image/jpg']}
+          accept={["image/png", "image/jpeg", "image/jpg"]}
           maxFiles={1}
-          className={errors?.image && 'border-red-500'}
+          className={errors?.image && "border-red-500"}
         >
           <div className="flex flex-col items-center justify-center">
             <Text size="lg" color="dimmed">
@@ -89,10 +78,10 @@ function PackageCreateForm({
         </Dropzone>
       )}
 
-      {watch('image') && (
+      {watch("image") && (
         <div className="relative">
           <img
-            src={watch('image')!}
+            src={watch("image")!}
             className="w-full h-64 object-cover"
             alt=""
           />
@@ -101,15 +90,15 @@ function PackageCreateForm({
             color="red"
             className="absolute top-2 right-2"
             variant="filled"
-            radius={'xl'}
-            size={'lg'}
-            onClick={() => setValue('image', undefined)}
+            radius={"xl"}
+            size={"lg"}
+            onClick={() => setValue("image", undefined)}
           />
         </div>
       )}
 
       <TextInput
-        {...register('title')}
+        {...register("title")}
         size="md"
         label="Title"
         placeholder="Enter Package Title"
@@ -117,18 +106,18 @@ function PackageCreateForm({
       />
 
       <NumberInput
-        {...register('price')}
+        {...register("price", { valueAsNumber: true })}
         size="md"
         min={0}
         max={100000}
         label="Price"
         placeholder="Enter Package Price"
         error={errors?.price && errors?.price?.message}
-        onChange={(value) => setValue('price', value ? value : 0)}
+        onChange={(value) => setValue("price", value || 0)}
       />
 
       <Textarea
-        {...register('description')}
+        {...register("description")}
         size="md"
         label="Description"
         placeholder="Enter Package Description"

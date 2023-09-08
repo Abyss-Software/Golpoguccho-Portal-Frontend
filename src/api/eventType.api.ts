@@ -1,4 +1,6 @@
-import { httpClient } from '@/utils/httpClient';
+import { IApiResponse } from "@/interfaces/response.interface";
+import { IEventType } from "@/interfaces/packages.interface";
+import { httpClient } from "@/utils/httpClient";
 
 export class EventTypeApi {
   async createEventType(data: {
@@ -6,18 +8,25 @@ export class EventTypeApi {
     description: string;
     image: string;
   }) {
-    const res = await httpClient.post('/packages/create-category', data);
-    return res.data;
+    const res = await httpClient.post<IApiResponse<IEventType>>(
+      "/packages/create-category",
+      data
+    );
+    return res.data.body;
   }
 
   async getEventTypes() {
-    const res = await httpClient.get('/packages/categories');
-    return res.data;
+    const res = await httpClient.get<IApiResponse<IEventType[]>>(
+      "/packages/categories"
+    );
+    return res.data.body;
   }
 
   async getEventTypeById(id: string) {
-    const res = await httpClient.get('/packages/categories/' + id);
-    return res.data;
+    const res = await httpClient.get<IApiResponse<IEventType>>(
+      "/packages/categories/" + id
+    );
+    return res.data.body;
   }
 
   async updateEventType(data: {
@@ -26,8 +35,11 @@ export class EventTypeApi {
     description: string;
     image: string;
   }) {
-    const res = await httpClient.patch(`/packages/category/${data.id}`, data);
-    return res.data;
+    const res = await httpClient.patch<IApiResponse<IEventType>>(
+      `/packages/category/${data.id}`,
+      data
+    );
+    return res.data.body;
   }
 
   async deleteEventType(id: string) {

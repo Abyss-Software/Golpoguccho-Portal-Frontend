@@ -1,12 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
-import EventTypeCard from './EventTypeCard';
-import { Grid } from '@mantine/core';
-import { ICreateBooking } from '@/interfaces/createBooking.interface';
-import { IEventType } from '@/interfaces/packages.interface';
-import PackageCard from './PackageCard';
-import { eventTypesData } from '@/constants/dummyData';
-import { useFormContext } from 'react-hook-form';
+import EventTypeCard from "./EventTypeCard";
+import { Grid } from "@mantine/core";
+import { ICreateBooking } from "@/interfaces/createBooking.interface";
+import { IEventType } from "@/interfaces/packages.interface";
+import PackageCard from "./PackageCard";
+import useEventTypeAction from "@/hooks/useEventTypeAction";
+import { useFormContext } from "react-hook-form";
 
 type EventTypeSelectFormProps = {
   itemIndex: number;
@@ -15,6 +15,11 @@ type EventTypeSelectFormProps = {
 function EventTypeSelectForm({ itemIndex }: EventTypeSelectFormProps) {
   const eventTypeRef = useRef<HTMLDivElement>(null);
   const packageRef = useRef<HTMLDivElement>(null);
+
+  const { fetchEventTypes } = useEventTypeAction();
+
+  const { data: eventTypesData = [] } = fetchEventTypes();
+
   const {
     setValue,
     watch,
@@ -23,23 +28,23 @@ function EventTypeSelectForm({ itemIndex }: EventTypeSelectFormProps) {
 
   const handleEventTypeSelection = (eventType: IEventType) => {
     setValue(`events.${itemIndex}.eventTypeId`, eventType.id!);
-    setValue(`events.${itemIndex}.packageId`, '');
+    setValue(`events.${itemIndex}.packageId`, "");
   };
 
   useEffect(() => {
     eventTypeRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-      inline: 'center',
+      behavior: "smooth",
+      block: "start",
+      inline: "center",
     });
   }, []);
 
   useEffect(() => {
     if (watch(`events.${itemIndex}.eventTypeId`)) {
       packageRef.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'center',
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
       });
     }
   }, [itemIndex, watch(`events.${itemIndex}.eventTypeId`)]);

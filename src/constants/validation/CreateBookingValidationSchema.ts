@@ -26,9 +26,7 @@ export const CreateBookingValidationSchema = z.object({
       eventEndTime: z.string().nonempty("Event end time cannot be empty"),
       dayOrEvening: z.string().nonempty("Choose an option"),
       dhakaOrOutside: z.string().nonempty("Choose an option"),
-      numberOfGuests: z.string().refine((val) => parseInt(val) > 0, {
-        message: "Number of guests must be greater than 0",
-      }),
+      numberOfGuests: z.number().min(1, "Number of guests must be at least 1"),
       eventVenue: z.string().nonempty("Event venue cannot be empty"),
       eventVenueAddress: z
         .string()

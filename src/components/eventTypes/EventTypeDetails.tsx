@@ -1,81 +1,60 @@
-import { Accordion, Button, Image, Modal } from '@mantine/core';
-import { IEventType, IPackage } from '@/interfaces/packages.interface';
+import { Accordion, Button, Image, Modal, Text } from "@mantine/core";
+import { IEventType, IPackage } from "@/interfaces/packages.interface";
+import PackageCreateForm, { PackageCreate } from "../package/PackageCreateForm";
 
-import Imgae2LineIcon from 'remixicon-react/Image2LineIcon';
-import { modals } from '@mantine/modals';
-import PackageCreateForm, { PackageCreate } from '../package/PackageCreateForm';
-import usePackageAction from '@/hooks/usePackageAction';
-import { notifications } from '@mantine/notifications';
-import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
-import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
+import { AiOutlineCheckCircle as CheckIcon } from "react-icons/ai";
+import { BiErrorCircle as ErrorIcon } from "react-icons/bi";
+import Imgae2LineIcon from "remixicon-react/Image2LineIcon";
+import { modals } from "@mantine/modals";
+import { notifications } from "@mantine/notifications";
+import useEventTypeAction from "@/hooks/useEventTypeAction";
+import usePackageAction from "@/hooks/usePackageAction";
 
 type EventTypeDetailsProps = {
-  selectedEvent: IEventType;
-  onEditClick: (selectedEvent: IEventType) => void;
-  onDeleteClick: (selectedEvent: IEventType) => void;
+  eventTypeId: string;
+  onEventUpdate: (selectedEvent: IEventType) => any;
+  onEventDelete: (selectedEvent: IEventType) => any;
 };
 
-function EventTypeDetails({
-  selectedEvent,
-  onEditClick,
-  onDeleteClick,
+export default function EventTypeDetails({
+  eventTypeId,
+  onEventUpdate,
+  onEventDelete,
 }: EventTypeDetailsProps) {
+  const { fetchEventTypeById } = useEventTypeAction();
 
-  const handleCreatePackageClick = () => {
-    modals.open({
-      title: 'Package',
-      children: <PackageCreateForm />,
-    });
-  };
+  const {
+    createPackageMutation,
+    deletePackageMutation,
+    updatePackageMutation,
+  } = usePackageAction();
 
-
-  const { createPackageMutation, deletePackageMutation, updatePackageMutation} = usePackageAction()
+  const { data: eventType } = fetchEventTypeById(eventTypeId);
 
   const onPackageCreate = (data: PackageCreate) => {
-    createPackageMutation.mutate(data, {
-      onSuccess: () => {
-        notifications.update({
-          id: 'packageCreation',
-          color: 'green',
-          title: 'Success',
-          message: 'Package Created',
-          icon: <CheckIcon size="2rem" />,
-        });
-        modals.closeAll();
+    createPackageMutation.mutate(
+      {
+        ...data,
+        eventTypeId,
       },
-      onError: (error: any) => {
-        notifications.update({
-          id: 'eventTypeCreation',
-          color: 'red',
-          title: 'Failed',
-          message: error?.response?.data?.message || 'Something went wrong',
-          icon: <ErrorIcon size="2rem" />,
-        });
-      },
-    });
-  };
-
-  const onEventTypeUpdate = (data: EventTypeCreate) => {
-    updateEventTypeMutation.mutate(
-      { ...data, id: data.id! },
       {
         onSuccess: () => {
+          modals.closeAll();
+
           notifications.update({
-            id: 'eventTypeUpdate',
-            color: 'green',
-            title: 'Success',
-            message: 'Event Type Updated',
+            id: "packageCreation",
+            color: "green",
+            title: "Success",
+            message: "Package has been created",
             icon: <CheckIcon size="2rem" />,
           });
-          modals.closeAll();
-          setDrawer.close();
         },
         onError: (error: any) => {
           notifications.update({
-            id: 'eventTypeUpdate',
-            color: 'red',
-            title: 'Failed',
-            message: error?.response?.data?.message || 'Something went wrong',
+            id: "packageCreation",
+            color: "red",
+            title: "Failed",
+            message: error?.response?.data?.message || "Something went wrong",
             icon: <ErrorIcon size="2rem" />,
           });
         },
@@ -83,31 +62,94 @@ function EventTypeDetails({
     );
   };
 
-  const onEventTypeDelete = (id: string) => {
-    deleteEventTypeMutation.mutate(id, {
+  const onPackageUpdate = (data: PackageCreate) => {
+    updatePackageMutation.mutate(
+      { ...data, id: data.id! },
+      {
+        onSuccess: () => {
+          modals.closeAll();
+
+          notifications.update({
+            id: "packageUpdate",
+            color: "green",
+            title: "Success",
+            message: "Package has been updated",
+            icon: <CheckIcon size="2rem" />,
+          });
+        },
+        onError: (error: any) => {
+          notifications.update({
+            id: "packageUpdate",
+            color: "red",
+            title: "Failed",
+            message: error?.response?.data?.message || "Something went wrong",
+            icon: <ErrorIcon size="2rem" />,
+          });
+        },
+      }
+    );
+  };
+
+  const onPackageDelete = (id: string) => {
+    deletePackageMutation.mutate(id, {
       onSuccess: () => {
+        modals.closeAll();
+
         notifications.update({
-          id: 'eventTypeDelete',
-          color: 'green',
-          title: 'Success',
-          message: 'Event Type Deleted',
+          id: "packageDelete",
+          color: "green",
+          title: "Success",
+          message: "Package has been deleted",
           icon: <CheckIcon size="2rem" />,
         });
-        modals.closeAll();
-        setDrawer.close();
       },
       onError: (error: any) => {
         notifications.update({
-          id: 'eventTypeDelete',
-          color: 'red',
-          title: 'Failed',
-          message: error?.response?.data?.message || 'Something went wrong',
+          id: "packageDelete",
+          color: "red",
+          title: "Failed",
+          message: error?.response?.data?.message || "Something went wrong",
           icon: <ErrorIcon size="2rem" />,
         });
       },
     });
   };
 
+  const handleCreatePackageClick = () => {
+    modals.open({
+      title: "Create Package",
+      centered: true,
+      size: "lg",
+      children: <PackageCreateForm onPackageCreate={onPackageCreate} />,
+    });
+  };
+
+  const handlePackageUpdateClick = (pkg: IPackage) => {
+    modals.open({
+      title: "Update Package",
+      size: "lg",
+      centered: true,
+      children: (
+        <PackageCreateForm
+          onPackageUpdate={onPackageUpdate}
+          defaultValues={pkg}
+          isUpdate
+        />
+      ),
+    });
+  };
+
+  const handlePackageDeleteClick = (pkg: IPackage) =>
+    modals.openConfirmModal({
+      title: "Please confirm your action",
+      centered: true,
+      children: (
+        <Text size="sm">Are you sure you want to delete this package?</Text>
+      ),
+      labels: { confirm: "Confirm", cancel: "Cancel" },
+      confirmProps: { color: "red" },
+      onConfirm: () => onPackageDelete(pkg.id!),
+    });
 
   return (
     <div className="space-y-4">
@@ -115,7 +157,7 @@ function EventTypeDetails({
         <Button
           uppercase
           variant="outline"
-          onClick={() => onEditClick(selectedEvent)}
+          onClick={() => onEventUpdate(eventType!)}
         >
           Edit
         </Button>
@@ -123,18 +165,18 @@ function EventTypeDetails({
           uppercase
           variant="outline"
           color="red"
-          onClick={() => onDeleteClick(selectedEvent)}
+          onClick={() => onEventDelete(eventType!)}
         >
           Delete
         </Button>
       </div>
       <div className="flex flex-col gap-4">
-        <Image height={250} src={selectedEvent.image} alt="" />
+        <Image height={250} src={eventType?.image} alt="" />
 
         <div>
           <h1 className="text-lg font-bold py-2">Description:</h1>
 
-          <p>{selectedEvent.description}</p>
+          <p>{eventType?.description}</p>
         </div>
         <Accordion variant="contained" transitionDuration={500} multiple>
           <div className="flex justify-between items-center py-4">
@@ -148,7 +190,7 @@ function EventTypeDetails({
               Add New Package
             </Button>
           </div>
-          {selectedEvent?.packages?.map((pkg: IPackage, index: number) => (
+          {eventType?.packages?.map((pkg: IPackage, index: number) => (
             <div key={index}>
               <Accordion.Item value={index.toString()}>
                 <div key={index} className="p-2">
@@ -158,7 +200,7 @@ function EventTypeDetails({
                     <h4 className="text-xl font-bold">
                       <span className="text-primaryColor">
                         Package {index + 1}:
-                      </span>{' '}
+                      </span>{" "}
                       {pkg.title}
                     </h4>
                   </Accordion.Control>
@@ -169,7 +211,7 @@ function EventTypeDetails({
                         <span className="font-bold">Package:</span> {pkg.title}
                       </p>
                       <p>
-                        <span className="font-bold">Description:</span>{' '}
+                        <span className="font-bold">Description:</span>{" "}
                         {pkg.description}
                       </p>
                       <p>
@@ -179,7 +221,7 @@ function EventTypeDetails({
                         <Button
                           uppercase
                           variant="outline"
-                          onClick={() => onEditClick(selectedEvent)}
+                          onClick={() => handlePackageUpdateClick(pkg)}
                         >
                           Edit
                         </Button>
@@ -187,7 +229,7 @@ function EventTypeDetails({
                           uppercase
                           variant="outline"
                           color="red"
-                          onClick={() => onDeleteClick(selectedEvent)}
+                          onClick={() => handlePackageDeleteClick(pkg)}
                         >
                           Delete
                         </Button>
@@ -203,5 +245,3 @@ function EventTypeDetails({
     </div>
   );
 }
-
-export default EventTypeDetails;
