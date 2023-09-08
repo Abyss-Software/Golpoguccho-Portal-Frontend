@@ -1,7 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { eventTypeApi } from "@/api";
-import { notifications } from "@mantine/notifications";
+import { eventTypeApi } from '@/api';
+import { notifications } from '@mantine/notifications';
 
 function useEventTypeAction() {
   const queryClient = useQueryClient();
@@ -9,29 +9,30 @@ function useEventTypeAction() {
     mutationFn: eventTypeApi.createEventType,
     onMutate: () => {
       notifications.show({
-        id: "eventTypeCreation",
+        id: 'eventTypeCreation',
         loading: true,
-        title: "Creating new event type...",
-        message: "Please wait",
+        title: 'Creating new event type...',
+        message: 'Please wait',
         autoClose: false,
         withCloseButton: false,
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["event-types"]);
+      queryClient.invalidateQueries(['event-types']);
     },
   });
 
   const fetchEventTypes = () =>
     useQuery({
-      queryKey: ["event-types"],
+      queryKey: ['event-types'],
       queryFn: async () => await eventTypeApi.getEventTypes(),
+      cacheTime: 1000 * 60 * 10,
     });
 
   const fetchEventTypeById = (id: string) =>
     useQuery({
       enabled: !!id,
-      queryKey: ["event-type", id],
+      queryKey: ['event-type', id],
       queryFn: async () => await eventTypeApi.getEventTypeById(id),
     });
 
@@ -39,16 +40,16 @@ function useEventTypeAction() {
     mutationFn: eventTypeApi.updateEventType,
     onMutate: () => {
       notifications.show({
-        id: "eventTypeUpdate",
+        id: 'eventTypeUpdate',
         loading: true,
-        title: "Updating event type...",
-        message: "Please wait",
+        title: 'Updating event type...',
+        message: 'Please wait',
         autoClose: false,
         withCloseButton: false,
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["event-types"]);
+      queryClient.invalidateQueries(['event-types']);
     },
   });
 
@@ -56,16 +57,16 @@ function useEventTypeAction() {
     mutationFn: eventTypeApi.deleteEventType,
     onMutate: () => {
       notifications.show({
-        id: "eventTypeDelete",
+        id: 'eventTypeDelete',
         loading: true,
-        title: "Deleting event type...",
-        message: "Please wait",
+        title: 'Deleting event type...',
+        message: 'Please wait',
         autoClose: false,
         withCloseButton: false,
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["event-types"]);
+      queryClient.invalidateQueries(['event-types']);
     },
   });
 
