@@ -1,6 +1,18 @@
+import { AdminSpecific } from '@/components/bookingDetails/AdminSpecific';
+import { AfterPaymentClient } from '@/components/bookingDetails/AfterPaymentClient';
+import { UserRoles } from '@/constants/userRoles';
 import { ThemeContext } from '@/contexts/ThemeContext';
-import { Accordion } from '@mantine/core';
+import { useAuthStore } from '@/contexts/authContext';
+import {
+  Accordion,
+  Button,
+  Card,
+  Table,
+  TextInput,
+  Textarea,
+} from '@mantine/core';
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import CalendarEventLineIcon from 'remixicon-react/CalendarEventLineIcon';
 
 const bookingData = {
@@ -41,6 +53,23 @@ const bookingData = {
   contactSecondary: '0198765432',
   address: '5/7 Mirpur 12, Dhaka - 1207',
   city: 'Dhaka',
+
+  totalPayment: '100000',
+  advancePayment: '70000',
+  advancePaymentDate: '2021-07-30T18:00:00.000Z',
+  advancePaymentMethod: 'bKash',
+  advancePaymentTransactionId: '123456789',
+
+  duePayment: '30000',
+  duePaymentDate: '2021-07-30T18:00:00.000Z',
+  duePaymentMethod: 'bKash',
+  duePaymentTransactionId: '987654321',
+
+  promoCode: 'randomPromoCode',
+
+  images: 'https://randomImageLink.com/randomImageFolder/',
+  feedback: 'random feedback',
+  review: 'random review',
 };
 
 const BookingDetailsPage = () => {
@@ -56,6 +85,8 @@ const BookingDetailsPage = () => {
     );
 
   const { darkMode } = useContext(ThemeContext);
+
+  const { isLoggedIn, userInfo } = useAuthStore();
 
   return (
     <div className=" mx-auto p-4 lg:p-10">
@@ -178,48 +209,49 @@ const BookingDetailsPage = () => {
         <h3 className="text-2xl font-semibold text-primaryColor mb-2 uppercase">
           Payment Information
         </h3>
-        <div className="p-4 space-y-1">
-          <p>
-            <span className="font-bold">Full Name:</span>{' '}
-            {bookingData?.fullName}
-          </p>
-          <p>
-            <span className="font-bold">Email:</span> {bookingData?.email}
-          </p>
-          <p>
-            <span className="font-bold">Primary Contact:</span>{' '}
-            {bookingData?.contactPrimary}
-          </p>
-          <p>
-            <span className="font-bold">Secondary Contact:</span>{' '}
-            {bookingData?.contactSecondary}
-          </p>
-          <p>
-            <span className="font-bold">Address:</span> {bookingData?.address}
-          </p>
-          <p>
-            <span className="font-bold">City:</span> {bookingData?.city}
-          </p>
+        <div className="p-4 space-y-1 overflow-auto">
+          <Table
+            bg={'white'}
+            highlightOnHover
+            withBorder
+            verticalSpacing={16}
+            horizontalSpacing={20}
+          >
+            <thead>
+              <tr>
+                <th>Payment Type</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Method</th>
+                <th>Transaction ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Advance Payment</td>
+                <td>{bookingData?.advancePayment}</td>
+                <td>{bookingData?.advancePaymentDate}</td>
+                <td>{bookingData?.advancePaymentMethod}</td>
+                <td>{bookingData?.advancePaymentTransactionId}</td>
+              </tr>
+              <tr>
+                <td>Due Payment</td>
+                <td>{bookingData?.duePayment}</td>
+                <td>{bookingData?.duePaymentDate}</td>
+                <td>{bookingData?.duePaymentMethod}</td>
+                <td>{bookingData?.duePaymentTransactionId}</td>
+              </tr>
+            </tbody>
+          </Table>
         </div>
+        {userInfo?.role == UserRoles.CLIENT && bookingData?.duePayment && (
+          <AfterPaymentClient bookingData={bookingData} />
+        )}
+        {(userInfo?.role == UserRoles.ADMIN ||
+          userInfo?.role == UserRoles.MODERATOR) && (
+          <AdminSpecific bookingData={bookingData} />
+        )}
       </div>
-      {/* <div className="mt-4">
-        <p>
-          <span className="font-bold">Total Payment:</span>{' '}
-          {bookingData?.totalPayment}
-        </p>
-        {bookingData?.advancePayment && (
-          <p>
-            <span className="font-bold">Advance Payment:</span>{' '}
-            {bookingData?.advancePayment}
-          </p>
-        )}
-        {bookingData?.duePayment && (
-          <p>
-            <span className="font-bold">Due Payment:</span>{' '}
-            {bookingData?.duePayment}
-          </p>
-        )}
-      </div> */}
     </div>
   );
 };
