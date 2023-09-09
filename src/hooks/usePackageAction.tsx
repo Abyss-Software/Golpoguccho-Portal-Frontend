@@ -1,8 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { PackageCreate } from "@/components/package/PackageCreateForm";
-import { notifications } from "@mantine/notifications";
-import { packageApi } from "@/api";
+import { packageApi } from '@/api';
+import { PackageCreate } from '@/components/package/PackageCreateForm';
+import { notifications } from '@mantine/notifications';
 
 function usePackageAction() {
   const queryClient = useQueryClient();
@@ -12,22 +12,22 @@ function usePackageAction() {
       packageApi.createPackage(data.eventTypeId, data),
     onMutate: () => {
       notifications.show({
-        id: "packageCreation",
+        id: 'packageCreation',
         loading: true,
-        title: "Creating new package...",
-        message: "Please wait",
+        title: 'Creating new package...',
+        message: 'Please wait',
         autoClose: false,
         withCloseButton: false,
       });
     },
     onSuccess: (_, variables: { eventTypeId: string } & PackageCreate) => {
-      queryClient.invalidateQueries(["event-type", variables.eventTypeId]);
+      queryClient.invalidateQueries(['event-type', variables.eventTypeId]);
     },
   });
 
   const fetchPackages = () =>
     useQuery({
-      queryKey: ["packages"],
+      queryKey: ['packages'],
       queryFn: async () => await packageApi.getPackages(),
     });
 
@@ -35,16 +35,16 @@ function usePackageAction() {
     mutationFn: packageApi.updatePackage,
     onMutate: () => {
       notifications.show({
-        id: "packageUpdate",
+        id: 'packageUpdate',
         loading: true,
-        title: "Updating Package...",
-        message: "Please wait",
+        title: 'Updating Package...',
+        message: 'Please wait',
         autoClose: false,
         withCloseButton: false,
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["event-type"]);
+      queryClient.invalidateQueries(['event-type']);
     },
   });
 
@@ -52,16 +52,16 @@ function usePackageAction() {
     mutationFn: packageApi.deletePackage,
     onMutate: () => {
       notifications.show({
-        id: "packageDelete",
+        id: 'packageDelete',
         loading: true,
-        title: "Deleting event type...",
-        message: "Please wait",
+        title: 'Deleting event type...',
+        message: 'Please wait',
         autoClose: false,
         withCloseButton: false,
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["event-type"]);
+      queryClient.invalidateQueries(['event-type']);
     },
   });
 

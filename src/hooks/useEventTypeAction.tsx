@@ -26,7 +26,6 @@ function useEventTypeAction() {
     useQuery({
       queryKey: ['event-types'],
       queryFn: async () => await eventTypeApi.getEventTypes(),
-      cacheTime: 1000 * 60 * 10,
     });
 
   const fetchEventTypeById = (id: string) =>
