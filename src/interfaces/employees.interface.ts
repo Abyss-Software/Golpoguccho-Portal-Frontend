@@ -6,6 +6,21 @@ export interface IEmployees {
   role: string;
 }
 
+export interface ICreateEmployee {
+  name: string;
+  email: string;
+  password: string;
+  contactPrimary: string;
+  contactSecondary?: string;
+  address: string;
+  position: string;
+  role: string;
+  verificationType: string;
+  verificationId: string;
+  baseSalary?: number;
+  monthlySalary?: number;
+}
+
 export const employeesColumns = [
   {
     name: 'Fullname',

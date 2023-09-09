@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
 import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
-import { ISignupPayload } from '@/interfaces/auth.interface';
+import { ISignup } from '@/interfaces/auth.interface';
 import LockPasswordLineIcon from 'remixicon-react/LockPasswordLineIcon';
 import MailLineIcon from 'remixicon-react/MailLineIcon';
 import PersonIcon from 'remixicon-react/User6LineIcon';
@@ -17,11 +17,11 @@ const SignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ISignupPayload>();
+  } = useForm<ISignup>();
 
   const { signupMutation } = useAuthAction(useAuthStore());
   const navigate = useNavigate();
-  const onSubmit: SubmitHandler<ISignupPayload> = (data) => {
+  const onSubmit: SubmitHandler<ISignup> = (data) => {
     signupMutation.mutate(data, {
       onSuccess: () => {
         navigate('/');

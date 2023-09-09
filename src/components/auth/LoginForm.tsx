@@ -1,7 +1,13 @@
-import { Button, Checkbox, PasswordInput, TextInput } from '@mantine/core';
+import {
+  Button,
+  Checkbox,
+  PasswordInput,
+  SegmentedControl,
+  TextInput,
+} from '@mantine/core';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ILoginPayload } from '@/interfaces/auth.interface';
+import { ILogin } from '@/interfaces/auth.interface';
 import LockPasswordLineIcon from 'remixicon-react/LockPasswordLineIcon';
 import MailLineIcon from 'remixicon-react/MailLineIcon';
 import useAuthAction from '@/hooks/useAuthAction';
@@ -14,13 +20,14 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm<ILoginPayload>();
+  } = useForm<ILogin>();
 
   const { signinMutation } = useAuthAction(useAuthStore());
   const userInfo = useAuthStore((state) => state.userInfo);
 
-  const onSubmit: SubmitHandler<ILoginPayload> = (data) => {
+  const onSubmit: SubmitHandler<ILogin> = (data) => {
     signinMutation.mutate(data);
   };
 
@@ -37,6 +44,18 @@ const LoginForm = () => {
       className="w-full flex flex-col gap-3"
       onSubmit={handleSubmit(onSubmit)}
     >
+      <SegmentedControl
+        fullWidth
+        color="green"
+        data={[
+          { label: 'Client', value: UserRoles.CLIENT },
+          { label: 'Employee', value: UserRoles.EMPLOYEE },
+        ]}
+        onChange={(value) =>
+          setValue('isEmployee', value === UserRoles.EMPLOYEE)
+        }
+      />
+
       <TextInput
         size="lg"
         type="email"
