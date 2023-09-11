@@ -1,9 +1,22 @@
-export interface IEmployees {
-  fullname: string;
-  email: string;
+export interface IEmployee {
+  id: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    status: string;
+  };
   contactPrimary: string;
+  contactSecondary?: string;
   position: string;
-  role: string;
+  address: string;
+  verificationType: string;
+  verificationId: string;
+  baseSalary?: number;
+  monthlySalary?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface ICreateEmployee {
@@ -21,30 +34,17 @@ export interface ICreateEmployee {
   monthlySalary?: number;
 }
 
-export const employeesColumns = [
-  {
-    name: 'Fullname',
-    selector: (row: IEmployees) => row.fullname,
-    sortable: false,
-  },
-  {
-    name: 'Email',
-    selector: (row: IEmployees) => row.email,
-    sortable: true,
-  },
-  {
-    name: 'Contact Primary',
-    selector: (row: IEmployees) => row.contactPrimary,
-    sortable: true,
-  },
-  {
-    name: 'Position',
-    selector: (row: IEmployees) => row.position,
-    sortable: true,
-  },
-  {
-    name: 'Role',
-    selector: (row: IEmployees) => row.role,
-    sortable: true,
-  },
-];
+export interface IUpdateEmployee {
+  id: string;
+  name: string;
+  email: string;
+  contactPrimary: string;
+  contactSecondary?: string;
+  address: string;
+  position: string;
+  role: string;
+  verificationType: string;
+  verificationId: string;
+  baseSalary?: number;
+  monthlySalary?: number;
+}

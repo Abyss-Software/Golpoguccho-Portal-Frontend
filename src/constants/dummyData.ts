@@ -2,7 +2,7 @@ import { IBookings } from '@/interfaces/bookings.interface';
 import { IEvents } from '@/interfaces/createBooking.interface';
 import { IEventType } from '@/interfaces/packages.interface';
 
-import { IEmployees } from '@/interfaces/employees.interface';
+import { IEmployee } from '@/interfaces/employees.interface';
 import { IPromoCode } from '@/interfaces/promoCodes.interface';
 export const columns = [
   {
@@ -612,72 +612,72 @@ export const eventTypesData: IEventType[] = [
   },
 ];
 
-export const employeeData: IEmployees[] = [
+export const employeeData: IEmployee[] = [
   {
-    fullname: 'John Doe',
+    name: 'John Doe',
     email: 'john.doe@example.com',
     contactPrimary: '123-456-7890',
     position: 'Software Engineer',
     role: 'Developer',
   },
   {
-    fullname: 'Jane Smith',
+    name: 'Jane Smith',
     email: 'jane.smith@example.com',
     contactPrimary: '987-654-3210',
     position: 'Product Manager',
     role: 'Manager',
   },
   {
-    fullname: 'Michael Johnson',
+    name: 'Michael Johnson',
     email: 'michael.johnson@example.com',
     contactPrimary: '555-123-4567',
     position: 'Data Scientist',
     role: 'Analyst',
   },
   {
-    fullname: 'Emily Lee',
+    name: 'Emily Lee',
     email: 'emily.lee@example.com',
     contactPrimary: '444-567-8901',
     position: 'UX Designer',
     role: 'Designer',
   },
   {
-    fullname: 'David Wang',
+    name: 'David Wang',
     email: 'david.wang@example.com',
     contactPrimary: '777-888-9999',
     position: 'Software Engineer',
     role: 'Developer',
   },
   {
-    fullname: 'Jessica Chen',
+    name: 'Jessica Chen',
     email: 'jessica.chen@example.com',
     contactPrimary: '222-333-4444',
     position: 'Marketing Specialist',
     role: 'Marketing',
   },
   {
-    fullname: 'Matthew Brown',
+    name: 'Matthew Brown',
     email: 'matthew.brown@example.com',
     contactPrimary: '888-777-6666',
     position: 'Sales Representative',
     role: 'Sales',
   },
   {
-    fullname: 'Sophia Kim',
+    name: 'Sophia Kim',
     email: 'sophia.kim@example.com',
     contactPrimary: '666-555-4444',
     position: 'HR Manager',
     role: 'HR',
   },
   {
-    fullname: 'William Liu',
+    name: 'William Liu',
     email: 'william.liu@example.com',
     contactPrimary: '111-222-3333',
     position: 'Financial Analyst',
     role: 'Finance',
   },
   {
-    fullname: 'Olivia Garcia',
+    name: 'Olivia Garcia',
     email: 'olivia.garcia@example.com',
     contactPrimary: '333-444-5555',
     position: 'Operations Manager',

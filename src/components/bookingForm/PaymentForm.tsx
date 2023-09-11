@@ -20,6 +20,8 @@ export default function PaymentForm() {
     duePayment: 0,
   });
 
+  const [promoCode, setPromoCode] = React.useState<string | undefined>();
+
   const { calculatePaymentMutation } = useBookingAction();
 
   const calculatePayment = (promoCode?: string) => {
@@ -37,7 +39,13 @@ export default function PaymentForm() {
 
   useEffect(() => {
     calculatePayment();
-  }, [getValues]);
+  }, []);
+
+  const handlePromoValidation = (promoCode?: string) => () => {
+    console.log(promoCode);
+    calculatePayment(promoCode);
+  };
+  console.log(promoCode);
 
   return (
     <div className=" mx-auto pb-4 space-y-8">
@@ -71,8 +79,15 @@ export default function PaymentForm() {
           size="lg"
           type="text"
           placeholder="Promo Code"
+          onChange={(e) => setPromoCode(e.currentTarget.value)}
         />
-        <Button size="lg">Apply</Button>
+        <Button
+          size="lg"
+          type="button"
+          onClick={handlePromoValidation(promoCode)}
+        >
+          Apply
+        </Button>
       </div>
       <div>
         <p className="text-mg font-semibold text-primaryColor mb-2 uppercase">
@@ -95,7 +110,7 @@ export default function PaymentForm() {
           className="w-full"
           size="lg"
           type="text"
-          placeholder="Promo Code"
+          placeholder="Transaction Id"
         />
       </div>
     </div>

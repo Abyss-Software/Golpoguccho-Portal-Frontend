@@ -1,10 +1,4 @@
-import {
-  Button,
-  Checkbox,
-  PasswordInput,
-  SegmentedControl,
-  TextInput,
-} from '@mantine/core';
+import { Button, Checkbox, PasswordInput, TextInput } from '@mantine/core';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ILogin } from '@/interfaces/auth.interface';
@@ -14,13 +8,15 @@ import useAuthAction from '@/hooks/useAuthAction';
 import { useAuthStore } from '@/contexts/authContext';
 import { useEffect } from 'react';
 import { UserRoles } from '@/constants/userRoles';
+import { notifications } from '@mantine/notifications';
+import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
+import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<ILogin>();
 
@@ -28,7 +24,26 @@ const LoginForm = () => {
   const userInfo = useAuthStore((state) => state.userInfo);
 
   const onSubmit: SubmitHandler<ILogin> = (data) => {
-    signinMutation.mutate(data);
+    signinMutation.mutate(data, {
+      onSuccess: () => {
+        notifications.update({
+          id: 'signingIn',
+          color: 'green',
+          title: 'Success',
+          message: 'Promo Created',
+          icon: <CheckIcon size="2rem" />,
+        });
+      },
+      onError: (error: any) => {
+        notifications.update({
+          id: 'signingIn',
+          color: 'red',
+          title: 'Failed',
+          message: error?.response?.data?.message || 'Something went wrong',
+          icon: <ErrorIcon size="2rem" />,
+        });
+      },
+    });
   };
 
   useEffect(() => {
@@ -44,18 +59,6 @@ const LoginForm = () => {
       className="w-full flex flex-col gap-3"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <SegmentedControl
-        fullWidth
-        color="green"
-        data={[
-          { label: 'Client', value: UserRoles.CLIENT },
-          { label: 'Employee', value: UserRoles.EMPLOYEE },
-        ]}
-        onChange={(value) =>
-          setValue('isEmployee', value === UserRoles.EMPLOYEE)
-        }
-      />
-
       <TextInput
         size="lg"
         type="email"

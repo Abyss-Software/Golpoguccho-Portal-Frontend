@@ -8,6 +8,16 @@ function useAuthAction(authContext: IAuthStore) {
 
   const signinMutation = useMutation({
     mutationFn: authApi.login,
+    onMutate: () => {
+      notifications.show({
+        id: 'signingIn',
+        loading: true,
+        title: 'Logging you in...',
+        message: 'Please wait',
+        autoClose: false,
+        withCloseButton: false,
+      });
+    },
     onSuccess: (res) => {
       setIsLoggedIn(true);
       setUserInfo({

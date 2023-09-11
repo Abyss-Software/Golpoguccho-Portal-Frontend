@@ -4,9 +4,7 @@ import storageUtil from '@/utils/storage.util';
 
 export class AuthApi {
   async login(data: ILogin) {
-    const loginUrl = data.isEmployee ? '/auth/employee-login' : '/auth/login';
-
-    const res = await httpClient.post(loginUrl, data);
+    const res = await httpClient.post('/auth/login', data);
     storageUtil.setAuthData(res.data.body, data.rememberMe);
 
     return res.data;

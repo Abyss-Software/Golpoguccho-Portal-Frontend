@@ -1,8 +1,9 @@
 import { employeeApi } from '@/api';
 import { notifications } from '@mantine/notifications';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export default function useEmployeeAction() {
+  const queryClient = useQueryClient();
   const createEmployeeMutation = useMutation({
     mutationFn: employeeApi.createEmployee,
     onMutate: () => {
@@ -15,6 +16,7 @@ export default function useEmployeeAction() {
         withCloseButton: false,
       });
     },
+    onSuccess: () => queryClient.invalidateQueries(['employees']),
   });
 
   const updateEmployeeMutation = useMutation({
@@ -29,6 +31,7 @@ export default function useEmployeeAction() {
         withCloseButton: false,
       });
     },
+    onSuccess: () => queryClient.invalidateQueries(['employees']),
   });
 
   const deleteEmployeeMutation = useMutation({
@@ -43,6 +46,7 @@ export default function useEmployeeAction() {
         withCloseButton: false,
       });
     },
+    onSuccess: () => queryClient.invalidateQueries(['employees']),
   });
 
   const fetchEmployees = () =>
