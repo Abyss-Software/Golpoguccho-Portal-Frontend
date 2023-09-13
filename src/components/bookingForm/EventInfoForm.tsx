@@ -24,7 +24,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
   return (
     <div className="space-y-1">
       <h3 className="text-2xl font-semibold">Event Information</h3>
-      <Grid columns={2} gutter={"xl"}>
+      <Grid columns={2} gutter={'xl'}>
         <Grid.Col md={2} lg={1}>
           <TextInput
             {...register(`events.${itemIndex}.eventTitle`)}
@@ -50,7 +50,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             onChange={(value) => {
               setValue(
                 `events.${itemIndex}.eventDate`,
-                new Date(value?.toISOString() ?? "")
+                new Date(value?.toISOString() ?? '')
               );
             }}
             error={

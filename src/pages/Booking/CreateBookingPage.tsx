@@ -1,4 +1,4 @@
-import { Button, Stepper, clsx } from '@mantine/core';
+import { Button, Stepper } from '@mantine/core';
 import { FormProvider, useForm } from 'react-hook-form';
 import BackIcon from 'remixicon-react/ArrowLeftSLineIcon';
 import { CreateBookingValidationSchema } from '@/constants/validation/CreateBookingValidationSchema';
@@ -14,6 +14,12 @@ import SubmitIcon from 'remixicon-react/CheckLineIcon';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import PaymentForm from '@/components/bookingForm/PaymentForm';
+import useBookingAction from '@/hooks/useBookingAction';
+import { notifications } from '@mantine/notifications';
+import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
+import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
+import { useAuthStore } from '@/contexts/authContext';
+import { useNavigate } from 'react-router-dom';
 
 const timelineContent = [
   {
@@ -39,12 +45,18 @@ const timelineContent = [
 ];
 
 const CreateBookingPage = () => {
+  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState(0);
+  const { userInfo } = useAuthStore();
+
+  const { createBookingMutation } = useBookingAction();
 
   const methods = useForm<ICreateBooking>({
     resolver: zodResolver(CreateBookingValidationSchema),
     shouldUnregister: true,
     defaultValues: {
+      clientId: userInfo?.id,
       events: [
         {
           eventTypeId: '',
@@ -87,10 +99,36 @@ const CreateBookingPage = () => {
     }
   };
 
-  console.log(methods.formState.errors);
+  console.log('errors:', methods.formState.errors);
 
   const onSubmit = (data: ICreateBooking) => {
-    console.log(data);
+    createBookingMutation.mutate(
+      { ...data, clientId: userInfo?.id! },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+          notifications.update({
+            withBorder: true,
+            id: 'bookingCreation',
+            color: 'green',
+            title: 'Success',
+            message: 'Booking Created',
+            icon: <CheckIcon size="2rem" />,
+          });
+          navigate(`/client/booking-details/${data.body.bookingResult.id}`);
+        },
+        onError: (error: any) => {
+          notifications.update({
+            withBorder: true,
+            id: 'bookingCreation',
+            color: 'red',
+            title: 'Failed',
+            message: error?.response?.data?.message || 'Something went wrong',
+            icon: <ErrorIcon size="2rem" />,
+          });
+        },
+      }
+    );
   };
 
   return (

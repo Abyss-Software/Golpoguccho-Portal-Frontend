@@ -8,6 +8,7 @@ export default function useEmployeeAction() {
     mutationFn: employeeApi.createEmployee,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'createEmployee',
         loading: true,
         title: 'Creating Employee...',
@@ -23,6 +24,7 @@ export default function useEmployeeAction() {
     mutationFn: employeeApi.updateEmployee,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'updateEmployee',
         loading: true,
         title: 'Updating Employee...',
@@ -38,6 +40,7 @@ export default function useEmployeeAction() {
     mutationFn: employeeApi.deleteEmployee,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'deleteEmployee',
         loading: true,
         title: 'Deleting Employee...',

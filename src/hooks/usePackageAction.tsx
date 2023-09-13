@@ -12,6 +12,7 @@ function usePackageAction() {
       packageApi.createPackage(data.eventTypeId, data),
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'packageCreation',
         loading: true,
         title: 'Creating new package...',
@@ -35,6 +36,7 @@ function usePackageAction() {
     mutationFn: packageApi.updatePackage,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'packageUpdate',
         loading: true,
         title: 'Updating Package...',
@@ -52,6 +54,7 @@ function usePackageAction() {
     mutationFn: packageApi.deletePackage,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'packageDelete',
         loading: true,
         title: 'Deleting event type...',

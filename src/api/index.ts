@@ -1,6 +1,7 @@
 import { AuthApi } from './auth.api';
 import { BookingApi } from './booking.api';
 import { EmployeeApi } from './employee.api';
+import { EventApi } from './event.api';
 
 import { EventTypeApi } from './eventType.api';
 import { PackageApi } from './package.api';
@@ -12,3 +13,4 @@ export const packageApi = new PackageApi();
 export const bookingApi = new BookingApi();
 export const promoApi = new PromoApi();
 export const employeeApi = new EmployeeApi();
+export const eventApi = new EventApi();

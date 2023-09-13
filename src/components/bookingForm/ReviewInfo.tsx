@@ -1,7 +1,7 @@
 import useEventTypeAction from '@/hooks/useEventTypeAction';
 import { ICreateBooking } from '@/interfaces/createBooking.interface';
 import { IEventType, IPackage } from '@/interfaces/packages.interface';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 const ReviewInfo = () => {
@@ -30,8 +30,6 @@ const ReviewInfo = () => {
       setPackages(packages);
     }
   }, [data]);
-
-  console.log(eventTypes, packages);
 
   const [bookingData, setBookingData] = useState<ICreateBooking>();
   useEffect(() => {
@@ -97,15 +95,15 @@ const ReviewInfo = () => {
             <div className="space-y-1 px-2">
               <p>
                 <span className="font-bold">Event Type:</span>{' '}
-                {eventTypes?.[event.eventTypeId].title}
+                {eventTypes?.[event.eventTypeId]?.title}
               </p>
               <p>
                 <span className="font-bold">Package:</span>{' '}
-                {packages?.[event.packageId].title}
+                {packages?.[event.packageId]?.title}
               </p>
               <p>
                 <span className="font-bold">Price:</span>{' '}
-                {packages?.[event.packageId].price}
+                {packages?.[event.packageId]?.price}
               </p>
               <p>
                 <span className="font-bold">Event Title:</span>{' '}

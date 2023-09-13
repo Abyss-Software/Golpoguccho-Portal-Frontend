@@ -10,9 +10,10 @@ export interface ICreateBooking {
   events: IEvents[];
   totalPayment: number;
   advancePayment: number;
+  advancePaymentMethod: string;
+  advanceTransactionId: string;
   duePayment: number;
   promoCode?: string;
-  advanceTransactionId: string;
 }
 
 export interface IEvents {

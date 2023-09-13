@@ -2,6 +2,7 @@ import {
   Button,
   NumberInput,
   PasswordInput,
+  Select,
   TextInput,
   Textarea,
 } from '@mantine/core';
@@ -9,6 +10,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ICreateEmployee } from '@/interfaces/employees.interface';
 import { EmployeeCreateValidationSchema } from '@/constants/validation/EmployeeProfileValidationSchema';
+import { positionOptions, roleOptions } from '@/constants/selectOptions';
 
 function EmployeeCreationForm({
   onEmployeeCreate,
@@ -78,20 +80,31 @@ function EmployeeCreationForm({
         placeholder="Enter Employee Address"
         error={errors?.address?.message}
       />
-
-      <TextInput
-        {...register('position')}
-        size="md"
+      <Select
+        {...register(`position`)}
         label="Position"
+        size="md"
         placeholder="Enter Employee Position"
+        searchable
+        nothingFound="No options"
+        data={positionOptions}
+        onChange={(value) => {
+          setValue(`position`, value ?? '');
+        }}
         error={errors?.position?.message}
       />
 
-      <TextInput
-        {...register('role')}
-        size="md"
+      <Select
+        {...register(`role`)}
         label="Role"
+        size="md"
         placeholder="Enter Employee Role"
+        searchable
+        nothingFound="No options"
+        data={roleOptions}
+        onChange={(value) => {
+          setValue(`role`, value ?? '');
+        }}
         error={errors?.role?.message}
       />
 

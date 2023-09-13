@@ -1,9 +1,17 @@
-import { Button, NumberInput, Text, TextInput, Textarea } from '@mantine/core';
+import {
+  Button,
+  NumberInput,
+  Select,
+  Text,
+  TextInput,
+  Textarea,
+} from '@mantine/core';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { IPromoDto } from '@/interfaces/promoCodes.interface';
 import { PromoValidationSchema } from '@/constants/validation/PromoValidationSchema';
 import { DateInput } from '@mantine/dates';
+import { statusOptions } from '@/constants/selectOptions';
 
 function PromoForm({
   onPromoUpdate,
@@ -34,7 +42,6 @@ function PromoForm({
       onPromoCreate?.(getValues());
     }
   };
-  console.log(defaultValues);
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmitClick)}>
@@ -60,6 +67,7 @@ function PromoForm({
         size="md"
         min={0}
         max={100}
+        precision={3}
         label="Discount Percentage"
         placeholder="Enter Discount Percentage"
         defaultValue={defaultValues?.discountPercentage}
@@ -108,11 +116,18 @@ function PromoForm({
         error={errors?.expiryDate && errors?.expiryDate.message}
       />
 
-      <TextInput
-        {...register('status', { required: true })}
-        size="md"
+      <Select
+        {...register(`status`)}
         label="Status"
-        placeholder="Enter Status"
+        size="lg"
+        placeholder="Pick promo code status"
+        searchable
+        nothingFound="No options"
+        data={statusOptions}
+        defaultValue={defaultValues?.status}
+        onChange={(value) => {
+          setValue(`status`, value ?? '');
+        }}
         error={errors?.status && errors?.status?.message}
       />
 

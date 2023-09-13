@@ -8,6 +8,7 @@ function usePromoAction() {
     mutationFn: promoApi.createPromo,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'promoCreation',
         loading: true,
         title: 'Creating new promo code...',
@@ -38,6 +39,7 @@ function usePromoAction() {
     mutationFn: promoApi.updatePromo,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'promoUpdate',
         loading: true,
         title: 'Updating promo code...',
@@ -55,6 +57,7 @@ function usePromoAction() {
     mutationFn: promoApi.deletePromo,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'promoDelete',
         loading: true,
         title: 'Deleting promo code...',

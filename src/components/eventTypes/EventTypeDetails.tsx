@@ -1,14 +1,14 @@
-import { Accordion, Button, Image, Modal, Text } from "@mantine/core";
-import { IEventType, IPackage } from "@/interfaces/packages.interface";
-import PackageCreateForm, { PackageCreate } from "../package/PackageCreateForm";
+import { Accordion, Button, Image, Modal, Text } from '@mantine/core';
+import { IEventType, IPackage } from '@/interfaces/packages.interface';
+import PackageCreateForm, { PackageCreate } from '../package/PackageCreateForm';
 
-import { AiOutlineCheckCircle as CheckIcon } from "react-icons/ai";
-import { BiErrorCircle as ErrorIcon } from "react-icons/bi";
-import Imgae2LineIcon from "remixicon-react/Image2LineIcon";
-import { modals } from "@mantine/modals";
-import { notifications } from "@mantine/notifications";
-import useEventTypeAction from "@/hooks/useEventTypeAction";
-import usePackageAction from "@/hooks/usePackageAction";
+import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
+import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
+import Imgae2LineIcon from 'remixicon-react/Image2LineIcon';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import useEventTypeAction from '@/hooks/useEventTypeAction';
+import usePackageAction from '@/hooks/usePackageAction';
 
 type EventTypeDetailsProps = {
   eventTypeId: string;
@@ -42,19 +42,21 @@ export default function EventTypeDetails({
           modals.closeAll();
 
           notifications.update({
-            id: "packageCreation",
-            color: "green",
-            title: "Success",
-            message: "Package has been created",
+            withBorder: true,
+            id: 'packageCreation',
+            color: 'green',
+            title: 'Success',
+            message: 'Package has been created',
             icon: <CheckIcon size="2rem" />,
           });
         },
         onError: (error: any) => {
           notifications.update({
-            id: "packageCreation",
-            color: "red",
-            title: "Failed",
-            message: error?.response?.data?.message || "Something went wrong",
+            withBorder: true,
+            id: 'packageCreation',
+            color: 'red',
+            title: 'Failed',
+            message: error?.response?.data?.message || 'Something went wrong',
             icon: <ErrorIcon size="2rem" />,
           });
         },
@@ -70,19 +72,21 @@ export default function EventTypeDetails({
           modals.closeAll();
 
           notifications.update({
-            id: "packageUpdate",
-            color: "green",
-            title: "Success",
-            message: "Package has been updated",
+            withBorder: true,
+            id: 'packageUpdate',
+            color: 'green',
+            title: 'Success',
+            message: 'Package has been updated',
             icon: <CheckIcon size="2rem" />,
           });
         },
         onError: (error: any) => {
           notifications.update({
-            id: "packageUpdate",
-            color: "red",
-            title: "Failed",
-            message: error?.response?.data?.message || "Something went wrong",
+            withBorder: true,
+            id: 'packageUpdate',
+            color: 'red',
+            title: 'Failed',
+            message: error?.response?.data?.message || 'Something went wrong',
             icon: <ErrorIcon size="2rem" />,
           });
         },
@@ -96,19 +100,21 @@ export default function EventTypeDetails({
         modals.closeAll();
 
         notifications.update({
-          id: "packageDelete",
-          color: "green",
-          title: "Success",
-          message: "Package has been deleted",
+          withBorder: true,
+          id: 'packageDelete',
+          color: 'green',
+          title: 'Success',
+          message: 'Package has been deleted',
           icon: <CheckIcon size="2rem" />,
         });
       },
       onError: (error: any) => {
         notifications.update({
-          id: "packageDelete",
-          color: "red",
-          title: "Failed",
-          message: error?.response?.data?.message || "Something went wrong",
+          withBorder: true,
+          id: 'packageDelete',
+          color: 'red',
+          title: 'Failed',
+          message: error?.response?.data?.message || 'Something went wrong',
           icon: <ErrorIcon size="2rem" />,
         });
       },
@@ -117,17 +123,17 @@ export default function EventTypeDetails({
 
   const handleCreatePackageClick = () => {
     modals.open({
-      title: "Create Package",
+      title: 'Create Package',
       centered: true,
-      size: "lg",
+      size: 'lg',
       children: <PackageCreateForm onPackageCreate={onPackageCreate} />,
     });
   };
 
   const handlePackageUpdateClick = (pkg: IPackage) => {
     modals.open({
-      title: "Update Package",
-      size: "lg",
+      title: 'Update Package',
+      size: 'lg',
       centered: true,
       children: (
         <PackageCreateForm
@@ -141,13 +147,13 @@ export default function EventTypeDetails({
 
   const handlePackageDeleteClick = (pkg: IPackage) =>
     modals.openConfirmModal({
-      title: "Please confirm your action",
+      title: 'Please confirm your action',
       centered: true,
       children: (
         <Text size="sm">Are you sure you want to delete this package?</Text>
       ),
-      labels: { confirm: "Confirm", cancel: "Cancel" },
-      confirmProps: { color: "red" },
+      labels: { confirm: 'Confirm', cancel: 'Cancel' },
+      confirmProps: { color: 'red' },
       onConfirm: () => onPackageDelete(pkg.id!),
     });
 
@@ -200,7 +206,7 @@ export default function EventTypeDetails({
                     <h4 className="text-xl font-bold">
                       <span className="text-primaryColor">
                         Package {index + 1}:
-                      </span>{" "}
+                      </span>{' '}
                       {pkg.title}
                     </h4>
                   </Accordion.Control>
@@ -211,7 +217,7 @@ export default function EventTypeDetails({
                         <span className="font-bold">Package:</span> {pkg.title}
                       </p>
                       <p>
-                        <span className="font-bold">Description:</span>{" "}
+                        <span className="font-bold">Description:</span>{' '}
                         {pkg.description}
                       </p>
                       <p>

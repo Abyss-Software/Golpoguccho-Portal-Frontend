@@ -31,6 +31,7 @@ export default function ClientLayout() {
 
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+
   return (
     <AppShell
       padding={0}
@@ -49,7 +50,9 @@ export default function ClientLayout() {
       header={
         <Header height={70} p="md" bg={'#009247'}>
           <div className="text-white flex items-center justify-between h-full">
-            <Text>Golpoguccho Photography</Text>
+            <Text onClick={() => navigate('')} className="cursor-pointer">
+              Golpoguccho Photography
+            </Text>
             <Group noWrap>
               <Menu shadow="md" width={200}>
                 <Menu.Target>

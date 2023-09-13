@@ -22,6 +22,7 @@ const PromoCodesPage = () => {
     createPromoMutation.mutate(data, {
       onSuccess: () => {
         notifications.update({
+          withBorder: true,
           id: 'promoCreation',
           color: 'green',
           title: 'Success',
@@ -32,6 +33,7 @@ const PromoCodesPage = () => {
       },
       onError: (error: any) => {
         notifications.update({
+          withBorder: true,
           id: 'promoCreation',
           color: 'red',
           title: 'Failed',
@@ -46,6 +48,7 @@ const PromoCodesPage = () => {
     updatePromoMutation.mutate(data, {
       onSuccess: () => {
         notifications.update({
+          withBorder: true,
           id: 'promoUpdate',
           color: 'green',
           title: 'Success',
@@ -56,6 +59,7 @@ const PromoCodesPage = () => {
       },
       onError: (error: any) => {
         notifications.update({
+          withBorder: true,
           id: 'promoUpdate',
           color: 'red',
           title: 'Failed',
@@ -70,6 +74,7 @@ const PromoCodesPage = () => {
     deletePromoMutation.mutate(id, {
       onSuccess: () => {
         notifications.update({
+          withBorder: true,
           id: 'promoDelete',
           color: 'green',
           title: 'Success',
@@ -80,6 +85,7 @@ const PromoCodesPage = () => {
       },
       onError: (error: any) => {
         notifications.update({
+          withBorder: true,
           id: 'promoDelete',
           color: 'red',
           title: 'Failed',

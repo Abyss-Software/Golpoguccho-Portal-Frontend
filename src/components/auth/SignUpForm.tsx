@@ -26,6 +26,7 @@ const SignUpForm = () => {
       onSuccess: () => {
         navigate('/');
         notifications.update({
+          withBorder: true,
           id: 'signup',
           color: 'green',
           title: 'Signup success',
@@ -35,6 +36,7 @@ const SignUpForm = () => {
       },
       onError: (error: any) => {
         notifications.update({
+          withBorder: true,
           id: 'signup',
           color: 'red',
           title: 'Signup failed',

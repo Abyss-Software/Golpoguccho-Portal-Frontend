@@ -1,12 +1,18 @@
-import { eventList, eventsColumns } from "@/constants/dummyData";
-
-import CommonDataTable from "@/components/dataTable/CommonDataTable";
-import { IEvents } from "@/interfaces/createBooking.interface";
-import ProfileCard from "@/components/employee/profile/ProfileCard";
-import ProfileForm from "@/components/employee/profile/ProfileForm";
-import { Tabs } from "@mantine/core";
+import CommonDataTable from '@/components/dataTable/CommonDataTable';
+import { IEvents } from '@/interfaces/createBooking.interface';
+import ProfileCard from '@/components/employee/profile/ProfileCard';
+import ProfileForm from '@/components/employee/profile/ProfileForm';
+import { Tabs } from '@mantine/core';
+import { useAuthStore } from '@/contexts/authContext';
+import useEmployeeAction from '@/hooks/useEmployeeActions';
 
 const EmployeeDashboard = () => {
+  const { userInfo } = useAuthStore();
+  const { fetchEmployee } = useEmployeeAction();
+
+  const { data: employee } = fetchEmployee(userInfo?.id!);
+
+  console.log(userInfo, employee);
   return (
     <div>
       <ProfileCard />
@@ -19,13 +25,13 @@ const EmployeeDashboard = () => {
           </Tabs.List>
 
           <Tabs.Panel value="events" pt="xs">
-            <CommonDataTable<IEvents>
+            {/* <CommonDataTable<IEvents>
               data={eventList}
               columns={eventsColumns}
               handleRowClick={(row) => {
                 console.log(row);
               }}
-            />
+            /> */}
           </Tabs.Panel>
 
           <Tabs.Panel value="profile" pt="xs">
@@ -33,13 +39,13 @@ const EmployeeDashboard = () => {
           </Tabs.Panel>
 
           <Tabs.Panel value="earnings" pt="xs">
-            <CommonDataTable<IEvents>
+            {/* <CommonDataTable<IEvents>
               data={eventList}
               columns={eventsColumns}
               handleRowClick={(row) => {
                 console.log(row);
               }}
-            />
+            /> */}
           </Tabs.Panel>
         </Tabs>
       </div>

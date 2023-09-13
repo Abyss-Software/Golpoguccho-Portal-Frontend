@@ -34,6 +34,7 @@ const EmployeeListPage = () => {
     createEmployeeMutation.mutate(data, {
       onSuccess: () => {
         notifications.update({
+          withBorder: true,
           id: 'createEmployee',
           color: 'green',
           title: 'Success',
@@ -44,6 +45,7 @@ const EmployeeListPage = () => {
       },
       onError: (error: any) => {
         notifications.update({
+          withBorder: true,
           id: 'createEmployee',
           color: 'red',
           title: 'Failed',
@@ -58,6 +60,7 @@ const EmployeeListPage = () => {
     updateEmployeeMutation.mutate(data, {
       onSuccess: () => {
         notifications.update({
+          withBorder: true,
           id: 'updateEmployee',
           color: 'green',
           title: 'Success',
@@ -68,6 +71,7 @@ const EmployeeListPage = () => {
       },
       onError: (error: any) => {
         notifications.update({
+          withBorder: true,
           id: 'updateEmployee',
           color: 'red',
           title: 'Failed',
@@ -82,6 +86,7 @@ const EmployeeListPage = () => {
     deleteEmployeeMutation.mutate(id, {
       onSuccess: () => {
         notifications.update({
+          withBorder: true,
           id: 'deleteEmployee',
           color: 'green',
           title: 'Success',
@@ -92,6 +97,7 @@ const EmployeeListPage = () => {
       },
       onError: (error: any) => {
         notifications.update({
+          withBorder: true,
           id: 'deleteEmployee',
           color: 'red',
           title: 'Failed',

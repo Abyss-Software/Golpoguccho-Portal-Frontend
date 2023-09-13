@@ -27,15 +27,17 @@ const LoginForm = () => {
     signinMutation.mutate(data, {
       onSuccess: () => {
         notifications.update({
+          withBorder: true,
           id: 'signingIn',
           color: 'green',
           title: 'Success',
-          message: 'Promo Created',
+          message: 'Logged in successfully',
           icon: <CheckIcon size="2rem" />,
         });
       },
       onError: (error: any) => {
         notifications.update({
+          withBorder: true,
           id: 'signingIn',
           color: 'red',
           title: 'Failed',

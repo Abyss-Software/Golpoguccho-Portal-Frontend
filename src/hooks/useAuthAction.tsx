@@ -10,6 +10,7 @@ function useAuthAction(authContext: IAuthStore) {
     mutationFn: authApi.login,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'signingIn',
         loading: true,
         title: 'Logging you in...',
@@ -32,6 +33,7 @@ function useAuthAction(authContext: IAuthStore) {
     mutationFn: authApi.signup,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'signup',
         loading: true,
         title: 'Signing Up...',

@@ -9,6 +9,7 @@ function useEventTypeAction() {
     mutationFn: eventTypeApi.createEventType,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'eventTypeCreation',
         loading: true,
         title: 'Creating new event type...',
@@ -39,6 +40,7 @@ function useEventTypeAction() {
     mutationFn: eventTypeApi.updateEventType,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'eventTypeUpdate',
         loading: true,
         title: 'Updating event type...',
@@ -56,6 +58,7 @@ function useEventTypeAction() {
     mutationFn: eventTypeApi.deleteEventType,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'eventTypeDelete',
         loading: true,
         title: 'Deleting event type...',
