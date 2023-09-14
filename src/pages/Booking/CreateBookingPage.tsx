@@ -17,6 +17,7 @@ import ReviewInfo from "@/components/bookingForm/ReviewInfo";
 import SubmitIcon from "remixicon-react/CheckLineIcon";
 import { convertTime } from "@/utils/common.util";
 import { notifications } from "@mantine/notifications";
+import { twMerge } from "tailwind-merge";
 import { useAuthStore } from "@/contexts/authContext";
 import useBookingAction from "@/hooks/useBookingAction";
 import { useNavigate } from "react-router-dom";
@@ -210,28 +211,32 @@ const CreateBookingPage = () => {
               Go Back
             </Button>
 
-            {activeTab === timelineContent.length - 1 ? (
-              <Button
-                fullWidth
-                size="lg"
-                type="submit"
-                rightIcon={<SubmitIcon />}
-              >
-                Submit
-              </Button>
-            ) : (
-              <Button
-                fullWidth
-                type="button"
-                size="lg"
-                variant="light"
-                rightIcon={<NextIcon />}
-                onClick={onNextClick}
-                className="border-primaryColor"
-              >
-                Up Next
-              </Button>
-            )}
+            <Button
+              className={twMerge(
+                activeTab !== timelineContent.length - 1 && "hidden"
+              )}
+              fullWidth
+              size="lg"
+              type="submit"
+              rightIcon={<SubmitIcon />}
+            >
+              Submit
+            </Button>
+
+            <Button
+              className={twMerge(
+                "border-primaryColor",
+                activeTab === timelineContent.length - 1 && "hidden"
+              )}
+              fullWidth
+              type="button"
+              size="lg"
+              variant="light"
+              rightIcon={<NextIcon />}
+              onClick={onNextClick}
+            >
+              Up Next
+            </Button>
           </div>
         </form>
       </div>

@@ -81,24 +81,22 @@ export default function PaymentForm() {
       <div className="bg-primaryColor text-white p-4 rounded-lg mb-10">
         <h2 className="text-2xl font-bold">Booking Payment</h2>
       </div>
-
       <div className="space-y-2">
         <p>
-          <span className="font-bold">Total Payment:</span>{" "}
+          <span className="font-bold">Total Payment: </span>
           {getValues("totalPayment")}
         </p>
 
         <p>
-          <span className="font-bold">Advance Payment:</span>{" "}
+          <span className="font-bold">Advance Payment: </span>
           {getValues("advancePayment")}
         </p>
 
         <p>
-          <span className="font-bold">Due Payment:</span>{" "}
+          <span className="font-bold">Due Payment: </span>
           {getValues("duePayment")}
         </p>
       </div>
-
       <div className="flex flex-col gap-4 md:flex-row">
         <Text weight={700}>Have a Promo Code?</Text>
         <TextInput
@@ -130,10 +128,10 @@ export default function PaymentForm() {
         </p>
 
         <Radio.Group
+          {...register(`advancePaymentMethod`)}
           onChange={(value) => {
             setValue(`advancePaymentMethod`, value);
           }}
-          name="advancePaymentMethod"
           label="Advance Payment Method:"
           description="Select your advance payment method"
           withAsterisk
@@ -146,9 +144,11 @@ export default function PaymentForm() {
         </Radio.Group>
       </div>
 
-      {watch("advancePaymentMethod") === "bkash" ? (
+      {watch("advancePaymentMethod") === "bkash" && (
         <BkashInstructions amount={getValues("advancePayment") ?? 0} />
-      ) : (
+      )}
+
+      {watch("advancePaymentMethod") === "bank" && (
         <BankInstructions amount={getValues("advancePayment") ?? 0} />
       )}
 

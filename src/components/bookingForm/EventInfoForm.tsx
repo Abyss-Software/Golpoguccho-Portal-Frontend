@@ -21,6 +21,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
     setValue,
     formState: { errors },
   } = useFormContext<ICreateBooking>();
+
   return (
     <div className="space-y-1">
       <h3 className="text-2xl font-semibold">Event Information</h3>
