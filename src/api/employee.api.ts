@@ -2,6 +2,7 @@ import {
   ICreateEmployee,
   IEmployee,
   IUpdateEmployee,
+  IUpdateProfile,
 } from '@/interfaces/employees.interface';
 import { IApiResponse } from '@/interfaces/response.interface';
 import { httpClient } from '@/utils/httpClient';
@@ -30,6 +31,14 @@ export class EmployeeApi {
   async updateEmployee(data: IUpdateEmployee) {
     const res = await httpClient.patch<IApiResponse<IEmployee>>(
       `/employees/${data.id}`,
+      data
+    );
+    return res.data.body;
+  }
+
+  async updateProfile(data: IUpdateProfile) {
+    const res = await httpClient.patch<IApiResponse<IEmployee>>(
+      `/employees/profile/${data.id}`,
       data
     );
     return res.data.body;

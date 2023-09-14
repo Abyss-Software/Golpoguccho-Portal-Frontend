@@ -36,6 +36,22 @@ export default function useEmployeeAction() {
     onSuccess: () => queryClient.invalidateQueries(['employees']),
   });
 
+  const updateProfileMutation = useMutation({
+    mutationFn: employeeApi.updateProfile,
+    onMutate: () => {
+      notifications.show({
+        withBorder: true,
+        id: 'updateProfile',
+        loading: true,
+        title: 'Updating Profile...',
+        message: 'Please wait while we are updating your profile',
+        autoClose: false,
+        withCloseButton: false,
+      });
+    },
+    onSuccess: () => queryClient.invalidateQueries(['employee']),
+  });
+
   const deleteEmployeeMutation = useMutation({
     mutationFn: employeeApi.deleteEmployee,
     onMutate: () => {
@@ -68,6 +84,7 @@ export default function useEmployeeAction() {
   return {
     createEmployeeMutation,
     updateEmployeeMutation,
+    updateProfileMutation,
     deleteEmployeeMutation,
     fetchEmployees,
     fetchEmployee,

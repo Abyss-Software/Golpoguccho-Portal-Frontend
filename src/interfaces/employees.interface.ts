@@ -48,3 +48,12 @@ export interface IUpdateEmployee {
   baseSalary?: number;
   monthlySalary?: number;
 }
+
+export interface IUpdateProfile {
+  id: string;
+  name: string;
+  email: string;
+  contactPrimary: string;
+  contactSecondary?: string;
+  address: string;
+}
