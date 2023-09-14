@@ -5,14 +5,24 @@ import ProfileForm from '@/components/employee/profile/ProfileForm';
 import { Tabs } from '@mantine/core';
 import { useAuthStore } from '@/contexts/authContext';
 import useEmployeeAction from '@/hooks/useEmployeeActions';
+import useEventAction from '@/hooks/useEventAction';
+import EmployeeEventsTable from '@/components/employee/EmployeeEventsTable';
+import { useParams } from 'react-router-dom';
 
 const EmployeeDashboard = () => {
   const { userInfo } = useAuthStore();
   const { fetchEmployee } = useEmployeeAction();
+  const { fetchEventsByEmployeeId } = useEventAction();
 
-  const { data: employee, isLoading } = fetchEmployee(userInfo?.id!);
+  const { employeeId } = useParams();
 
-  console.log(userInfo, employee);
+  const { data: employee, isLoading } = fetchEmployee(
+    employeeId ? employeeId : userInfo?.id!
+  );
+
+  const { data: eventList, isLoading: isEmpEventsLoading } =
+    fetchEventsByEmployeeId(employee?.id!);
+
   return (
     <div>
       {isLoading ? (
@@ -29,13 +39,11 @@ const EmployeeDashboard = () => {
               </Tabs.List>
 
               <Tabs.Panel value="events" pt="xs">
-                {/* <CommonDataTable<IEvents>
-                 data={eventList}
-                 columns={eventsColumns}
-                 handleRowClick={(row) => {
-                   console.log(row);
-                 }}
-               /> */}
+                {isEmpEventsLoading ? (
+                  <>Loading</>
+                ) : (
+                  <EmployeeEventsTable employeeEvents={eventList} />
+                )}
               </Tabs.Panel>
 
               <Tabs.Panel value="profile" pt="xs">

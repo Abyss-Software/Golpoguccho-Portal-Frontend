@@ -20,6 +20,7 @@ import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
 import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
 import { useAuthStore } from '@/contexts/authContext';
 import { useNavigate } from 'react-router-dom';
+import { convertTime } from '@/utils/common.util';
 
 const timelineContent = [
   {
@@ -102,11 +103,15 @@ const CreateBookingPage = () => {
   console.log('errors:', methods.formState.errors);
 
   const onSubmit = (data: ICreateBooking) => {
+    data.events.map((event) => {
+      event.eventTime = convertTime(event.eventTime);
+      event.eventEndTime = convertTime(event.eventEndTime);
+    });
+
     createBookingMutation.mutate(
       { ...data, clientId: userInfo?.id! },
       {
         onSuccess: (data) => {
-          console.log(data);
           notifications.update({
             withBorder: true,
             id: 'bookingCreation',

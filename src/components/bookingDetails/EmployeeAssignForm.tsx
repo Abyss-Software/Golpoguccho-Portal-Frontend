@@ -47,7 +47,6 @@ export default function EmployeeAssignForm({ eventId }: { eventId: string }) {
     },
   });
 
-  console.log(event);
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'assignedEmployees',

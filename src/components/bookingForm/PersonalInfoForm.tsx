@@ -1,7 +1,7 @@
-import { Grid, Input } from "@mantine/core";
+import { Grid, Input } from '@mantine/core';
 
-import { ICreateBooking } from "@/interfaces/createBooking.interface";
-import { useFormContext } from "react-hook-form";
+import { ICreateBooking } from '@/interfaces/createBooking.interface';
+import { useFormContext } from 'react-hook-form';
 
 const PersonalInfoForm = () => {
   const {
@@ -23,10 +23,10 @@ const PersonalInfoForm = () => {
           size="lg"
           type="text"
           placeholder="Booking Title"
-          {...register("bookingTitle", { required: true })}
+          {...register('bookingTitle', { required: true })}
         />
       </Input.Wrapper>
-      <Grid columns={2} gutter={"xl"}>
+      <Grid columns={2} gutter={'xl'}>
         <Grid.Col md={2} lg={1}>
           <Input.Wrapper
             id="fullname"
@@ -37,8 +37,8 @@ const PersonalInfoForm = () => {
             <Input
               size="lg"
               type="text"
-              placeholder="First Name"
-              {...register("fullName", { required: true })}
+              placeholder="Full Name"
+              {...register('fullName', { required: true })}
             />
           </Input.Wrapper>
         </Grid.Col>
@@ -53,7 +53,7 @@ const PersonalInfoForm = () => {
               size="lg"
               type="email"
               placeholder="Email"
-              {...register("email", { required: true })}
+              {...register('email', { required: true })}
             />
           </Input.Wrapper>
         </Grid.Col>
@@ -68,7 +68,7 @@ const PersonalInfoForm = () => {
               size="lg"
               type="text"
               placeholder="Contact Number Primary"
-              {...register("contactPrimary", { required: true })}
+              {...register('contactPrimary', { required: true })}
             />
           </Input.Wrapper>
         </Grid.Col>
@@ -82,7 +82,7 @@ const PersonalInfoForm = () => {
               size="lg"
               type="text"
               placeholder="Contact Number Secondary"
-              {...register("contactSecondary", { required: true })}
+              {...register('contactSecondary', { required: true })}
             />
           </Input.Wrapper>
         </Grid.Col>
@@ -97,7 +97,7 @@ const PersonalInfoForm = () => {
               size="lg"
               type="text"
               placeholder="Address"
-              {...register("address", { required: true })}
+              {...register('address', { required: true })}
             />
           </Input.Wrapper>
         </Grid.Col>
@@ -112,7 +112,7 @@ const PersonalInfoForm = () => {
               size="lg"
               type="text"
               placeholder="City"
-              {...register("city", { required: true })}
+              {...register('city', { required: true })}
             />
           </Input.Wrapper>
         </Grid.Col>

@@ -17,7 +17,7 @@ const BookingDetailsPage = () => {
   const { userInfo } = useAuthStore();
 
   let { id } = useParams();
-  console.log(id);
+
   const { fetchBookingById, changeStatusMutation } = useBookingAction();
 
   const { data: bookingData } = fetchBookingById(id!);
@@ -32,8 +32,6 @@ const BookingDetailsPage = () => {
       ),
     });
   };
-
-  console.log(bookingData);
 
   if (!bookingData)
     return (
@@ -124,11 +122,11 @@ const BookingDetailsPage = () => {
           )}
         <div className="p-4 space-y-1 overflow-auto">
           <Table
-            bg={'white'}
+            striped
             highlightOnHover
             withBorder
-            verticalSpacing={16}
-            horizontalSpacing={20}
+            verticalSpacing="md"
+            fontSize="md"
             captionSide="bottom"
           >
             <caption>Total Payment: {bookingData?.totalPayment}</caption>
@@ -145,14 +143,16 @@ const BookingDetailsPage = () => {
               <tr>
                 <td>Advance Payment</td>
                 <td>{bookingData?.advancePayment}</td>
-                <td>{bookingData?.advancePaymentDate}</td>
+                <td>
+                  {new Date(bookingData?.advancePaymentDate).toDateString()}
+                </td>
                 <td>{bookingData?.advancePaymentMethod}</td>
                 <td>{bookingData?.advanceTransactionId}</td>
               </tr>
               <tr>
                 <td>Due Payment</td>
                 <td>{bookingData?.duePayment}</td>
-                <td>{bookingData?.duePaymentDate}</td>
+                <td>{new Date(bookingData?.duePaymentDate).toDateString()}</td>
                 <td>{bookingData?.duePaymentMethod}</td>
                 <td>{bookingData?.dueTransactionId}</td>
               </tr>

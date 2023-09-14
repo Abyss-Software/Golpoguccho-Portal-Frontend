@@ -79,7 +79,6 @@ export default function PaymentForm() {
     calculatePayment();
   }, []);
 
-  console.log(getValues());
   return (
     <div className=" mx-auto pb-4 space-y-8">
       <div className="bg-primaryColor text-white p-4 rounded-lg mb-10">

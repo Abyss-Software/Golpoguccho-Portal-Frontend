@@ -12,7 +12,6 @@ const PreviousBookings = () => {
 
   const navigate = useNavigate();
 
-  console.log(bookings);
   return (
     <div>
       {!bookings?.length ? (
@@ -51,13 +50,12 @@ const PreviousBookings = () => {
                   <tr
                     key={booking.BookingTitle}
                     onClick={() => {
-                      console.log(booking.id);
                       navigate(`/client/booking-details/${booking.id}`);
                     }}
                     className="cursor-pointer"
                   >
                     <td>{booking.bookingTitle}</td>
-                    <td>{booking.createdAt}</td>
+                    <td>{new Date(booking.createdAt).toDateString()}</td>
                     <td>{booking.events.length}</td>
                     <td>{booking.totalPayment}</td>
                     <td>{booking.status}</td>

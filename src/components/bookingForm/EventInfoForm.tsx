@@ -92,7 +92,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             onChange={(value) => {
               setValue(`events.${itemIndex}.dayOrEvening`, value);
             }}
-            name="dayOrEvening"
+            name={`dayOrEvening${itemIndex}`}
             label="When is the event?"
             description="Select whether it is a day event or an evening event"
             withAsterisk
@@ -112,7 +112,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             onChange={(value) => {
               setValue(`events.${itemIndex}.dhakaOrOutside`, value);
             }}
-            name="dhakaOrOutside"
+            name={`dhakaOrOutside${itemIndex}`}
             label="Where is the event?"
             description="Select whether it is inside Dhaka or outside"
             withAsterisk

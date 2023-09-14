@@ -47,11 +47,11 @@ const ProfileForm = ({ employeeData }: { employeeData: any }) => {
 
   const clearFile = () => {
     setImage(null);
+    setValue('avatar', '');
     resetRef.current?.();
   };
 
   const onSubmit = (data: IEmployeeProfile) => {
-    console.log(data);
     data = { ...data, id: employeeData?.id };
     updateProfileMutation.mutate(data, {
       onSuccess: () => {
@@ -89,7 +89,6 @@ const ProfileForm = ({ employeeData }: { employeeData: any }) => {
     }
   }, [image]);
 
-  console.log(errors, getValues());
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}

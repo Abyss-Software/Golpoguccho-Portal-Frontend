@@ -18,7 +18,7 @@ import { employeeColumns } from '@/components/employee/employeeColumns';
 const EmployeeListPage = () => {
   const navigate = useNavigate();
   const handleRowClick = (row: IEmployee) => {
-    navigate(`/emp`);
+    navigate(`/admin/employees/${row.user.id}`);
   };
 
   const {

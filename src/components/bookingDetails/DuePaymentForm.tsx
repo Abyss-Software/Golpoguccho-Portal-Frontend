@@ -60,8 +60,6 @@ export default function DuePaymentForm({
     );
   };
 
-  console.log(getValues(), errors);
-
   return (
     <form className="space-y-4 m-3" onSubmit={handleSubmit(onSubmitClick)}>
       <div>

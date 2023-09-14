@@ -95,6 +95,10 @@ export const router = createBrowserRouter([
         element: <EmployeeListPage />,
       },
       {
+        path: 'employees/:employeeId',
+        element: <EmployeeDashboard />,
+      },
+      {
         path: 'promos',
         element: <PromoCodesPage />,
       },

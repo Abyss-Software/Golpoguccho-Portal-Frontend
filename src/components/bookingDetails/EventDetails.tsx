@@ -18,7 +18,6 @@ export default function EventDetails({
       children: <EmployeeAssignForm eventId={event?.id} />,
     });
   };
-  console.log(event);
 
   const { userInfo } = useAuthStore();
 

@@ -2,7 +2,7 @@ import { eventApi } from '@/api';
 import { notifications } from '@mantine/notifications';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-function useBookingAction() {
+function useEventAction() {
   const queryClient = useQueryClient();
 
   const fetchEvents = () =>
@@ -32,6 +32,31 @@ function useBookingAction() {
       queryFn: async () => await eventApi.getEventById(id),
     });
 
+  const fetchEventsByEmployeeId = (employeeId: string) =>
+    useQuery({
+      enabled: !!employeeId,
+      queryKey: ['employeeEvents', employeeId],
+      queryFn: async () => await eventApi.getEventByEmployeeId(employeeId),
+    });
+
+  const updateEventStatusMutation = useMutation({
+    mutationFn: eventApi.updateEventStatus,
+    onMutate: () => {
+      notifications.show({
+        withBorder: true,
+        id: 'updateEventStatus',
+        loading: true,
+        title: 'Updating Event Status',
+        message: 'Please wait',
+        autoClose: false,
+        withCloseButton: false,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['events']);
+    },
+  });
+
   const assignEmployeesMutation = useMutation({
     mutationFn: eventApi.assignEmployees,
     onMutate: () => {
@@ -55,8 +80,10 @@ function useBookingAction() {
     fetchEventsByClientId,
     fetchEventById,
     fetchEventsByBookingId,
+    fetchEventsByEmployeeId,
+    updateEventStatusMutation,
     assignEmployeesMutation,
   };
 }
 
-export default useBookingAction;
+export default useEventAction;

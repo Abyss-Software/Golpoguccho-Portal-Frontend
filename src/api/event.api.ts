@@ -21,6 +21,16 @@ export class EventApi {
     return res.data;
   }
 
+  async getEventByEmployeeId(employeeId: string) {
+    const res = await httpClient.get(`/events/employee/${employeeId}`);
+    return res.data;
+  }
+
+  async updateEventStatus() {
+    const res = await httpClient.post('/events/update-status');
+    return res.data;
+  }
+
   async assignEmployees(data: { eventId: string; status: string }) {
     const res = await httpClient.post('/events/assign-employees', data);
     return res.data;
