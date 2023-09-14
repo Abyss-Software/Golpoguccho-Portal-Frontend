@@ -1,46 +1,47 @@
-import { Button, Stepper } from '@mantine/core';
-import { FormProvider, useForm } from 'react-hook-form';
-import BackIcon from 'remixicon-react/ArrowLeftSLineIcon';
-import { CreateBookingValidationSchema } from '@/constants/validation/CreateBookingValidationSchema';
-import EventDetailsForm from '@/components/bookingForm/EventDetailsForm';
-import EventIcon from 'remixicon-react/CalendarEventLineIcon';
-import { ICreateBooking } from '@/interfaces/createBooking.interface';
-import NextIcon from 'remixicon-react/ArrowRightSLineIcon';
-import PaymentIcon from 'remixicon-react/CurrencyLineIcon';
-import PersonalIcon from 'remixicon-react/User3LineIcon';
-import PersonalInfoForm from '@/components/bookingForm/PersonalInfoForm';
-import ReviewInfo from '@/components/bookingForm/ReviewInfo';
-import SubmitIcon from 'remixicon-react/CheckLineIcon';
-import { useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import PaymentForm from '@/components/bookingForm/PaymentForm';
-import useBookingAction from '@/hooks/useBookingAction';
-import { notifications } from '@mantine/notifications';
-import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
-import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
-import { useAuthStore } from '@/contexts/authContext';
-import { useNavigate } from 'react-router-dom';
-import { convertTime } from '@/utils/common.util';
+import { Button, Stepper } from "@mantine/core";
+import { FormProvider, useForm } from "react-hook-form";
+
+import BackIcon from "remixicon-react/ArrowLeftSLineIcon";
+import { AiOutlineCheckCircle as CheckIcon } from "react-icons/ai";
+import { CreateBookingValidationSchema } from "@/constants/validation/CreateBookingValidationSchema";
+import { BiErrorCircle as ErrorIcon } from "react-icons/bi";
+import EventDetailsForm from "@/components/bookingForm/EventDetailsForm";
+import EventIcon from "remixicon-react/CalendarEventLineIcon";
+import { ICreateBooking } from "@/interfaces/createBooking.interface";
+import NextIcon from "remixicon-react/ArrowRightSLineIcon";
+import PaymentForm from "@/components/bookingForm/PaymentForm";
+import PaymentIcon from "remixicon-react/CurrencyLineIcon";
+import PersonalIcon from "remixicon-react/User3LineIcon";
+import PersonalInfoForm from "@/components/bookingForm/PersonalInfoForm";
+import ReviewInfo from "@/components/bookingForm/ReviewInfo";
+import SubmitIcon from "remixicon-react/CheckLineIcon";
+import { convertTime } from "@/utils/common.util";
+import { notifications } from "@mantine/notifications";
+import { useAuthStore } from "@/contexts/authContext";
+import useBookingAction from "@/hooks/useBookingAction";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const timelineContent = [
   {
-    title: 'Booking Info',
-    subtitle: 'Provide your personal information',
+    title: "Booking Info",
+    subtitle: "Provide your personal information",
     icon: <PersonalIcon />,
   },
   {
-    title: 'Events',
-    subtitle: 'Give details of your events',
+    title: "Events",
+    subtitle: "Give details of your events",
     icon: <EventIcon />,
   },
   {
-    title: 'Review',
-    subtitle: 'Double check your information',
+    title: "Review",
+    subtitle: "Double check your information",
     icon: <PaymentIcon />,
   },
   {
-    title: 'Payment',
-    subtitle: 'Make advance payment',
+    title: "Payment",
+    subtitle: "Make advance payment",
     icon: <PaymentIcon />,
   },
 ];
@@ -60,18 +61,18 @@ const CreateBookingPage = () => {
       clientId: userInfo?.id,
       events: [
         {
-          eventTypeId: '',
-          packageId: '',
-          eventTitle: '',
+          eventTypeId: "",
+          packageId: "",
+          eventTitle: "",
           eventDate: new Date(),
-          eventTime: '',
-          eventEndTime: '',
-          dayOrEvening: '',
-          dhakaOrOutside: '',
+          eventTime: "",
+          eventEndTime: "",
+          dayOrEvening: "",
+          dhakaOrOutside: "",
           numberOfGuests: 0,
-          eventVenue: '',
-          eventVenueAddress: '',
-          additionalInfo: '',
+          eventVenue: "",
+          eventVenueAddress: "",
+          additionalInfo: "",
         },
       ],
     },
@@ -82,17 +83,27 @@ const CreateBookingPage = () => {
       if (
         activeTab === 0 &&
         !(await methods.trigger([
-          'bookingTitle',
-          'fullName',
-          'email',
-          'contactPrimary',
-          'contactSecondary',
-          'address',
-          'city',
+          "bookingTitle",
+          "fullName",
+          "email",
+          "contactPrimary",
+          "contactSecondary",
+          "address",
+          "city",
         ]))
       )
         return;
-      else if (activeTab === 1 && !(await methods.trigger(['events']))) return;
+      else if (activeTab === 1 && !(await methods.trigger(["events"]))) return;
+      else if (
+        activeTab === 3 &&
+        !(await methods.trigger([
+          "totalPayment",
+          "advancePayment",
+          "advancePaymentMethod",
+          "advanceTransactionId",
+        ]))
+      )
+        return;
 
       setActiveTab((prev) => prev + 1);
     } catch (error) {
@@ -100,7 +111,7 @@ const CreateBookingPage = () => {
     }
   };
 
-  console.log('errors:', methods.formState.errors);
+  console.log("errors:", methods.formState.errors);
 
   const onSubmit = (data: ICreateBooking) => {
     data.events.map((event) => {
@@ -114,10 +125,10 @@ const CreateBookingPage = () => {
         onSuccess: (data) => {
           notifications.update({
             withBorder: true,
-            id: 'bookingCreation',
-            color: 'green',
-            title: 'Success',
-            message: 'Booking Created',
+            id: "bookingCreation",
+            color: "green",
+            title: "Success",
+            message: "Booking Created",
             icon: <CheckIcon size="2rem" />,
           });
           navigate(`/client/booking-details/${data.body.bookingResult.id}`);
@@ -125,10 +136,10 @@ const CreateBookingPage = () => {
         onError: (error: any) => {
           notifications.update({
             withBorder: true,
-            id: 'bookingCreation',
-            color: 'red',
-            title: 'Failed',
-            message: error?.response?.data?.message || 'Something went wrong',
+            id: "bookingCreation",
+            color: "red",
+            title: "Failed",
+            message: error?.response?.data?.message || "Something went wrong",
             icon: <ErrorIcon size="2rem" />,
           });
         },
@@ -166,7 +177,7 @@ const CreateBookingPage = () => {
         >
           <div
             style={{
-              display: activeTab === 0 ? 'block' : 'none',
+              display: activeTab === 0 ? "block" : "none",
             }}
           >
             <PersonalInfoForm />
@@ -174,7 +185,7 @@ const CreateBookingPage = () => {
 
           <div
             style={{
-              display: activeTab === 1 ? 'block' : 'none',
+              display: activeTab === 1 ? "block" : "none",
             }}
           >
             <EventDetailsForm />

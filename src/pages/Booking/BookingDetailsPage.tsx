@@ -1,15 +1,16 @@
-import { AdminSpecific } from '@/components/bookingDetails/AdminSpecific';
-import { AfterPaymentClient } from '@/components/bookingDetails/AfterPaymentClient';
-import DuePaymentForm from '@/components/bookingDetails/DuePaymentForm';
-import { UserRoles } from '@/constants/userRoles';
-import { ThemeContext } from '@/contexts/ThemeContext';
-import { useAuthStore } from '@/contexts/authContext';
-import useBookingAction from '@/hooks/useBookingAction';
-import { Accordion, Button, Table } from '@mantine/core';
-import { modals } from '@mantine/modals';
-import { useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import EventDetails from '@/components/bookingDetails/EventDetails';
+import { Accordion, Button, Table } from "@mantine/core";
+
+import { AdminSpecific } from "@/components/bookingDetails/AdminSpecific";
+import { AfterPaymentClient } from "@/components/bookingDetails/AfterPaymentClient";
+import DuePaymentForm from "@/components/bookingDetails/DuePaymentForm";
+import EventDetails from "@/components/bookingDetails/EventDetails";
+import { ThemeContext } from "@/contexts/ThemeContext";
+import { UserRoles } from "@/constants/userRoles";
+import { modals } from "@mantine/modals";
+import { useAuthStore } from "@/contexts/authContext";
+import useBookingAction from "@/hooks/useBookingAction";
+import { useContext } from "react";
+import { useParams } from "react-router-dom";
 
 const BookingDetailsPage = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -24,9 +25,9 @@ const BookingDetailsPage = () => {
 
   const handleMakeDuePayment = (bookingId: string, duePayment: number) => {
     modals.open({
-      title: 'Make Due Payment',
+      title: "Make Due Payment",
       centered: true,
-      size: 'lg',
+      size: "lg",
       children: (
         <DuePaymentForm bookingId={bookingId} duePayment={duePayment} />
       ),
@@ -55,18 +56,18 @@ const BookingDetailsPage = () => {
         </h3>
         <div className="p-4 space-y-1">
           <p>
-            <span className="font-bold">Full Name:</span>{' '}
+            <span className="font-bold">Full Name:</span>{" "}
             {bookingData?.fullName}
           </p>
           <p>
             <span className="font-bold">Email:</span> {bookingData?.email}
           </p>
           <p>
-            <span className="font-bold">Primary Contact:</span>{' '}
+            <span className="font-bold">Primary Contact:</span>{" "}
             {bookingData?.contactPrimary}
           </p>
           <p>
-            <span className="font-bold">Secondary Contact:</span>{' '}
+            <span className="font-bold">Secondary Contact:</span>{" "}
             {bookingData?.contactSecondary}
           </p>
           <p>
@@ -76,17 +77,17 @@ const BookingDetailsPage = () => {
             <span className="font-bold">City:</span> {bookingData?.city}
           </p>
           <p>
-            <span className="font-bold">Booking Date:</span>{' '}
+            <span className="font-bold">Booking Date:</span>{" "}
             {new Date(bookingData?.createdAt).toLocaleDateString()}
           </p>
 
           <p>
-            <span className="font-bold">Promo Code:</span>{' '}
-            {bookingData?.promoCode ? bookingData?.promoCode : 'N/A'}
+            <span className="font-bold">Promo Code:</span>{" "}
+            {bookingData?.promoCode ? bookingData?.promoCode : "N/A"}
           </p>
         </div>
       </div>
-      {/* <hr className="border-primaryColor mb-8" /> */}
+
       <div>
         <h3 className="text-2xl font-semibold text-primaryColor mb-2 uppercase">
           Events
@@ -96,10 +97,10 @@ const BookingDetailsPage = () => {
           defaultValue={[`${0}`]}
           transitionDuration={500}
           multiple
-          className={`${!darkMode && 'bg-[#fafafa]'}`}
+          className={`${!darkMode && "bg-[#fafafa]"}`}
         >
           {bookingData?.events?.map((event: any, index: number) => (
-            <EventDetails event={event} index={index} />
+            <EventDetails key={event} event={event} index={index} />
           ))}
         </Accordion>
       </div>
@@ -108,8 +109,9 @@ const BookingDetailsPage = () => {
         <h3 className="text-2xl font-semibold text-primaryColor mb-2 uppercase">
           Payment Information
         </h3>
+
         {userInfo?.role == UserRoles.CLIENT &&
-          bookingData?.status == 'CONFIRMED' && (
+          bookingData?.status == "CONFIRMED" && (
             <Button
               className="ml-auto"
               disabled={bookingData?.dueTransactionId}
@@ -120,6 +122,7 @@ const BookingDetailsPage = () => {
               Make Due Payment
             </Button>
           )}
+
         <div className="p-4 space-y-1 overflow-auto">
           <Table
             striped
@@ -161,7 +164,7 @@ const BookingDetailsPage = () => {
         </div>
 
         {userInfo?.role == UserRoles.CLIENT &&
-          bookingData?.status == 'COMPLETED' && (
+          bookingData?.status == "COMPLETED" && (
             <AfterPaymentClient bookingData={bookingData} />
           )}
         {(userInfo?.role == UserRoles.ADMIN ||

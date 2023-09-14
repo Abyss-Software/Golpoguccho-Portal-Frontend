@@ -1,21 +1,14 @@
-import { paymentOptions } from '@/constants/selectOptions';
-import useBookingAction from '@/hooks/useBookingAction';
-import { ICreateBooking } from '@/interfaces/createBooking.interface';
-import {
-  Button,
-  Group,
-  Radio,
-  SegmentedControl,
-  Text,
-  TextInput,
-} from '@mantine/core';
-import { notifications } from '@mantine/notifications';
-import React, { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
-import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
-import BkashInstructions from './BkashInstructions';
-import BankInstructions from './BankTransferInstructions';
+import { Button, Group, Radio, Text, TextInput } from "@mantine/core";
+import { useEffect, useState } from "react";
+
+import BankInstructions from "./BankTransferInstructions";
+import BkashInstructions from "./BkashInstructions";
+import { AiOutlineCheckCircle as CheckIcon } from "react-icons/ai";
+import { BiErrorCircle as ErrorIcon } from "react-icons/bi";
+import { ICreateBooking } from "@/interfaces/createBooking.interface";
+import { notifications } from "@mantine/notifications";
+import useBookingAction from "@/hooks/useBookingAction";
+import { useFormContext } from "react-hook-form";
 
 export default function PaymentForm() {
   const {
@@ -26,53 +19,57 @@ export default function PaymentForm() {
     formState: { errors },
   } = useFormContext<ICreateBooking>();
 
-  const [payments, setPayments] = React.useState({
-    totalPayment: 0,
-    advancePayment: 0,
-    duePayment: 0,
-  });
-
-  const [apply, setApply] = React.useState<boolean>(true);
+  const [apply, setApply] = useState<boolean>(true);
 
   const { calculatePaymentMutation } = useBookingAction();
 
   const calculatePayment = () => {
-    const packageIds = getValues('events').map((event) => event.packageId);
+    const packageIds = getValues("events").map((event) => event.packageId);
 
     calculatePaymentMutation.mutate(
-      { packageIds, promoCode: getValues('promoCode') },
+      { packageIds, promoCode: getValues("promoCode") },
       {
         onSuccess: (data) => {
-          setPayments(data.body);
-          setValue('totalPayment', data.body.totalPayment);
-          setValue('advancePayment', data.body.advancePayment);
-          setValue('duePayment', data.body.duePayment);
+          setValue("totalPayment", data.body.totalPayment);
+          setValue("advancePayment", data.body.advancePayment);
+          setValue("duePayment", data.body.duePayment);
 
           notifications.update({
             withBorder: true,
-            id: 'priceValidation',
-            color: 'green',
-            title: 'Success',
-            message: getValues('promoCode')
+            id: "priceValidation",
+            color: "green",
+            title: "Success",
+            message: getValues("promoCode")
               ? apply
-                ? 'Promo Applied'
-                : 'Promo Cleared'
-              : 'Pricing Calculated',
+                ? "Promo Applied"
+                : "Promo Cleared"
+              : "Pricing Calculated",
             icon: <CheckIcon size="2rem" />,
           });
         },
         onError: (error: any) => {
           notifications.update({
             withBorder: true,
-            id: 'priceValidation',
-            color: 'red',
-            title: 'Failed',
-            message: error?.response?.data?.message || 'Something went wrong',
+            id: "priceValidation",
+            color: "red",
+            title: "Failed",
+            message: error?.response?.data?.message || "Something went wrong",
             icon: <ErrorIcon size="2rem" />,
           });
         },
       }
     );
+  };
+
+  const onApplyPromo = () => {
+    setApply(false);
+    calculatePayment();
+  };
+
+  const onClearPromo = () => {
+    setApply(true);
+    setValue("promoCode", undefined);
+    calculatePayment();
   };
 
   useEffect(() => {
@@ -87,21 +84,19 @@ export default function PaymentForm() {
 
       <div className="space-y-2">
         <p>
-          <span className="font-bold">Total Payment:</span>{' '}
-          {payments.totalPayment}
+          <span className="font-bold">Total Payment:</span>{" "}
+          {getValues("totalPayment")}
         </p>
-        {payments.advancePayment && (
-          <p>
-            <span className="font-bold">Advance Payment:</span>{' '}
-            {payments.advancePayment}
-          </p>
-        )}
-        {payments.duePayment && (
-          <p>
-            <span className="font-bold">Due Payment:</span>{' '}
-            {payments.duePayment}
-          </p>
-        )}
+
+        <p>
+          <span className="font-bold">Advance Payment:</span>{" "}
+          {getValues("advancePayment")}
+        </p>
+
+        <p>
+          <span className="font-bold">Due Payment:</span>{" "}
+          {getValues("duePayment")}
+        </p>
       </div>
 
       <div className="flex flex-col gap-4 md:flex-row">
@@ -116,27 +111,15 @@ export default function PaymentForm() {
         />
         {apply ? (
           <Button
-            disabled={!watch('promoCode')}
+            disabled={!watch("promoCode")}
             size="lg"
             type="button"
-            onClick={() => {
-              setApply(false);
-              calculatePayment();
-            }}
+            onClick={onApplyPromo}
           >
             Apply
           </Button>
         ) : (
-          <Button
-            color="red"
-            size="lg"
-            type="button"
-            onClick={() => {
-              setApply(true);
-              setValue('promoCode', undefined);
-              calculatePayment();
-            }}
-          >
+          <Button color="red" size="lg" type="button" onClick={onClearPromo}>
             Clear
           </Button>
         )}
@@ -154,10 +137,7 @@ export default function PaymentForm() {
           label="Advance Payment Method:"
           description="Select your advance payment method"
           withAsterisk
-          error={
-            errors?.advancePaymentMethod &&
-            errors?.advancePaymentMethod?.message
-          }
+          error={errors?.advancePaymentMethod?.message}
         >
           <Group mt="xs">
             <Radio value="bkash" label="bKash" />
@@ -166,10 +146,10 @@ export default function PaymentForm() {
         </Radio.Group>
       </div>
 
-      {watch('advancePaymentMethod') === 'bkash' ? (
-        <BkashInstructions amount={getValues('advancePayment') ?? 0} />
+      {watch("advancePaymentMethod") === "bkash" ? (
+        <BkashInstructions amount={getValues("advancePayment") ?? 0} />
       ) : (
-        <BankInstructions amount={getValues('advancePayment') ?? 0} />
+        <BankInstructions amount={getValues("advancePayment") ?? 0} />
       )}
 
       <div>

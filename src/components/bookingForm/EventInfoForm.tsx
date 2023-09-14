@@ -5,11 +5,11 @@ import {
   Radio,
   TextInput,
   Textarea,
-} from '@mantine/core';
+} from "@mantine/core";
 
-import { DateInput } from '@mantine/dates';
-import { ICreateBooking } from '@/interfaces/createBooking.interface';
-import { useFormContext } from 'react-hook-form';
+import { DateInput } from "@mantine/dates";
+import { ICreateBooking } from "@/interfaces/createBooking.interface";
+import { useFormContext } from "react-hook-form";
 
 type EventInfoFormProps = {
   itemIndex: number;
@@ -24,7 +24,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
   return (
     <div className="space-y-1">
       <h3 className="text-2xl font-semibold">Event Information</h3>
-      <Grid columns={2} gutter={'xl'}>
+      <Grid columns={2} gutter={"xl"}>
         <Grid.Col md={2} lg={1}>
           <TextInput
             {...register(`events.${itemIndex}.eventTitle`)}
@@ -32,10 +32,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             size="lg"
             label="Event Title"
             placeholder="Event Title"
-            error={
-              errors?.events?.[itemIndex]?.eventTitle &&
-              errors?.events?.[itemIndex]?.eventTitle?.message
-            }
+            error={errors?.events?.[itemIndex]?.eventTitle?.message}
           />
         </Grid.Col>
         <Grid.Col md={2} lg={1}>
@@ -50,13 +47,10 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             onChange={(value) => {
               setValue(
                 `events.${itemIndex}.eventDate`,
-                new Date(value?.toISOString() ?? '')
+                new Date(value?.toISOString() ?? "")
               );
             }}
-            error={
-              errors?.events?.[itemIndex]?.eventDate &&
-              errors?.events?.[itemIndex]?.eventDate?.message
-            }
+            error={errors?.events?.[itemIndex]?.eventDate?.message}
           />
         </Grid.Col>
         <Grid.Col md={2} lg={1}>
@@ -67,10 +61,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             size="lg"
             type="time"
             placeholder="Event Time"
-            error={
-              errors?.events?.[itemIndex]?.eventTime &&
-              errors?.events?.[itemIndex]?.eventTime?.message
-            }
+            error={errors?.events?.[itemIndex]?.eventTime?.message}
           />
         </Grid.Col>
         <Grid.Col md={2} lg={1}>
@@ -81,10 +72,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             size="lg"
             type="time"
             placeholder="Event End Time"
-            error={
-              errors?.events?.[itemIndex]?.eventEndTime &&
-              errors?.events?.[itemIndex]?.eventEndTime?.message
-            }
+            error={errors?.events?.[itemIndex]?.eventEndTime?.message}
           />
         </Grid.Col>
         <Grid.Col md={2} lg={1}>
@@ -96,10 +84,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             label="When is the event?"
             description="Select whether it is a day event or an evening event"
             withAsterisk
-            error={
-              errors?.events?.[itemIndex]?.dayOrEvening &&
-              errors?.events?.[itemIndex]?.dayOrEvening?.message
-            }
+            error={errors?.events?.[itemIndex]?.dayOrEvening?.message}
           >
             <Group mt="xs">
               <Radio value="day" label="Day Event" />
@@ -116,10 +101,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             label="Where is the event?"
             description="Select whether it is inside Dhaka or outside"
             withAsterisk
-            error={
-              errors?.events?.[itemIndex]?.dhakaOrOutside &&
-              errors?.events?.[itemIndex]?.dhakaOrOutside?.message
-            }
+            error={errors?.events?.[itemIndex]?.dhakaOrOutside?.message}
           >
             <Group mt="xs">
               <Radio value="dhaka" label="Inside Dhaka" />
@@ -141,10 +123,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             onChange={(value) => {
               setValue(`events.${itemIndex}.numberOfGuests`, value || 0);
             }}
-            error={
-              errors?.events?.[itemIndex]?.numberOfGuests &&
-              errors?.events?.[itemIndex]?.numberOfGuests?.message
-            }
+            error={errors?.events?.[itemIndex]?.numberOfGuests?.message}
           />
         </Grid.Col>
         <Grid.Col md={2} lg={1}>
@@ -155,10 +134,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             size="lg"
             type="text"
             placeholder="Event Venue"
-            error={
-              errors?.events?.[itemIndex]?.eventVenue &&
-              errors?.events?.[itemIndex]?.eventVenue?.message
-            }
+            error={errors?.events?.[itemIndex]?.eventVenue?.message}
           />
         </Grid.Col>
         <Grid.Col md={2} lg={1}>
@@ -171,10 +147,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             autosize
             minRows={2}
             maxRows={6}
-            error={
-              errors?.events?.[itemIndex]?.eventVenueAddress &&
-              errors?.events?.[itemIndex]?.eventVenueAddress?.message
-            }
+            error={errors?.events?.[itemIndex]?.eventVenueAddress?.message}
           />
         </Grid.Col>
         <Grid.Col md={2} lg={1}>
@@ -186,10 +159,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             autosize
             minRows={2}
             maxRows={6}
-            error={
-              errors?.events?.[itemIndex]?.additionalInfo &&
-              errors?.events?.[itemIndex]?.additionalInfo?.message
-            }
+            error={errors?.events?.[itemIndex]?.additionalInfo?.message}
           />
         </Grid.Col>
       </Grid>
