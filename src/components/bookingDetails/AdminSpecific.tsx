@@ -107,6 +107,7 @@ export const AdminSpecific = ({ bookingData }: any) => {
               size="lg"
               placeholder="Link to Image library"
               className="w-full"
+              defaultValue={bookingData?.images}
               onChange={(e) => setLink(e.currentTarget.value)}
             />
             <Button size="lg" onClick={() => handleSetLink(link)}>

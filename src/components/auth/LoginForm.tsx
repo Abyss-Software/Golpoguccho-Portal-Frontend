@@ -50,7 +50,9 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (userInfo) {
-      userInfo.role === UserRoles.ADMIN && navigate('/admin');
+      (userInfo.role === UserRoles.ADMIN ||
+        userInfo.role === UserRoles.MODERATOR) &&
+        navigate('/admin');
       userInfo.role === UserRoles.CLIENT && navigate('/client');
       userInfo.role === UserRoles.EMPLOYEE && navigate('/emp');
     }

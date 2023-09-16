@@ -1,36 +1,54 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = () => {
-  return <Pie data={pieChartData1} />;
+const PieChart = ({ stats }: any) => {
+  const [pieChartData, setPieChartData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: '# of Sales',
+        data: [] as number[],
+        backgroundColor: [] as string[],
+        borderColor: [] as string[],
+        borderWidth: 1,
+      },
+    ],
+  });
+
+  useEffect(() => {
+    if (stats) {
+      const labels = stats.map((item: any) => item.packagename);
+      const data = stats.map((item: any) => item.count);
+      const backgroundColor = Array.from(
+        { length: 7 },
+        () =>
+          `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
+            Math.random() * 256
+          )}, ${Math.floor(Math.random() * 256)}, 0.2)`
+      );
+
+      const borderColor = backgroundColor.map((color) =>
+        color.replace('0.2', '1')
+      );
+
+      setPieChartData({
+        labels,
+        datasets: [
+          {
+            label: 'Sales',
+            data,
+            backgroundColor,
+            borderColor,
+            borderWidth: 1,
+          },
+        ],
+      });
+    }
+  }, [stats]);
+
+  return <Pie data={pieChartData} />;
 };
 
 export default PieChart;
-
-export const pieChartData1 = {
-  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-  datasets: [
-    {
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ],
-      borderWidth: 1,
-    },
-  ],
-};

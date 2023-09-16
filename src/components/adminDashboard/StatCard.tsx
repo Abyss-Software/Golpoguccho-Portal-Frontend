@@ -9,6 +9,8 @@ export default function StatCard({ Icon, title, value }: StatCardProps) {
     setGradientBackground(elegantGradients[randomIndex]);
   }, []);
 
+  console.log(value);
+
   return (
     <Card
       withBorder
@@ -18,7 +20,7 @@ export default function StatCard({ Icon, title, value }: StatCardProps) {
       style={{ background: gradientBackground, color: 'white' }}
     >
       <Card.Section className="text-center" mt="sm">
-        <h2 className="text-3xl">50</h2>
+        <h2 className="text-3xl">{value}</h2>
       </Card.Section>
 
       <Card.Section

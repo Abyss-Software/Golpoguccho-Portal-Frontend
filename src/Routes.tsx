@@ -25,7 +25,6 @@ export const router = createBrowserRouter([
     path: '/',
     element: <LoginPage />,
   },
-
   {
     path: '/client',
     element: (
@@ -65,7 +64,7 @@ export const router = createBrowserRouter([
   {
     path: '/admin',
     element: (
-      <AuthGuard allowedRoles={[UserRoles.ADMIN]}>
+      <AuthGuard allowedRoles={[UserRoles.ADMIN, UserRoles.MODERATOR]}>
         <AdminLayout />
       </AuthGuard>
     ),
