@@ -1,13 +1,16 @@
 import { Button, Checkbox, PasswordInput, TextInput } from '@mantine/core';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ILoginPayload } from '@/interfaces/auth.interface';
+import { ILogin } from '@/interfaces/auth.interface';
 import LockPasswordLineIcon from 'remixicon-react/LockPasswordLineIcon';
 import MailLineIcon from 'remixicon-react/MailLineIcon';
 import useAuthAction from '@/hooks/useAuthAction';
 import { useAuthStore } from '@/contexts/authContext';
 import { useEffect } from 'react';
 import { UserRoles } from '@/constants/userRoles';
+import { notifications } from '@mantine/notifications';
+import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
+import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -15,13 +18,34 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ILoginPayload>();
+  } = useForm<ILogin>();
 
   const { signinMutation } = useAuthAction(useAuthStore());
   const userInfo = useAuthStore((state) => state.userInfo);
 
-  const onSubmit: SubmitHandler<ILoginPayload> = (data) => {
-    signinMutation.mutate(data);
+  const onSubmit: SubmitHandler<ILogin> = (data) => {
+    signinMutation.mutate(data, {
+      onSuccess: () => {
+        notifications.update({
+          withBorder: true,
+          id: 'signingIn',
+          color: 'green',
+          title: 'Success',
+          message: 'Logged in successfully',
+          icon: <CheckIcon size="2rem" />,
+        });
+      },
+      onError: (error: any) => {
+        notifications.update({
+          withBorder: true,
+          id: 'signingIn',
+          color: 'red',
+          title: 'Failed',
+          message: error?.response?.data?.message || 'Something went wrong',
+          icon: <ErrorIcon size="2rem" />,
+        });
+      },
+    });
   };
 
   useEffect(() => {

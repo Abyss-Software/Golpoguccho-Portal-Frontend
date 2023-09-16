@@ -1,20 +1,20 @@
-import { Button, Drawer, Modal, SimpleGrid, Text } from '@mantine/core';
+import { Button, Drawer, SimpleGrid, Text } from '@mantine/core';
 import EventTypeCreateFrom, {
   EventTypeCreate,
 } from '@/components/eventTypes/EventTypeCreateFrom';
+
+import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
+import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
 import EventTypeDetails from '@/components/eventTypes/EventTypeDetails';
 import EventTypesCard from '@/components/eventTypes/EventTypesCard';
 import { IEventType } from '@/interfaces/packages.interface';
-import { useDisclosure } from '@mantine/hooks';
-import { useState } from 'react';
-import { useContext } from 'react';
 import { ThemeContext } from '@/contexts/ThemeContext';
-import useEventTypeAction from '@/hooks/useEventTypeAction';
-import { notifications } from '@mantine/notifications';
-import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
-import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
 import { modals } from '@mantine/modals';
-import PackageCreateForm from '@/components/package/PackageCreateForm';
+import { notifications } from '@mantine/notifications';
+import { useContext } from 'react';
+import { useDisclosure } from '@mantine/hooks';
+import useEventTypeAction from '@/hooks/useEventTypeAction';
+import { useState } from 'react';
 
 const EventTypesPage = () => {
   const [openedDrawer, setDrawer] = useDisclosure(false);
@@ -24,25 +24,6 @@ const EventTypesPage = () => {
   const { data: eventTypes } = fetchEventTypes();
 
   const [selectedEvent, setSelectedEvent] = useState<IEventType>();
-
-  const handleEventTypeClick = (eventType: IEventType) => {
-    setSelectedEvent(eventType);
-    setDrawer.open();
-  };
-
-  const handleAddNewEventType = () => {
-    modals.open({
-      title: 'Create Event Type',
-      children: <EventTypeCreateFrom onEventTypeCreate={onEventTypeCreate} />,
-    });
-  };
-
-  const handleCreatePackageClick = () => {
-    modals.open({
-      title: 'Package',
-      children: <PackageCreateForm />,
-    });
-  };
 
   const {
     createEventTypeMutation,
@@ -54,6 +35,7 @@ const EventTypesPage = () => {
     createEventTypeMutation.mutate(data, {
       onSuccess: () => {
         notifications.update({
+          withBorder: true,
           id: 'eventTypeCreation',
           color: 'green',
           title: 'Success',
@@ -64,6 +46,7 @@ const EventTypesPage = () => {
       },
       onError: (error: any) => {
         notifications.update({
+          withBorder: true,
           id: 'eventTypeCreation',
           color: 'red',
           title: 'Failed',
@@ -80,6 +63,7 @@ const EventTypesPage = () => {
       {
         onSuccess: () => {
           notifications.update({
+            withBorder: true,
             id: 'eventTypeUpdate',
             color: 'green',
             title: 'Success',
@@ -91,6 +75,7 @@ const EventTypesPage = () => {
         },
         onError: (error: any) => {
           notifications.update({
+            withBorder: true,
             id: 'eventTypeUpdate',
             color: 'red',
             title: 'Failed',
@@ -106,6 +91,7 @@ const EventTypesPage = () => {
     deleteEventTypeMutation.mutate(id, {
       onSuccess: () => {
         notifications.update({
+          withBorder: true,
           id: 'eventTypeDelete',
           color: 'green',
           title: 'Success',
@@ -117,6 +103,7 @@ const EventTypesPage = () => {
       },
       onError: (error: any) => {
         notifications.update({
+          withBorder: true,
           id: 'eventTypeDelete',
           color: 'red',
           title: 'Failed',
@@ -127,9 +114,25 @@ const EventTypesPage = () => {
     });
   };
 
-  const onUpdateClick = (selectedEvent: IEventType) => {
+  const handleEventTypeClick = (eventType: IEventType) => {
+    setSelectedEvent(eventType);
+    setDrawer.open();
+  };
+
+  const handleEventTypeCreateClick = () => {
+    modals.open({
+      title: 'Create Event Type',
+      centered: true,
+      size: 'lg',
+      children: <EventTypeCreateFrom onEventTypeCreate={onEventTypeCreate} />,
+    });
+  };
+
+  const handleEventUpdateClick = (selectedEvent: IEventType) => {
     modals.open({
       title: 'Update Event Type',
+      size: 'lg',
+      centered: true,
       children: (
         <EventTypeCreateFrom
           onEventTypeUpdate={onEventTypeUpdate}
@@ -140,14 +143,15 @@ const EventTypesPage = () => {
     });
   };
 
-  const onDeleteClick = (selectedEvent: IEventType) =>
+  const handleEventDeleteClick = (selectedEvent: IEventType) =>
     modals.openConfirmModal({
       title: 'Please confirm your action',
+      centered: true,
       children: (
         <Text size="sm">Are you sure you want to delete this event type?</Text>
       ),
       labels: { confirm: 'Confirm', cancel: 'Cancel' },
-      onCancel: () => {},
+      confirmProps: { color: 'red' },
       onConfirm: () => onEventTypeDelete(selectedEvent.id!),
     });
 
@@ -168,13 +172,13 @@ const EventTypesPage = () => {
         overlayProps={{ opacity: 0.5, blur: 4 }}
         padding={'lg'}
         size={'xl'}
+        zIndex={100}
       >
-        {selectedEvent && (
+        {selectedEvent?.id && (
           <EventTypeDetails
-            selectedEvent={selectedEvent}
-            onCreatePackageClick={handleCreatePackageClick}
-            onEditClick={onUpdateClick}
-            onDeleteClick={onDeleteClick}
+            eventTypeId={selectedEvent.id}
+            onEventUpdate={handleEventUpdateClick}
+            onEventDelete={handleEventDeleteClick}
           />
         )}
       </Drawer>
@@ -185,7 +189,7 @@ const EventTypesPage = () => {
         size="md"
         uppercase
         variant={darkMode ? 'outline' : 'filled'}
-        onClick={handleAddNewEventType}
+        onClick={handleEventTypeCreateClick}
       >
         Add New Event Type
       </Button>
@@ -199,7 +203,7 @@ const EventTypesPage = () => {
           { maxWidth: '36rem', cols: 1, spacing: 'sm' },
         ]}
       >
-        {eventTypes?.body.map((eventType: any) => (
+        {eventTypes?.map((eventType: any) => (
           <div
             key={eventType.id}
             onClick={() => handleEventTypeClick(eventType)}

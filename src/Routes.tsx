@@ -43,7 +43,7 @@ export const router = createBrowserRouter([
         element: <CreateBookingPage />,
       },
       {
-        path: 'booking-details',
+        path: 'booking-details/:id',
         element: <BookingDetailsPage />,
       },
     ],
@@ -83,7 +83,7 @@ export const router = createBrowserRouter([
         element: <BookingListPage />,
       },
       {
-        path: 'booking-details',
+        path: 'booking-details/:id',
         element: <BookingDetailsPage />,
       },
       {
@@ -93,6 +93,10 @@ export const router = createBrowserRouter([
       {
         path: 'employees',
         element: <EmployeeListPage />,
+      },
+      {
+        path: 'employees/:employeeId',
+        element: <EmployeeDashboard />,
       },
       {
         path: 'promos',

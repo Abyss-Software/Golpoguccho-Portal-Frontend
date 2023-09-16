@@ -1,17 +1,37 @@
+import useEventTypeAction from '@/hooks/useEventTypeAction';
 import { ICreateBooking } from '@/interfaces/createBooking.interface';
-import React, { useEffect, useState } from 'react';
+import { IEventType, IPackage } from '@/interfaces/packages.interface';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 const ReviewInfo = () => {
-  const {
-    register,
-    setValue,
-    getValues,
-    formState: { errors },
-  } = useFormContext<ICreateBooking>();
+  const { getValues } = useFormContext<ICreateBooking>();
+
+  const { fetchEventTypes } = useEventTypeAction();
+  const { data } = fetchEventTypes();
+
+  const [eventTypes, setEventTypes] = useState<Record<string, IEventType>>();
+  const [packages, setPackages] = useState<Record<string, IPackage>>();
+
+  useEffect(() => {
+    if (data) {
+      const eventTypes = data.reduce((acc, eventType) => {
+        acc[eventType.id!] = eventType;
+        return acc;
+      }, {} as Record<string, IEventType>);
+      setEventTypes(eventTypes);
+
+      const packages = data.reduce((acc, eventType) => {
+        eventType.packages.forEach((packageItem) => {
+          acc[packageItem.id!] = packageItem;
+        });
+        return acc;
+      }, {} as Record<string, IPackage>);
+      setPackages(packages);
+    }
+  }, [data]);
 
   const [bookingData, setBookingData] = useState<ICreateBooking>();
-
   useEffect(() => {
     setTimeout(() => {
       setBookingData(getValues());
@@ -75,10 +95,15 @@ const ReviewInfo = () => {
             <div className="space-y-1 px-2">
               <p>
                 <span className="font-bold">Event Type:</span>{' '}
-                {event.eventTypeId}
+                {eventTypes?.[event.eventTypeId]?.title}
               </p>
               <p>
-                <span className="font-bold">Package ID:</span> {event.packageId}
+                <span className="font-bold">Package:</span>{' '}
+                {packages?.[event.packageId]?.title}
+              </p>
+              <p>
+                <span className="font-bold">Price:</span>{' '}
+                {packages?.[event.packageId]?.price}
               </p>
               <p>
                 <span className="font-bold">Event Title:</span>{' '}
@@ -122,25 +147,7 @@ const ReviewInfo = () => {
           </div>
         ))}
       </div>
-      <hr className="border-primaryColor mt-4" />
-      <div className="mt-4">
-        <p>
-          <span className="font-bold">Total Payment:</span>{' '}
-          {bookingData?.totalPayment}
-        </p>
-        {bookingData?.advancePayment && (
-          <p>
-            <span className="font-bold">Advance Payment:</span>{' '}
-            {bookingData?.advancePayment}
-          </p>
-        )}
-        {bookingData?.duePayment && (
-          <p>
-            <span className="font-bold">Due Payment:</span>{' '}
-            {bookingData?.duePayment}
-          </p>
-        )}
-      </div>
+      <hr className="border-primaryColor mb-8" />
     </div>
   );
 };

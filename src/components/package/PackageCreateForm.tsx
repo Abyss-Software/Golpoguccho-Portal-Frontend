@@ -6,40 +6,58 @@ import {
   TextInput,
   Textarea,
 } from '@mantine/core';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Dropzone } from '@mantine/dropzone';
 import { PackageCreateValidatorSchema } from '@/constants/validation/PackageCreateValidatorSchema';
-import { useForm } from 'react-hook-form';
+import { toBase64 } from '@/utils/common.util';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-type PackageCreate = {
+export type PackageCreate = {
+  id?: string;
   title: string;
   description: string;
-  image?: File;
+  image?: string;
   price: number;
 };
 
-function PackageCreateForm() {
+function PackageCreateForm({
+  onPackageUpdate,
+  onPackageCreate,
+  isUpdate,
+  defaultValues,
+}: {
+  onPackageUpdate?: SubmitHandler<PackageCreate>;
+  onPackageCreate?: SubmitHandler<PackageCreate>;
+  isUpdate?: boolean;
+  defaultValues?: PackageCreate;
+}) {
   const {
     register,
     handleSubmit,
     setValue,
+    getValues,
     watch,
     formState: { errors },
   } = useForm<PackageCreate>({
     resolver: zodResolver(PackageCreateValidatorSchema),
+    defaultValues: defaultValues,
   });
 
-  const onFileDrop = (files: File[]) => {
-    setValue('image', files[0]);
+  const onFileDrop = async (files: File[]) => {
+    setValue('image', await toBase64(files[0]));
   };
 
-  const onSubmit = (data: PackageCreate) => {
-    console.log(data);
+  const onSubmitClick = () => {
+    if (isUpdate) {
+      onPackageUpdate?.(getValues());
+    } else {
+      onPackageCreate?.(getValues());
+    }
   };
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="space-y-4" onSubmit={handleSubmit(onSubmitClick)}>
       {!watch('image') && (
         <Dropzone
           onDrop={onFileDrop}
@@ -63,7 +81,7 @@ function PackageCreateForm() {
       {watch('image') && (
         <div className="relative">
           <img
-            src={URL.createObjectURL(watch('image')!)}
+            src={watch('image')!}
             className="w-full h-64 object-cover"
             alt=""
           />
@@ -88,14 +106,15 @@ function PackageCreateForm() {
       />
 
       <NumberInput
-        {...register('price')}
+        {...register('price', { valueAsNumber: true })}
         size="md"
         min={0}
         max={100000}
         label="Price"
+        defaultValue={defaultValues?.price}
         placeholder="Enter Package Price"
         error={errors?.price && errors?.price?.message}
-        onChange={(value) => setValue('price', value ? value : 0)}
+        onChange={(value) => setValue('price', value || 0)}
       />
 
       <Textarea

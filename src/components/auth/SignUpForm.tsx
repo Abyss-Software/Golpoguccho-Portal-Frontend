@@ -1,31 +1,32 @@
 import { Button, PasswordInput, TextInput } from '@mantine/core';
+import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { ISignupPayload } from '@/interfaces/auth.interface';
-import { Link, useNavigate } from 'react-router-dom';
+import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
+import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
+import { ISignup } from '@/interfaces/auth.interface';
 import LockPasswordLineIcon from 'remixicon-react/LockPasswordLineIcon';
 import MailLineIcon from 'remixicon-react/MailLineIcon';
 import PersonIcon from 'remixicon-react/User6LineIcon';
+import { notifications } from '@mantine/notifications';
 import useAuthAction from '@/hooks/useAuthAction';
 import { useAuthStore } from '@/contexts/authContext';
-import { notifications } from '@mantine/notifications';
-import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
-import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
 
 const SignUpForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ISignupPayload>();
+  } = useForm<ISignup>();
 
   const { signupMutation } = useAuthAction(useAuthStore());
   const navigate = useNavigate();
-  const onSubmit: SubmitHandler<ISignupPayload> = (data) => {
+  const onSubmit: SubmitHandler<ISignup> = (data) => {
     signupMutation.mutate(data, {
       onSuccess: () => {
         navigate('/');
         notifications.update({
+          withBorder: true,
           id: 'signup',
           color: 'green',
           title: 'Signup success',
@@ -34,8 +35,8 @@ const SignUpForm = () => {
         });
       },
       onError: (error: any) => {
-        console.log(error);
         notifications.update({
+          withBorder: true,
           id: 'signup',
           color: 'red',
           title: 'Signup failed',

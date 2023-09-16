@@ -1,10 +1,15 @@
 export interface IBookings {
-  id: number;
-  title: string;
-  clientName: string;
-  contactNumber: string;
+  id: string;
+  bookingTitle: string;
+  fullName: string;
+  contactPrimary: string;
   email: string;
-  eventCount: number;
-  paymentStatus: string;
-  bookingStatus: string;
+  totalPayment: number;
+  status: string;
+  createdAt: Date;
+}
+
+export interface IDuePayment {
+  duePaymentMethod: string;
+  dueTransactionId: string;
 }

@@ -1,41 +1,22 @@
 export interface IPromoCode {
-  code: string;
-  discountPercentage: string;
-  maxUsage: string;
-  expiryDate: string;
+  id: string;
+  promo_code: string;
+  description: string;
+  percentage: number;
+  max_use: number;
+  max_discount: number;
+  expiry_date: Date;
   status: string;
-  createdAt: string;
+  createdAt: Date;
 }
 
-export const promoCodesColumns = [
-  {
-    name: 'Promo Code',
-    selector: (row: IPromoCode) => row.code,
-    sortable: false,
-  },
-  {
-    name: 'Discount Percentage',
-    selector: (row: IPromoCode) => row.discountPercentage,
-    sortable: false,
-  },
-  {
-    name: 'Max Usage',
-    selector: (row: IPromoCode) => row.maxUsage,
-    sortable: false,
-  },
-  {
-    name: 'Expiry Date',
-    selector: (row: IPromoCode) => row.expiryDate,
-    sortable: false,
-  },
-  {
-    name: 'Status',
-    selector: (row: IPromoCode) => row.status,
-    sortable: false,
-  },
-  {
-    name: 'Created At',
-    selector: (row: IPromoCode) => row.createdAt,
-    sortable: false,
-  },
-];
+export interface IPromoDto {
+  id?: string;
+  promoCode: string;
+  description: string;
+  discountPercentage: number;
+  maxUse: number;
+  maxDiscount: number;
+  expiryDate: Date;
+  status: string;
+}

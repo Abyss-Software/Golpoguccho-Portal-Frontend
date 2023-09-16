@@ -12,7 +12,7 @@ interface AuthData {
 
 class StorageUtil {
   getAuthData() {
-    const data = sessionStorage.getItem('auth') || localStorage.getItem('auth');
+    const data = sessionStorage.getItem("auth") || localStorage.getItem("auth");
     if (!data) return null;
     return JSON.parse(data);
   }
@@ -20,12 +20,12 @@ class StorageUtil {
   setAuthData(authData: AuthData, rememberMe = false) {
     if (!rememberMe)
       return sessionStorage.setItem(
-        'auth',
+        "auth",
         JSON.stringify({ ...authData, rememberMe })
       );
 
     return localStorage.setItem(
-      'auth',
+      "auth",
       JSON.stringify({ ...authData, rememberMe })
     );
   }
@@ -36,8 +36,8 @@ class StorageUtil {
   }
 
   removeAuthData() {
-    sessionStorage.removeItem('auth');
-    localStorage.removeItem('auth');
+    sessionStorage.removeItem("auth");
+    localStorage.removeItem("auth");
   }
 
   setCurrentUser(user: any) {
@@ -45,12 +45,12 @@ class StorageUtil {
 
     if (authData?.rememberMe)
       return localStorage.setItem(
-        'auth',
+        "auth",
         JSON.stringify({ ...authData, user })
       );
 
     return sessionStorage.setItem(
-      'auth',
+      "auth",
       JSON.stringify({ ...authData, user })
     );
   }
@@ -62,7 +62,6 @@ class StorageUtil {
 
   getLocalAccessToken() {
     const token = this.getAuthData()?.access_token;
-    console.log(token);
     return token;
   }
 }

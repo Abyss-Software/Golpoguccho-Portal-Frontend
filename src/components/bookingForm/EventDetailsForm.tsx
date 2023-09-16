@@ -1,9 +1,9 @@
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from "react-hook-form";
 
-import { Button } from '@mantine/core';
-import EventInfoForm from './EventInfoForm';
-import EventTypeSelectForm from './EventTypeSelectForm';
-import { ICreateBooking } from '@/interfaces/createBooking.interface';
+import { Button } from "@mantine/core";
+import EventInfoForm from "./EventInfoForm";
+import EventTypeSelectForm from "./EventTypeSelectForm";
+import { ICreateBooking } from "@/interfaces/createBooking.interface";
 
 const EventDetailsForm = () => {
   const { control } = useFormContext<ICreateBooking>();
@@ -15,18 +15,18 @@ const EventDetailsForm = () => {
 
   const handleAddEvent = () => {
     append({
-      eventTypeId: '',
-      packageId: '',
-      eventTitle: '',
+      eventTypeId: "",
+      packageId: "",
+      eventTitle: "",
       eventDate: new Date(),
-      eventTime: '',
-      eventEndTime: '',
-      dayOrEvening: '',
-      dhakaOrOutside: '',
+      eventTime: "",
+      eventEndTime: "",
+      dayOrEvening: "",
+      dhakaOrOutside: "",
       numberOfGuests: 0,
-      eventVenue: '',
-      eventVenueAddress: '',
-      additionalInfo: '',
+      eventVenue: "",
+      eventVenueAddress: "",
+      additionalInfo: "",
     });
   };
 

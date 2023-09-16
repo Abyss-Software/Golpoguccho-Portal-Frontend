@@ -20,15 +20,39 @@ function CommonDataTable<T>({
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
+  // const customFilter = (rows: T[], searchValue: string) => {
+  //   return rows.filter((row) =>
+  //     Object.values(row as any).some(
+  //       (value) =>
+  //         value &&
+  //         value.toString().toLowerCase().includes(searchValue.toLowerCase())
+  //     )
+  //   );
+  // };
+
+  //ts-ignore
   const customFilter = (rows: T[], searchValue: string) => {
-    return rows.filter((row) =>
-      Object.values(row as any).some(
-        (value) =>
-          value &&
-          value.toString().toLowerCase().includes(searchValue.toLowerCase())
-      )
-    );
+    return rows.filter((row) => {
+      return (Object.keys(row) as Array<keyof T>).some((key) => {
+        const value = (row as any)[key];
+        if (value && typeof value === 'object') {
+          return Object.values(value).some((nestedValue) =>
+            nestedValue
+              ? nestedValue
+                  .toString()
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase())
+              : false
+          );
+        } else {
+          return value
+            ? value.toString().toLowerCase().includes(searchValue.toLowerCase())
+            : false;
+        }
+      });
+    });
   };
+
   const filteredData = customFilter(data, searchText);
 
   // Custom theme for the table

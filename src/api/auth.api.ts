@@ -1,14 +1,16 @@
+import { ILogin, ISignup } from '@/interfaces/auth.interface';
 import { httpClient } from '@/utils/httpClient';
 import storageUtil from '@/utils/storage.util';
 
 export class AuthApi {
-  async login(data: { email: string; password: string; rememberMe: boolean }) {
+  async login(data: ILogin) {
     const res = await httpClient.post('/auth/login', data);
     storageUtil.setAuthData(res.data.body, data.rememberMe);
+
     return res.data;
   }
 
-  async signup(data: { name: string; email: string; password: string }) {
+  async signup(data: ISignup) {
     const res = await httpClient.post('/auth/signup', data);
     return res.data;
   }

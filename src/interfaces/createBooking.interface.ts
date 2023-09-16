@@ -1,4 +1,5 @@
 export interface ICreateBooking {
+  clientId: string;
   bookingTitle: string;
   fullName: string;
   email: string;
@@ -8,8 +9,11 @@ export interface ICreateBooking {
   city: string;
   events: IEvents[];
   totalPayment: number;
-  advancePayment?: number;
-  duePayment?: number;
+  advancePayment: number;
+  advancePaymentMethod: string;
+  advanceTransactionId: string;
+  duePayment: number;
+  promoCode?: string;
 }
 
 export interface IEvents {

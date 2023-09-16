@@ -1,6 +1,7 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import { eventTypeApi } from '@/api';
 import { notifications } from '@mantine/notifications';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 function useEventTypeAction() {
   const queryClient = useQueryClient();
@@ -8,6 +9,7 @@ function useEventTypeAction() {
     mutationFn: eventTypeApi.createEventType,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'eventTypeCreation',
         loading: true,
         title: 'Creating new event type...',
@@ -16,7 +18,7 @@ function useEventTypeAction() {
         withCloseButton: false,
       });
     },
-    onSuccess: (res) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['event-types']);
     },
   });
@@ -27,10 +29,18 @@ function useEventTypeAction() {
       queryFn: async () => await eventTypeApi.getEventTypes(),
     });
 
+  const fetchEventTypeById = (id: string) =>
+    useQuery({
+      enabled: !!id,
+      queryKey: ['event-type', id],
+      queryFn: async () => await eventTypeApi.getEventTypeById(id),
+    });
+
   const updateEventTypeMutation = useMutation({
     mutationFn: eventTypeApi.updateEventType,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'eventTypeUpdate',
         loading: true,
         title: 'Updating event type...',
@@ -39,7 +49,7 @@ function useEventTypeAction() {
         withCloseButton: false,
       });
     },
-    onSuccess: (res) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['event-types']);
     },
   });
@@ -48,6 +58,7 @@ function useEventTypeAction() {
     mutationFn: eventTypeApi.deleteEventType,
     onMutate: () => {
       notifications.show({
+        withBorder: true,
         id: 'eventTypeDelete',
         loading: true,
         title: 'Deleting event type...',
@@ -56,7 +67,7 @@ function useEventTypeAction() {
         withCloseButton: false,
       });
     },
-    onSuccess: (res) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['event-types']);
     },
   });
@@ -64,6 +75,7 @@ function useEventTypeAction() {
   return {
     createEventTypeMutation,
     fetchEventTypes,
+    fetchEventTypeById,
     updateEventTypeMutation,
     deleteEventTypeMutation,
   };

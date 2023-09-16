@@ -26,9 +26,7 @@ export const CreateBookingValidationSchema = z.object({
       eventEndTime: z.string().nonempty("Event end time cannot be empty"),
       dayOrEvening: z.string().nonempty("Choose an option"),
       dhakaOrOutside: z.string().nonempty("Choose an option"),
-      numberOfGuests: z.string().refine((val) => parseInt(val) > 0, {
-        message: "Number of guests must be greater than 0",
-      }),
+      numberOfGuests: z.number().min(1, "Number of guests must be at least 1"),
       eventVenue: z.string().nonempty("Event venue cannot be empty"),
       eventVenueAddress: z
         .string()
@@ -36,7 +34,10 @@ export const CreateBookingValidationSchema = z.object({
       additionalInfo: z.string().optional(),
     })
   ),
-  totalPayment: z.number().min(1).max(1000000),
-  advancePayment: z.number().min(1).max(1000000),
-  duePayment: z.number().min(1).max(1000000),
+  totalPayment: z.number().min(0).max(1000000),
+  advancePaymentMethod: z.string().nonempty("Choose an option"),
+  advancePayment: z.number().min(0).max(1000000),
+  advanceTransactionId: z.string().nonempty("Transaction ID cannot be empty"),
+  duePayment: z.number().min(0).max(1000000),
+  promoCode: z.string().optional(),
 });
