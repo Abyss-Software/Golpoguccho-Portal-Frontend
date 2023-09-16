@@ -104,7 +104,7 @@ export default function DuePaymentForm({
           error={errors?.dueTransactionId?.message}
         />
       </div>
-      <Button type="submit">Create Event Type</Button>
+      <Button type="submit">Make Due Payment</Button>
     </form>
   );
 }

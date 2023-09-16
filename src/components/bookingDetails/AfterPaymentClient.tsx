@@ -54,7 +54,10 @@ export const AfterPaymentClient = ({ bookingData }: any) => {
         Your Library
       </h3>
       <Card radius={8} shadow="sm" padding={20}>
-        <p onClick={redirectToExternalLink(bookingData.images)}>
+        <p
+          className="cursor-pointer"
+          onClick={redirectToExternalLink(bookingData.images)}
+        >
           {' '}
           {bookingData.images}
         </p>
