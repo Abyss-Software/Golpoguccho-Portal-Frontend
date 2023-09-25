@@ -75,6 +75,11 @@ export default function EventDetails({
                   {event.additional_info}
                 </p>
               )}
+              {event.status && (
+                <p>
+                  <span className="font-bold">Status:</span> {event.status}
+                </p>
+              )}
             </div>
             {(userInfo?.role == 'ADMIN' || userInfo?.role == 'MODERATOR') && (
               <Button

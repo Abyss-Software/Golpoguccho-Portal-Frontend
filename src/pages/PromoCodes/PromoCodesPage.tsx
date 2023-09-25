@@ -16,6 +16,7 @@ const PromoCodesPage = () => {
     updatePromoMutation,
     deletePromoMutation,
   } = usePromoAction();
+
   const { data: promos } = fetchPromos();
 
   const onPromoCreate = (data: IPromoDto) => {

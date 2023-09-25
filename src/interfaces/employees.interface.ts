@@ -17,6 +17,7 @@ export interface IEmployee {
   monthlySalary?: number;
   createdAt?: Date;
   updatedAt?: Date;
+  paid?: number;
 }
 
 export interface ICreateEmployee {

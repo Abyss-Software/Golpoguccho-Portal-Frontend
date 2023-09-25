@@ -9,11 +9,13 @@ function CommonDataTable<T>({
   columns,
   handleRowClick,
   title,
+  defaultSortField,
 }: {
   data: T[];
   columns: any;
   handleRowClick?: (row: T) => void;
   title?: any;
+  defaultSortField?: string;
 }) {
   const { darkMode } = useContext(ThemeContext);
   const [searchText, setSearchText] = useState('');
@@ -83,7 +85,7 @@ function CommonDataTable<T>({
   }, [darkMode]);
 
   return (
-    <div className="p-2  border-4 border-sky-500">
+    <div className="p-2 border-4 border-sky-500">
       <DataTable
         fixedHeader
         fixedHeaderScrollHeight="400px"
@@ -111,6 +113,7 @@ function CommonDataTable<T>({
         theme={darkMode ? 'dark' : 'light'}
         customStyles={commonHeadCellStyles}
         onRowClicked={handleRowClick}
+        defaultSortFieldId={defaultSortField}
       />
     </div>
   );
