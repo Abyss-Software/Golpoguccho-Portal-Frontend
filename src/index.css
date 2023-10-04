@@ -17,21 +17,20 @@
   --color-primary: hsl(149, 100%, 29%);
   --color-primary-dark: hsl(149, 100%, 19%);
   --color-primary-light: hsl(149, 100%, 39%);
-  --color-primary-lighter: hsl(149, 100%, 79%);
+  --color-primary-lighter: hsl(149, 100%, 90%);
 
   --color-error: #ef4444;
   --color-error-dark: #b91c1c;
   --color-error-light: #fca5a5;
   --color-error-lighter: #fee2e2;
 
-  --color-nav-light: #3fe891;
-  --color-nav-dark: #1f2937;
+  --color-topnav: #009247;
 }
 
 :root[class*='dark'] {
   --color-text: hsl(216, 25%, 75%);
 
-  --color-background: #1a1a1a;
+  --color-background: hsl(220, 7%, 12%);
 
   --color-paper: #1c1c1c;
 
@@ -42,6 +41,8 @@
   --color-primary-lighter: #2a2837;
 
   --color-error-lighter: #3a2627;
+
+  --color-topnav: #009247;
 }
 
 :root {
@@ -70,6 +71,10 @@ html {
   overflow-x: hidden;
   overflow-y: overlay;
   /* background: var(--color-background); */
+}
+
+body {
+  overflow-x: hidden;
 }
 
 #root {

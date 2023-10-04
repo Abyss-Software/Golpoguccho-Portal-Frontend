@@ -1,46 +1,103 @@
-import { Children, useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   AppShell,
-  Navbar,
   Header,
   Text,
-  MediaQuery,
-  Burger,
   useMantineTheme,
+  Switch,
+  Group,
+  Menu,
+  Avatar,
 } from '@mantine/core';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
+import SunLineIcon from 'remixicon-react/SunLineIcon';
+import MoonLineIcon from 'remixicon-react/MoonLineIcon';
+import { ThemeContext } from '../contexts/ThemeContext';
+import User3LineIcon from 'remixicon-react/User3LineIcon';
+import LogoutBoxIcon from 'remixicon-react/LogoutBoxRLineIcon';
+import useAuthAction from '@/hooks/useAuthAction';
+import { useAuthStore } from '@/contexts/authContext';
 
 export default function ClientLayout() {
+  const { toggleDarkMode, darkMode } = useContext(ThemeContext);
+
+  const { signoutMutation } = useAuthAction(useAuthStore());
+
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    signoutMutation.mutate();
+    navigate('/');
+  };
+
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+
   return (
     <AppShell
+      padding={0}
       styles={{
         main: {
           background:
             theme.colorScheme === 'dark'
               ? theme.colors.dark[8]
               : 'rgb(250 250 250)',
+          padding: '0px',
+          paddingTop: '70px',
         },
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       header={
-        <Header height={{ base: 50, md: 70 }} p="md">
-          <div
-            style={{ display: 'flex', alignItems: 'center', height: '100%' }}
-          >
-            {/* <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-              <Burger
-                opened={opened}
-                onClick={() => setOpened((o) => !o)}
-                size="sm"
-                color={theme.colors.gray[6]}
-                mr="xl"
-              />
-            </MediaQuery> */}
+        <Header height={70} p="md" bg={'#009247'}>
+          <div className="text-white flex items-center justify-between h-full">
+            <Text onClick={() => navigate('')} className="cursor-pointer">
+              Golpoguccho Photography
+            </Text>
+            <Group noWrap>
+              <Menu shadow="md" width={200}>
+                <Menu.Target>
+                  <Avatar size={35} radius="xl">
+                    <User3LineIcon size="1.2rem" />
+                  </Avatar>
+                </Menu.Target>
 
-            <Text>Golpoguccho Photography</Text>
+                <Menu.Dropdown>
+                  <Menu.Item
+                    closeMenuOnClick={false}
+                    rightSection={
+                      <Switch
+                        size="md"
+                        color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
+                        onChange={toggleDarkMode}
+                        checked={darkMode}
+                        onLabel={
+                          <SunLineIcon
+                            size="1rem"
+                            color={theme.colors.yellow[4]}
+                          />
+                        }
+                        offLabel={
+                          <MoonLineIcon
+                            size="1rem"
+                            color={theme.colors.blue[6]}
+                          />
+                        }
+                      />
+                    }
+                  >
+                    Change Theme{' '}
+                  </Menu.Item>
+
+                  <Menu.Item
+                    color="red"
+                    icon={<LogoutBoxIcon size={14} />}
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            </Group>
           </div>
         </Header>
       }

@@ -3,6 +3,7 @@ import Menu5LineIcon from 'remixicon-react/Menu5LineIcon';
 import MoonClearLineIcon from 'remixicon-react/MoonClearLineIcon';
 import SunLineIcon from 'remixicon-react/SunLineIcon';
 import { ThemeContext } from '../../contexts/ThemeContext';
+import { Avatar } from '@mantine/core';
 
 interface TopnavProps {
   sidebarEnabled?: boolean;
@@ -13,7 +14,7 @@ const Topnav = ({ toggleSidebar, sidebarEnabled }: TopnavProps) => {
   const { darkMode, toggleDarkMode } = useContext(ThemeContext);
 
   return (
-    <nav className="w-screen p-5 z-50 max-h-[64px] flex bg-navLight text-black">
+    <nav className="w-screen p-5 z-50 max-h-[64px] flex bg-red-200 dark  text-black">
       {sidebarEnabled && (
         <button onClick={toggleSidebar}>
           <Menu5LineIcon />

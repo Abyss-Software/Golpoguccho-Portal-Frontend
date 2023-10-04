@@ -1,25 +1,36 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { UserRoles } from '../../constants/userRoles';
+import { useAuthStore } from '@/contexts/authContext';
+import { Children } from 'react';
 
-function AuthGuard({ allowedRoles = Object.values(UserRoles) }) {
-  const location = useLocation();
-  const userAuth = {
-    id: 1,
-    role: 'ADMIN',
-  };
-  return allowedRoles.includes(userAuth?.role) ? (
-    <Outlet />
-  ) : userAuth?.id ? (
+function AuthGuard({
+  allowedRoles,
+  children,
+}: {
+  allowedRoles: UserRoles[];
+  children: React.ReactNode;
+}) {
+  const { isLoggedIn, userInfo } = useAuthStore();
+
+  if (!isLoggedIn) {
+    return (
+      <Navigate
+        replace
+        to={{
+          pathname: '/',
+        }}
+      />
+    );
+  }
+
+  if (allowedRoles.includes(userInfo?.role!)) {
+    return <>{children}</>;
+  }
+
+  return (
     <Navigate
       to={{
         pathname: '/unauthorized',
-      }}
-    />
-  ) : (
-    <Navigate
-      replace
-      to={{
-        pathname: '/login',
       }}
     />
   );
