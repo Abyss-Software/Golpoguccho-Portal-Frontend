@@ -10,8 +10,6 @@ function AuthGuard({
   allowedRoles: UserRoles[];
   children: React.ReactNode;
 }) {
-  const location = useLocation();
-
   const { isLoggedIn, userInfo } = useAuthStore();
 
   if (!isLoggedIn) {
@@ -25,9 +23,11 @@ function AuthGuard({
     );
   }
 
-  return allowedRoles.includes(userInfo?.role!) ? (
-    children
-  ) : (
+  if (allowedRoles.includes(userInfo?.role!)) {
+    return <>{children}</>;
+  }
+
+  return (
     <Navigate
       to={{
         pathname: '/unauthorized',

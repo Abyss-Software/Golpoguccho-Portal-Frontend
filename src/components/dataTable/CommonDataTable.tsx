@@ -4,7 +4,7 @@ import { useContext, useMemo, useState } from 'react';
 import DataTable, { createTheme } from 'react-data-table-component';
 import SearchEyeIcon from 'remixicon-react/SearchEyeLineIcon';
 
-function CommonDataTable<T>({
+function CommonDataTable<T extends Object>({
   data,
   columns,
   handleRowClick,
@@ -22,17 +22,7 @@ function CommonDataTable<T>({
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
-  // const customFilter = (rows: T[], searchValue: string) => {
-  //   return rows.filter((row) =>
-  //     Object.values(row as any).some(
-  //       (value) =>
-  //         value &&
-  //         value.toString().toLowerCase().includes(searchValue.toLowerCase())
-  //     )
-  //   );
-  // };
 
-  //ts-ignore
   const customFilter = (rows: T[], searchValue: string) => {
     return rows.filter((row) => {
       return (Object.keys(row) as Array<keyof T>).some((key) => {
