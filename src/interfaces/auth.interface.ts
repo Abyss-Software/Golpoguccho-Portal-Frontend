@@ -8,3 +8,8 @@ export interface ISignup {
   email: string;
   password: string;
 }
+
+export interface ISocialLogin {
+  email: string;
+  name: string;
+}

@@ -7,7 +7,9 @@ const ThemeContext = createContext({
 
 function ThemeContextProvider({ children }: { children: React.ReactNode }) {
   const [darkMode, setDarkMode] = useState(
-    localStorage.getItem('darkMode') === 'true'
+    localStorage.getItem('darkMode')
+      ? localStorage.getItem('darkMode') === 'true'
+      : true
   );
 
   const toggleDarkMode = () => setDarkMode((prev) => !prev);

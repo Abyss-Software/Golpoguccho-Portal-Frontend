@@ -95,12 +95,6 @@ const LoginForm = () => {
 
       <div className="flex justify-between font-semibold text-sm">
         <Checkbox label="Remember Me" {...register('rememberMe')} />
-        <Link
-          className="no-underline text-primaryColor hover:underline hover:underline-offset-4"
-          to="/forgot-password"
-        >
-          Forgot Password?
-        </Link>
       </div>
 
       <Button radius="sm" size="md" className="uppercase mt-2" type="submit">

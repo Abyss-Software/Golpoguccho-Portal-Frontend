@@ -1,5 +1,5 @@
-import { IPackage } from "@/interfaces/packages.interface";
-import { twMerge } from "tailwind-merge";
+import { IPackage } from '@/interfaces/packages.interface';
+import { twMerge } from 'tailwind-merge';
 
 type PackageCardProps = {
   packageOption: IPackage;
@@ -17,8 +17,8 @@ function PackageCard({
   return (
     <div
       className={twMerge(
-        "cursor-pointer h-full bg-paperColor border shadow-md shadow-shadowColor rounded-lg hover:shadow-lg transition-shadow",
-        selected ? "bg-primaryLighterColor" : error && "bg-red-100"
+        'cursor-pointer h-full bg-paperColor border shadow-md shadow-shadowColor rounded-lg hover:shadow-lg transition-shadow',
+        selected ? 'bg-primaryLighterColor' : error && 'bg-red-100'
       )}
       onClick={onClick}
     >
@@ -29,7 +29,9 @@ function PackageCard({
       />
       <div className="p-4 space-y-4 h-full">
         <h1 className="text-2xl font-bold">{packageOption.title}</h1>
-        <p className="text-base">{packageOption.description}</p>
+        <p className="text-base whitespace-pre-wrap">
+          {packageOption.description}
+        </p>
         <h2 className="text-lg font-bold">Price: ${packageOption.price}</h2>
       </div>
     </div>
