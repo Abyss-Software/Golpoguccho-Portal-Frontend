@@ -46,7 +46,11 @@ export const promoCodesColumns = ({
     cell: (row: any) => {
       return (
         <div className="flex items-center gap-2">
-          <Button onClick={() => onPromoUpdate(row)} variant="outline">
+          <Button
+            onClick={() => onPromoUpdate(row)}
+            variant="outline"
+            size="xs"
+          >
             <AiFillEdit size="1.5rem" color="green" />
           </Button>
 
@@ -54,6 +58,7 @@ export const promoCodesColumns = ({
             onClick={() => onPromoDelete(row)}
             variant="outline"
             color="red"
+            size="xs"
           >
             <BiTrash size="1.5rem" color="red" />
           </Button>

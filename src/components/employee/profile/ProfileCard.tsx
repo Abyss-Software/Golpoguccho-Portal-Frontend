@@ -8,7 +8,7 @@ const ProfileCard = ({ employeeData }: { employeeData: any }) => {
       radius="md"
       withBorder
       shadow="md"
-      className="flex max-w-[1000px] mx-auto items-center"
+      className="flex flex-col md:flex-row max-w-[1000px] mx-auto items-center"
     >
       <Avatar
         src={employeeData?.avatar ?? null}
@@ -21,7 +21,14 @@ const ProfileCard = ({ employeeData }: { employeeData: any }) => {
 
       <div className="space-y-5 p-5">
         <h1 className="text-2xl">{employeeData?.user?.name}</h1>
-        <SimpleGrid cols={2} spacing="lg" className="">
+        <SimpleGrid
+          cols={2}
+          spacing="lg"
+          breakpoints={[
+            { maxWidth: 'sm', cols: 1 },
+            { maxWidth: 'md', cols: 2 },
+          ]}
+        >
           <p className="text-lg">
             <strong>Role:</strong> {employeeData?.user?.role}
           </p>

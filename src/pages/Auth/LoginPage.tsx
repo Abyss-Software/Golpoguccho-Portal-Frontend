@@ -2,11 +2,21 @@ import googleSVG from '@/assets/svg/googly.svg';
 import loginSVG from '@/assets/svg/login.svg';
 import LoginForm from '@/components/auth/LoginForm';
 import SignUpForm from '@/components/auth/SignUpForm';
+import { useAuthStore } from '@/contexts/authContext';
+import useAuthAction from '@/hooks/useAuthAction';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
+import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
+import { notifications } from '@mantine/notifications';
+import { useEffect } from 'react';
+import { UserRoles } from '@/constants/userRoles';
 
 export default function LoginPage() {
+  const { socialSigninMutation } = useAuthAction(useAuthStore());
+  const userInfo = useAuthStore((state) => state.userInfo);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const googleLogin = useGoogleLogin({
@@ -21,17 +31,48 @@ export default function LoginPage() {
           }
         );
 
-        // const payload: ISocialLoginPayload = {
-        //   email: data.data.email,
-        //   firstName: data.data.given_name,
-        //   lastName: data.data.family_name,
-        // };
-        // socialLogin(payload);
+        const payload = {
+          email: data.data.email,
+          name: data.data.name,
+        };
+        socialSigninMutation.mutate(payload, {
+          onSuccess: () => {
+            notifications.update({
+              withBorder: true,
+              id: 'signingIn',
+              color: 'green',
+              title: 'Success',
+              message: 'Logged in successfully',
+              icon: <CheckIcon size="2rem" />,
+            });
+          },
+          onError: (error: any) => {
+            notifications.update({
+              withBorder: true,
+              id: 'signingIn',
+              color: 'red',
+              title: 'Failed',
+              message: error?.response?.data?.message || 'Something went wrong',
+              icon: <ErrorIcon size="2rem" />,
+            });
+          },
+        });
       } catch (err) {
         console.log(err);
       }
     },
   });
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userInfo) {
+      (userInfo.role === UserRoles.ADMIN ||
+        userInfo.role === UserRoles.MODERATOR) &&
+        navigate('/admin');
+      userInfo.role === UserRoles.CLIENT && navigate('/client');
+      userInfo.role === UserRoles.EMPLOYEE && navigate('/emp');
+    }
+  }, [userInfo]);
 
   return (
     <section className="h-screen flex flex-col md:flex-row justify-center items-center ">

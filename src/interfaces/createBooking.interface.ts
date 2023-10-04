@@ -8,6 +8,7 @@ export interface ICreateBooking {
   address: string;
   city: string;
   events: IEvents[];
+  acceptedTerms: boolean;
   totalPayment: number;
   advancePayment: number;
   advancePaymentMethod: string;

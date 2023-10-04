@@ -52,6 +52,22 @@ export default function useEmployeeAction() {
     onSuccess: () => queryClient.invalidateQueries(['employee']),
   });
 
+  const salaryPaymentMutation = useMutation({
+    mutationFn: employeeApi.makeSalaryPayment,
+    onMutate: () => {
+      notifications.show({
+        withBorder: true,
+        id: 'salaryRecordCreation',
+        loading: true,
+        title: 'Adding Salary Record...',
+        message: 'Please wait while we are adding salary record',
+        autoClose: false,
+        withCloseButton: false,
+      });
+    },
+    onSuccess: () => queryClient.invalidateQueries(['employee', 'records']),
+  });
+
   const deleteEmployeeMutation = useMutation({
     mutationFn: employeeApi.deleteEmployee,
     onMutate: () => {
@@ -85,6 +101,7 @@ export default function useEmployeeAction() {
     createEmployeeMutation,
     updateEmployeeMutation,
     updateProfileMutation,
+    salaryPaymentMutation,
     deleteEmployeeMutation,
     fetchEmployees,
     fetchEmployee,

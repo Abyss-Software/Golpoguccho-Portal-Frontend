@@ -54,6 +54,7 @@ export const employeeColumns = ({
               })
             }
             variant="outline"
+            size="xs"
           >
             <AiFillEdit size="1.5rem" color="green" />
           </Button>
@@ -62,6 +63,7 @@ export const employeeColumns = ({
             onClick={() => onEmployeeDelete(row)}
             variant="outline"
             color="red"
+            size="xs"
           >
             <BiTrash size="1.5rem" color="red" />
           </Button>

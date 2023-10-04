@@ -4,33 +4,25 @@ import { useContext, useMemo, useState } from 'react';
 import DataTable, { createTheme } from 'react-data-table-component';
 import SearchEyeIcon from 'remixicon-react/SearchEyeLineIcon';
 
-function CommonDataTable<T>({
+function CommonDataTable<T extends Object>({
   data,
   columns,
   handleRowClick,
   title,
+  defaultSortField,
 }: {
   data: T[];
   columns: any;
   handleRowClick?: (row: T) => void;
   title?: any;
+  defaultSortField?: string;
 }) {
   const { darkMode } = useContext(ThemeContext);
   const [searchText, setSearchText] = useState('');
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
-  // const customFilter = (rows: T[], searchValue: string) => {
-  //   return rows.filter((row) =>
-  //     Object.values(row as any).some(
-  //       (value) =>
-  //         value &&
-  //         value.toString().toLowerCase().includes(searchValue.toLowerCase())
-  //     )
-  //   );
-  // };
 
-  //ts-ignore
   const customFilter = (rows: T[], searchValue: string) => {
     return rows.filter((row) => {
       return (Object.keys(row) as Array<keyof T>).some((key) => {
@@ -83,7 +75,7 @@ function CommonDataTable<T>({
   }, [darkMode]);
 
   return (
-    <div className="p-2  border-4 border-sky-500">
+    <div className="p-2 border-4 border-sky-500">
       <DataTable
         fixedHeader
         fixedHeaderScrollHeight="400px"
@@ -111,6 +103,7 @@ function CommonDataTable<T>({
         theme={darkMode ? 'dark' : 'light'}
         customStyles={commonHeadCellStyles}
         onRowClicked={handleRowClick}
+        defaultSortFieldId={defaultSortField}
       />
     </div>
   );

@@ -65,12 +65,36 @@ function useAuthAction(authContext: IAuthStore) {
     }) => await authApi.resetPassword({ password, token }),
   });
 
+  const socialSigninMutation = useMutation({
+    mutationFn: authApi.socialLogin,
+    onMutate: () => {
+      notifications.show({
+        withBorder: true,
+        id: 'signingIn',
+        loading: true,
+        title: 'Logging you in...',
+        message: 'Please wait',
+        autoClose: false,
+        withCloseButton: false,
+      });
+    },
+    onSuccess: (res) => {
+      setIsLoggedIn(true);
+      setUserInfo({
+        id: res.body.user.id,
+        name: res.body.user.name,
+        role: res.body.user.role,
+      });
+    },
+  });
+
   const forgotPasswordMutation = useMutation({
     mutationFn: authApi.forgotPassword,
   });
 
   return {
     signinMutation,
+    socialSigninMutation,
     signupMutation,
     signoutMutation,
     resetPasswordMutation,

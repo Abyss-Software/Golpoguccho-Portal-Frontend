@@ -1,6 +1,7 @@
 import { bookingStatusOptions } from '@/constants/selectOptions';
 import useBookingAction from '@/hooks/useBookingAction';
 import { Button, Card, TextInput, Textarea, Text, Select } from '@mantine/core';
+import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import React, { useState } from 'react';
 import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
@@ -37,6 +38,27 @@ export const AdminSpecific = ({ bookingData }: any) => {
         },
       }
     );
+  };
+
+  const onStatusChange = (status: string) => {
+    modals.openConfirmModal({
+      title: 'Please confirm your action',
+      centered: true,
+      children: (
+        <div className="space-y-3">
+          <Text size="lg">Are you sure you want to change status?</Text>
+          <Text size="md" color="red">
+            Current Status: {bookingData.status}
+          </Text>
+          <Text size="md" color="green">
+            Change status to: {status}
+          </Text>
+        </div>
+      ),
+      labels: { confirm: 'Confirm', cancel: 'Cancel' },
+      confirmProps: { color: 'green' },
+      onConfirm: () => handleStatusChange(status),
+    });
   };
 
   const [link, setLink] = React.useState<string>('');
@@ -89,7 +111,7 @@ export const AdminSpecific = ({ bookingData }: any) => {
           />
           <Button
             onClick={() => {
-              handleStatusChange(statusUpdate);
+              onStatusChange(statusUpdate);
             }}
           >
             Update Status

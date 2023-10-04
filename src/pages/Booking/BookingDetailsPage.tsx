@@ -1,16 +1,16 @@
-import { Accordion, Button, Table } from "@mantine/core";
+import { Accordion, Button, Table } from '@mantine/core';
 
-import { AdminSpecific } from "@/components/bookingDetails/AdminSpecific";
-import { AfterPaymentClient } from "@/components/bookingDetails/AfterPaymentClient";
-import DuePaymentForm from "@/components/bookingDetails/DuePaymentForm";
-import EventDetails from "@/components/bookingDetails/EventDetails";
-import { ThemeContext } from "@/contexts/ThemeContext";
-import { UserRoles } from "@/constants/userRoles";
-import { modals } from "@mantine/modals";
-import { useAuthStore } from "@/contexts/authContext";
-import useBookingAction from "@/hooks/useBookingAction";
-import { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { AdminSpecific } from '@/components/bookingDetails/AdminSpecific';
+import { AfterPaymentClient } from '@/components/bookingDetails/AfterPaymentClient';
+import DuePaymentForm from '@/components/bookingDetails/DuePaymentForm';
+import EventDetails from '@/components/bookingDetails/EventDetails';
+import { ThemeContext } from '@/contexts/ThemeContext';
+import { UserRoles } from '@/constants/userRoles';
+import { modals } from '@mantine/modals';
+import { useAuthStore } from '@/contexts/authContext';
+import useBookingAction from '@/hooks/useBookingAction';
+import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 
 const BookingDetailsPage = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -25,9 +25,9 @@ const BookingDetailsPage = () => {
 
   const handleMakeDuePayment = (bookingId: string, duePayment: number) => {
     modals.open({
-      title: "Make Due Payment",
+      title: 'Make Due Payment',
       centered: true,
-      size: "lg",
+      size: 'lg',
       children: (
         <DuePaymentForm bookingId={bookingId} duePayment={duePayment} />
       ),
@@ -56,18 +56,18 @@ const BookingDetailsPage = () => {
         </h3>
         <div className="p-4 space-y-1">
           <p>
-            <span className="font-bold">Full Name:</span>{" "}
+            <span className="font-bold">Full Name:</span>{' '}
             {bookingData?.fullName}
           </p>
           <p>
             <span className="font-bold">Email:</span> {bookingData?.email}
           </p>
           <p>
-            <span className="font-bold">Primary Contact:</span>{" "}
+            <span className="font-bold">Primary Contact:</span>{' '}
             {bookingData?.contactPrimary}
           </p>
           <p>
-            <span className="font-bold">Secondary Contact:</span>{" "}
+            <span className="font-bold">Secondary Contact:</span>{' '}
             {bookingData?.contactSecondary}
           </p>
           <p>
@@ -77,13 +77,13 @@ const BookingDetailsPage = () => {
             <span className="font-bold">City:</span> {bookingData?.city}
           </p>
           <p>
-            <span className="font-bold">Booking Date:</span>{" "}
+            <span className="font-bold">Booking Date:</span>{' '}
             {new Date(bookingData?.createdAt).toLocaleDateString()}
           </p>
 
           <p>
-            <span className="font-bold">Promo Code:</span>{" "}
-            {bookingData?.promoCode ? bookingData?.promoCode : "N/A"}
+            <span className="font-bold">Promo Code:</span>{' '}
+            {bookingData?.promoCode ? bookingData?.promoCode : 'N/A'}
           </p>
         </div>
       </div>
@@ -97,7 +97,7 @@ const BookingDetailsPage = () => {
           defaultValue={[`${0}`]}
           transitionDuration={500}
           multiple
-          className={`${!darkMode && "bg-[#fafafa]"}`}
+          className={`${!darkMode && 'bg-[#fafafa]'}`}
         >
           {bookingData?.events?.map((event: any, index: number) => (
             <EventDetails key={event} event={event} index={index} />
@@ -111,10 +111,9 @@ const BookingDetailsPage = () => {
         </h3>
 
         {userInfo?.role == UserRoles.CLIENT &&
-          bookingData?.status == "CONFIRMED" && (
+          bookingData?.status == 'CONFIRMED' && (
             <Button
               className="ml-auto"
-              disabled={bookingData?.dueTransactionId}
               onClick={() => {
                 handleMakeDuePayment(bookingData?.id, bookingData?.duePayment);
               }}
@@ -164,7 +163,7 @@ const BookingDetailsPage = () => {
         </div>
 
         {userInfo?.role == UserRoles.CLIENT &&
-          bookingData?.status == "COMPLETED" && (
+          bookingData?.status == 'COMPLETED' && (
             <AfterPaymentClient bookingData={bookingData} />
           )}
         {(userInfo?.role == UserRoles.ADMIN ||

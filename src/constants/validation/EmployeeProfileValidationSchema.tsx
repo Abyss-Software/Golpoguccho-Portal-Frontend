@@ -30,8 +30,8 @@ export const EmployeeCreateValidationSchema = z.object({
   verificationId: z
     .string()
     .nonempty({ message: 'Verification ID is required' }),
-  baseSalary: z.number().nonnegative().optional(),
-  monthlySalary: z.number().nonnegative().optional(),
+  baseSalary: z.number().optional(),
+  monthlySalary: z.number().optional(),
 });
 
 export const EmployeeUpdateValidationSchema = z.object({
@@ -51,6 +51,6 @@ export const EmployeeUpdateValidationSchema = z.object({
   verificationId: z
     .string()
     .nonempty({ message: 'Verification ID is required' }),
-  baseSalary: z.number().nonnegative().optional(),
-  monthlySalary: z.number().nonnegative().optional(),
+  baseSalary: z.number().optional(),
+  monthlySalary: z.number().optional(),
 });

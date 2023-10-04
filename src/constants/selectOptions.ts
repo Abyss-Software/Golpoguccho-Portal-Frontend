@@ -26,6 +26,19 @@ export const positionOptions = [
 ];
 
 export const paymentOptions = [
-  { label: 'Bkash', value: 'bkash' },
-  { label: 'Bank Transfer', value: 'bank' },
+  { label: 'Bkash', value: 'BKASH' },
+  { label: 'Bank Transfer', value: 'BANK' },
+];
+
+export const recordTypeOptions = [
+  { label: 'Income', value: 'INCOME' },
+  { label: 'Expense', value: 'EXPENSE' },
+];
+
+export const recordMediumOptions = [
+  { label: 'Cash', value: 'CASH' },
+  { label: 'bKash', value: 'BKASH' },
+  { label: 'Bank', value: 'BANK' },
+  { label: 'Check', value: 'CHECK' },
+  { label: 'Other', value: 'OTHER' },
 ];

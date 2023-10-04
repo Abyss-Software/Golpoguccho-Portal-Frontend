@@ -4,6 +4,7 @@ import {
   IUpdateEmployee,
   IUpdateProfile,
 } from '@/interfaces/employees.interface';
+import { ISalaryRecordDto } from '@/interfaces/financialRecord.interface';
 import { IApiResponse } from '@/interfaces/response.interface';
 import { httpClient } from '@/utils/httpClient';
 
@@ -31,6 +32,14 @@ export class EmployeeApi {
   async updateEmployee(data: IUpdateEmployee) {
     const res = await httpClient.patch<IApiResponse<IEmployee>>(
       `/employees/${data.id}`,
+      data
+    );
+    return res.data.body;
+  }
+
+  async makeSalaryPayment(data: ISalaryRecordDto) {
+    const res = await httpClient.patch<IApiResponse<any>>(
+      `/employees/salary/${data.id}`,
       data
     );
     return res.data.body;

@@ -38,6 +38,7 @@ export default function EmployeeAssignForm({ eventId }: { eventId: string }) {
     handleSubmit,
     setValue,
     control,
+    reset,
     formState: { errors },
   } = useForm<IAssignEmployeesDto>({
     resolver: zodResolver(assignEmployeesValidationSchema),
@@ -46,6 +47,13 @@ export default function EmployeeAssignForm({ eventId }: { eventId: string }) {
       assignedEmployees: event?.assignedEmployees,
     },
   });
+
+  useEffect(() => {
+    reset({
+      eventId: eventId,
+      assignedEmployees: event?.assignedEmployees,
+    });
+  }, [event]);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -87,7 +95,7 @@ export default function EmployeeAssignForm({ eventId }: { eventId: string }) {
             {fields.map((item, index) => {
               return (
                 <li
-                  key={item.id}
+                  key={index}
                   className="flex gap-2 items-center justify-center pb-4"
                 >
                   <Select
