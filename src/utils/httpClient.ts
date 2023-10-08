@@ -2,7 +2,7 @@ import axios from 'axios';
 import storageUtil from './storage.util';
 
 export const httpClient = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'http://65.0.227.130/api',
 });
 
 httpClient.interceptors.request.use(

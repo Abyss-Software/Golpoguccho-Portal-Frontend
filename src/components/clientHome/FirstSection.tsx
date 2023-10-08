@@ -45,13 +45,13 @@ const FirstSection = () => {
         <img
           className="w-full h-full object-cover"
           alt="First image"
-          src="/src/assets/img/homepage/cover1.png"
+          src="https://res.cloudinary.com/dl8vvdyc5/image/upload/v1696533605/Assets/cover.png"
         />
 
         <img
           className="w-full h-full object-cover"
           alt="Second image"
-          src="/src/assets/img/homepage/cover1.png"
+          src="https://res.cloudinary.com/dl8vvdyc5/image/upload/v1696533605/Assets/cover.png"
         />
       </Fade>
     </div>

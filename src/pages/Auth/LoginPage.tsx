@@ -76,15 +76,14 @@ export default function LoginPage() {
 
   return (
     <section className="h-screen flex flex-col md:flex-row justify-center items-center ">
-      <div className="h-full p-4 bg-black  flex-1 flex items-center justify-center">
-        {/* <img className="w-full max-w-md" src={authImg} alt="Sample image" /> */}
-        <object
-          data={loginSVG}
-          type="image/svg+xml"
+ <div className="w-full h-full p-4 bg-black  flex-1 flex items-center justify-center">
+        <img
           className="w-full max-w-md"
+          src="https://res.cloudinary.com/dl8vvdyc5/image/upload/v1696765513/Assets/LogoWithMoto.svg"
+          alt="Sample image"
         />
       </div>
-      <div className="bg-backgroundColor h-full p-4 flex-1 flex items-center justify-center">
+      <div className="w-full bg-backgroundColor h-full p-8 flex-1 flex items-center justify-center">
         <div className="w-full max-w-md">
           <div
             onClick={() => googleLogin()}
