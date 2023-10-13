@@ -101,7 +101,7 @@ const LoginForm = () => {
         Login
       </Button>
 
-      <div className="mt-2 font-semibold text-sm text-slate-500 text-center md:text-left">
+      <div className="mt-2 font-semibold text-base text-slate-500 text-center md:text-left">
         Don't have an account?{' '}
         <Link
           className="no-underline text-primaryColor hover:underline hover:underline-offset-4"

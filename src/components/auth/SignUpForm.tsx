@@ -101,7 +101,7 @@ const SignUpForm = () => {
         Register
       </Button>
 
-      <div className="mt-2 font-semibold text-sm text-slate-500 text-center md:text-left">
+      <div className="mt-2 font-semibold text-base text-slate-500 text-center md:text-left">
         Already have an account?{' '}
         <Link
           className="text-primaryColor hover:underline hover:underline-offset-4"

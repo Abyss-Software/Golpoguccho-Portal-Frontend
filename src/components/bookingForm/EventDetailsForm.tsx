@@ -1,12 +1,16 @@
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { Button } from "@mantine/core";
-import EventInfoForm from "./EventInfoForm";
-import EventTypeSelectForm from "./EventTypeSelectForm";
-import { ICreateBooking } from "@/interfaces/createBooking.interface";
+import { Button, Divider } from '@mantine/core';
+import EventInfoForm from './EventInfoForm';
+import EventTypeSelectForm from './EventTypeSelectForm';
+import { ICreateBooking } from '@/interfaces/createBooking.interface';
+import { useEffect } from 'react';
 
 const EventDetailsForm = () => {
-  const { control } = useFormContext<ICreateBooking>();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<ICreateBooking>();
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -15,18 +19,18 @@ const EventDetailsForm = () => {
 
   const handleAddEvent = () => {
     append({
-      eventTypeId: "",
-      packageId: "",
-      eventTitle: "",
+      eventTypeId: '',
+      packageId: '',
+      eventTitle: '',
       eventDate: new Date(),
-      eventTime: "",
-      eventEndTime: "",
-      dayOrEvening: "",
-      dhakaOrOutside: "",
+      eventTime: '',
+      eventEndTime: '',
+      dayOrEvening: '',
+      dhakaOrOutside: '',
       numberOfGuests: 0,
-      eventVenue: "",
-      eventVenueAddress: "",
-      additionalInfo: "",
+      eventVenue: '',
+      eventVenueAddress: '',
+      additionalInfo: '',
     });
   };
 
@@ -34,7 +38,13 @@ const EventDetailsForm = () => {
     <div className="space-y-8">
       {fields.map((field, itemIndex) => (
         <div className="space-y-2 lg:space-y-4" key={field.id}>
-          <h1>Event {itemIndex + 1}</h1>
+          <Divider
+            className="mt-10"
+            label={
+              <h1 className="text-2xl font-bold">Event {itemIndex + 1}</h1>
+            }
+            labelPosition="center"
+          />
           <EventTypeSelectForm itemIndex={itemIndex} />
 
           <EventInfoForm itemIndex={itemIndex} />

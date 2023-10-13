@@ -8,7 +8,7 @@ const ProfileCard = ({ employeeData }: { employeeData: any }) => {
       radius="md"
       withBorder
       shadow="md"
-      className="flex flex-col md:flex-row max-w-[1000px] mx-auto items-center"
+      className="flex flex-col md:flex-row mt-4 max-w-[1000px] mx-auto items-center"
     >
       <Avatar
         src={employeeData?.avatar ?? null}

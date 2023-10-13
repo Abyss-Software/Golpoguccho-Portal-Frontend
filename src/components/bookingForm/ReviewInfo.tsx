@@ -41,9 +41,9 @@ const ReviewInfo = () => {
   if (!bookingData)
     return (
       <div className="h-96 mx-auto pb-4 flex items-center justify-center">
-        <object
-          data="/src/assets/svg/loader.svg"
-          type="image/svg+xml"
+        <img
+          src="https://res.cloudinary.com/dl8vvdyc5/image/upload/v1697100893/Assets/loader.svg"
+          alt="loader"
           className="h-32"
         />
       </div>

@@ -20,7 +20,6 @@ import { useAuthStore } from '@/contexts/authContext';
 
 export default function ClientLayout() {
   const { toggleDarkMode, darkMode } = useContext(ThemeContext);
-
   const { signoutMutation } = useAuthAction(useAuthStore());
 
   const navigate = useNavigate();
@@ -30,7 +29,8 @@ export default function ClientLayout() {
   };
 
   const theme = useMantineTheme();
-  const [opened, setOpened] = useState(false);
+
+  const userInfo = useAuthStore((state) => state.userInfo);
 
   return (
     <AppShell
@@ -49,8 +49,12 @@ export default function ClientLayout() {
       asideOffsetBreakpoint="sm"
       header={
         <Header height={70} p="md" bg={'#009247'}>
-          <div className="text-white flex items-center justify-between h-full">
-            <Text onClick={() => navigate('')} className="cursor-pointer">
+          <div className=" flex items-center justify-between h-full">
+            <Text
+              color="white"
+              onClick={() => navigate('')}
+              className="cursor-pointer"
+            >
               Golpoguccho Photography
             </Text>
             <Group noWrap>
@@ -62,6 +66,8 @@ export default function ClientLayout() {
                 </Menu.Target>
 
                 <Menu.Dropdown>
+                  <p className="p-2 text-sm">User: {userInfo?.name}</p>
+                  <hr />
                   <Menu.Item
                     closeMenuOnClick={false}
                     rightSection={

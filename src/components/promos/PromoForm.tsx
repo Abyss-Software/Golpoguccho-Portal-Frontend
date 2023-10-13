@@ -131,7 +131,7 @@ function PromoForm({
         error={errors?.status && errors?.status?.message}
       />
 
-      <Button type="submit">Create Event Type</Button>
+      <Button type="submit">Create Promo Code</Button>
     </form>
   );
 }

@@ -21,6 +21,7 @@ import User3LineIcon from 'remixicon-react/User3LineIcon';
 import LogoutBoxIcon from 'remixicon-react/LogoutBoxRLineIcon';
 import useAuthAction from '@/hooks/useAuthAction';
 import { useAuthStore } from '@/contexts/authContext';
+import { MenuItem } from '@mantine/core/lib/Menu/MenuItem/MenuItem';
 
 export default function AdminLayout() {
   const { toggleDarkMode, darkMode } = useContext(ThemeContext);
@@ -38,6 +39,12 @@ export default function AdminLayout() {
   const handleLogout = () => {
     signoutMutation.mutate();
     navigate('/');
+  };
+
+  const userInfo = useAuthStore((state) => state.userInfo);
+
+  const handleProfileClick = () => {
+    navigate(`/admin/employees/${userInfo?.id}`);
   };
 
   return (
@@ -67,7 +74,7 @@ export default function AdminLayout() {
           bg={'#009247'}
           withBorder={false}
         >
-          <div className="text-white flex items-center justify-between h-full">
+          <div className=" flex items-center justify-between h-full">
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
                 opened={opened}
@@ -77,7 +84,7 @@ export default function AdminLayout() {
                 mr="xl"
               />
             </MediaQuery>
-            <Text>Golpoguccho Photography</Text>
+            <Text color="white">Golpoguccho Photography</Text>
             <Group noWrap>
               <Menu shadow="md" width={200}>
                 <Menu.Target>
@@ -87,6 +94,16 @@ export default function AdminLayout() {
                 </Menu.Target>
 
                 <Menu.Dropdown>
+                  <Menu.Item>
+                    <p
+                      className="text-green-600 cursor-pointer"
+                      onClick={handleProfileClick}
+                    >
+                      User: {userInfo?.name}
+                    </p>
+                  </Menu.Item>
+
+                  <hr />
                   <Menu.Item
                     closeMenuOnClick={false}
                     rightSection={

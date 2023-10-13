@@ -4,12 +4,12 @@ export const bookingColumns = () => [
   {
     name: 'Booking Title',
     selector: (row: IBookings) => row.bookingTitle,
-    sortable: false,
+    sortable: true,
   },
   {
     name: 'Client Name',
     selector: (row: IBookings) => row.fullName,
-    sortable: false,
+    sortable: true,
   },
   {
     name: 'Contact No.',
@@ -29,11 +29,11 @@ export const bookingColumns = () => [
   {
     name: 'Status',
     selector: (row: IBookings) => row.status,
-    sortable: false,
+    sortable: true,
   },
   {
-    name: 'Created At',
-    selector: (row: IBookings) => new Date(row.createdAt).toLocaleString(),
-    sortable: false,
+    name: 'Created',
+    selector: (row: IBookings) => new Date(row.createdAt).toDateString(),
+    sortable: true,
   },
 ];

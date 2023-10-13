@@ -1,4 +1,10 @@
-import { Button, Group, Radio, TextInput } from '@mantine/core';
+import {
+  Button,
+  Group,
+  Radio,
+  SegmentedControl,
+  TextInput,
+} from '@mantine/core';
 import BkashInstructions from '../bookingForm/BkashInstructions';
 import BankInstructions from '../bookingForm/BankTransferInstructions';
 import { useForm } from 'react-hook-form';
@@ -10,6 +16,8 @@ import { notifications } from '@mantine/notifications';
 import { modals } from '@mantine/modals';
 import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
 import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
+import CashPaymentInstructions from '../bookingForm/CashPaymentInstructions';
+import { useEffect } from 'react';
 
 export default function DuePaymentForm({
   bookingId,
@@ -60,6 +68,10 @@ export default function DuePaymentForm({
     );
   };
 
+  useEffect(() => {
+    setValue('duePaymentMethod', 'bkash');
+  }, []);
+
   return (
     <form className="space-y-4 m-3" onSubmit={handleSubmit(onSubmitClick)}>
       <div>
@@ -67,7 +79,7 @@ export default function DuePaymentForm({
           Payment Method
         </p>
 
-        <Radio.Group
+        {/* <Radio.Group
           onChange={(value) => {
             setValue(`duePaymentMethod`, value);
           }}
@@ -82,14 +94,36 @@ export default function DuePaymentForm({
             <Radio value="bkash" label="bKash" />
             <Radio value="bank" label="Bank Transfer" />
           </Group>
-        </Radio.Group>
+        </Radio.Group> */}
+        <h3>Due Payment Method:</h3>
+        <SegmentedControl
+          onChange={(value) => {
+            console.log(value);
+            setValue(`duePaymentMethod`, value);
+          }}
+          color="green"
+          fullWidth
+          defaultValue="bkash"
+          size="md"
+          data={[
+            { value: 'bkash', label: 'bKash' },
+            { value: 'bank', label: 'Bank Transfer' },
+            { value: 'cash', label: 'Cash' },
+          ]}
+        />
       </div>
 
-      {watch('duePaymentMethod') === 'bkash' ? (
+      {watch('duePaymentMethod') === 'bkash' && (
         <BkashInstructions amount={duePayment ?? 0} />
-      ) : watch('duePaymentMethod') === 'bank' ? (
+      )}
+
+      {watch('duePaymentMethod') === 'bank' && (
         <BankInstructions amount={duePayment ?? 0} />
-      ) : null}
+      )}
+
+      {watch('duePaymentMethod') === 'cash' && (
+        <CashPaymentInstructions amount={duePayment ?? 0} />
+      )}
 
       <div>
         <p className="text-mg font-semibold text-primaryColor mb-2 uppercase">

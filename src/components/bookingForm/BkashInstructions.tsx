@@ -5,7 +5,9 @@ export default function BkashInstructions({ amount }: { amount: number }) {
       <p className="text-[16px] font-semibold text-primaryColor uppercase">
         Bkash No: 01927195229 (Personal)
         <br />
-        Amount: {amountWithFee} BDT
+        <span className="text-green-500 font-bold">
+          Amount: {amountWithFee} BDT (Including 2% bKash fee)
+        </span>
       </p>
 
       <div className="space-y-2 text-[15px] font-semibold">

@@ -21,7 +21,7 @@ const queryClient = new QueryClient({
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
-    <GoogleOAuthProvider clientId="254412738059-n7c755k5so031eodq19m6p9867d0i1t3.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="470926837429-oim1evs83qp3r1ceusj3n9irisoieduu.apps.googleusercontent.com">
       <ThemeContextProvider>
         <Notifications position="bottom-center" limit={5} />
         <App />

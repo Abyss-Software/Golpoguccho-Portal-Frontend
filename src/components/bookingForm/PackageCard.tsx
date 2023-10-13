@@ -1,4 +1,5 @@
 import { IPackage } from '@/interfaces/packages.interface';
+import { Paper } from '@mantine/core';
 import { twMerge } from 'tailwind-merge';
 
 type PackageCardProps = {
@@ -15,10 +16,13 @@ function PackageCard({
   error,
 }: PackageCardProps) {
   return (
-    <div
+    <Paper
+      shadow="md"
       className={twMerge(
-        'cursor-pointer h-full bg-paperColor border shadow-md shadow-shadowColor rounded-lg hover:shadow-lg transition-shadow',
-        selected ? 'bg-primaryLighterColor' : error && 'bg-red-100'
+        'border border-transparent cursor-pointer h-full rounded-lg hover:shadow-lg transition-shadow',
+        selected
+          ? 'bg-primaryLightColor dark:text-black'
+          : error && 'border-errorColor'
       )}
       onClick={onClick}
     >
@@ -34,7 +38,7 @@ function PackageCard({
         </p>
         <h2 className="text-lg font-bold">Price: ${packageOption.price}</h2>
       </div>
-    </div>
+    </Paper>
   );
 }
 

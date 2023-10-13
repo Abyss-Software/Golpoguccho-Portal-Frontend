@@ -5,11 +5,11 @@ import {
   Radio,
   TextInput,
   Textarea,
-} from "@mantine/core";
+} from '@mantine/core';
 
-import { DateInput } from "@mantine/dates";
-import { ICreateBooking } from "@/interfaces/createBooking.interface";
-import { useFormContext } from "react-hook-form";
+import { DateInput } from '@mantine/dates';
+import { ICreateBooking } from '@/interfaces/createBooking.interface';
+import { useFormContext } from 'react-hook-form';
 
 type EventInfoFormProps = {
   itemIndex: number;
@@ -24,8 +24,8 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
 
   return (
     <div className="space-y-1">
-      <h3 className="text-2xl font-semibold">Event Information</h3>
-      <Grid columns={2} gutter={"xl"}>
+      <h3 className="text-xl font-semibold">Event Information</h3>
+      <Grid columns={2} gutter={'xl'}>
         <Grid.Col md={2} lg={1}>
           <TextInput
             {...register(`events.${itemIndex}.eventTitle`)}
@@ -48,7 +48,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             onChange={(value) => {
               setValue(
                 `events.${itemIndex}.eventDate`,
-                new Date(value?.toISOString() ?? "")
+                new Date(value?.toISOString() ?? '')
               );
             }}
             error={errors?.events?.[itemIndex]?.eventDate?.message}
@@ -62,6 +62,7 @@ function EventInfoForm({ itemIndex }: EventInfoFormProps) {
             size="lg"
             type="time"
             placeholder="Event Time"
+            color="red"
             error={errors?.events?.[itemIndex]?.eventTime?.message}
           />
         </Grid.Col>

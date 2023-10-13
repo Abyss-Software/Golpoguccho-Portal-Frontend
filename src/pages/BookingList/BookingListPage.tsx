@@ -63,6 +63,7 @@ const BookingListPage = () => {
             data={bookings?.body!}
             columns={bookingColumns()}
             handleRowClick={handleRowClick}
+            defaultSortField="createdAt"
           />
         )}
       </Card>

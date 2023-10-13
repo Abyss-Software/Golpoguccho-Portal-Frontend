@@ -29,7 +29,7 @@ export default function PaymentForm() {
   } = useFormContext<ICreateBooking>();
 
   const [apply, setApply] = useState<boolean>(true);
-
+  const [discountAmount, setDiscountAmount] = useState<number>(0);
   const { calculatePaymentMutation } = useBookingAction();
 
   const calculatePayment = () => {
@@ -42,7 +42,7 @@ export default function PaymentForm() {
           setValue('totalPayment', data.body.totalPayment);
           setValue('advancePayment', data.body.advancePayment);
           setValue('duePayment', data.body.duePayment);
-
+          setDiscountAmount(data.body.discountAmount);
           notifications.update({
             withBorder: true,
             id: 'priceValidation',
@@ -99,72 +99,35 @@ export default function PaymentForm() {
   return (
     <div className=" mx-auto pb-4 space-y-8">
       <div className="bg-primaryColor text-white p-4 rounded-lg mb-10">
-        <h2 className="text-2xl font-bold">Booking Payment</h2>
+        <h2 className="text-2xl font-bold">Payment</h2>
       </div>
+
       <div className="space-y-2">
-        <p>
-          <span className="font-bold">Total Payment: </span>
-          {getValues('totalPayment')}
+        <p className="text-mg font-semibold text-primaryColor mb-2 uppercase">
+          Billing Information
         </p>
-
         <p>
-          <span className="font-bold">Advance Payment: </span>
-          {getValues('advancePayment')}
+          <span className="font-bold">Full Name:</span> {getValues('fullName')}
         </p>
-
         <p>
-          <span className="font-bold">Due Payment: </span>
-          {getValues('duePayment')}
+          <span className="font-bold">Email:</span> {getValues('email')}
+        </p>
+        <p>
+          <span className="font-bold">Primary Contact:</span>{' '}
+          {getValues('contactPrimary')}
+        </p>
+        <p>
+          <span className="font-bold">Address:</span> {getValues('address')}
         </p>
       </div>
-      <div className="flex flex-col gap-4 md:flex-row">
-        <Text weight={700}>Have a Promo Code?</Text>
-        <TextInput
-          {...register(`promoCode`)}
-          disabled={!apply}
-          className="w-full"
-          size="lg"
-          type="text"
-          placeholder="Promo Code"
-        />
-        {apply ? (
-          <Button
-            disabled={!watch('promoCode')}
-            size="lg"
-            type="button"
-            onClick={onApplyPromo}
-          >
-            Apply
-          </Button>
-        ) : (
-          <Button color="red" size="lg" type="button" onClick={onClearPromo}>
-            Clear
-          </Button>
-        )}
-      </div>
+
       <div>
         <p className="text-mg font-semibold text-primaryColor mb-2 uppercase">
           Payment Method
         </p>
 
-        {/* <Radio.Group
-          {...register(`advancePaymentMethod`)}
-          onChange={(value) => {
-            console.log(value);
-            setValue(`advancePaymentMethod`, value);
-          }}
-          label="Advance Payment Method:"
-          description="Select your advance payment method"
-          withAsterisk
-          error={errors?.advancePaymentMethod?.message}
-        >
-          <Group mt="xs">
-            <Radio value="bkash" label="bKash" />
-            <Radio value="bank" label="Bank Transfer" />
-            <Radio value="cash" label="Cash" />
-          </Group>
-        </Radio.Group> */}
         <SegmentedControl
+          className="dark:bg-backgroundColor"
           onChange={(value) => {
             console.log(value);
             setValue(`advancePaymentMethod`, value);
@@ -193,6 +156,59 @@ export default function PaymentForm() {
         <CashPaymentInstructions amount={getValues('advancePayment') ?? 0} />
       )}
 
+      <hr />
+      <div className="space-y-2 flex flex-col items-end text-lg">
+        <p>
+          <span className="font-bold">Total Payment: </span>
+          <span> {getValues('totalPayment')} </span>
+        </p>
+
+        <p>
+          <span className="font-bold">Advance Payment: </span>
+          {getValues('advancePaymentMethod') === 'bkash' ? (
+            <span className="text-green-500">
+              {getValues('advancePayment') +
+                (getValues('advancePayment') * 2) / 100}{' '}
+            </span>
+          ) : (
+            <span className="text-green-500">
+              {getValues('advancePayment')}{' '}
+            </span>
+          )}
+        </p>
+
+        <p>
+          <span className="font-bold">Due Payment: </span>
+          <span>{getValues('duePayment')} </span>
+        </p>
+        {discountAmount > 0 && <p className="text-sm">Promo Code Applied!</p>}
+      </div>
+      <div className="flex flex-col gap-2 md:flex-row">
+        <Text weight={700}>Have a Promo Code?</Text>
+        <TextInput
+          {...register(`promoCode`)}
+          disabled={!apply}
+          className="w-full"
+          size="md"
+          type="text"
+          placeholder="Promo Code"
+        />
+        {apply ? (
+          <Button
+            disabled={!watch('promoCode')}
+            size="md"
+            type="button"
+            onClick={onApplyPromo}
+          >
+            Apply
+          </Button>
+        ) : (
+          <Button color="red" size="md" type="button" onClick={onClearPromo}>
+            Clear
+          </Button>
+        )}
+      </div>
+
       <div>
         <p className="text-mg font-semibold text-primaryColor mb-2 uppercase">
           Advance Payment Transaction Id
@@ -200,7 +216,7 @@ export default function PaymentForm() {
         <TextInput
           {...register(`advanceTransactionId`)}
           className="w-full"
-          size="lg"
+          size="md"
           type="text"
           placeholder="Transaction Id"
           disabled={watch('advancePaymentMethod') === 'cash'}

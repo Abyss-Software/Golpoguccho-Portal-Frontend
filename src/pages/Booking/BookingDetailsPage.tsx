@@ -37,9 +37,9 @@ const BookingDetailsPage = () => {
   if (!bookingData)
     return (
       <div className="h-96 mx-auto pb-4 flex items-center justify-center">
-        <object
-          data="/src/assets/svg/loader.svg"
-          type="image/svg+xml"
+        <img
+          src="https://res.cloudinary.com/dl8vvdyc5/image/upload/v1697100893/Assets/loader.svg"
+          alt="loader"
           className="h-32"
         />
       </div>
@@ -110,6 +110,10 @@ const BookingDetailsPage = () => {
           Payment Information
         </h3>
 
+        <p className="text-base font-semibold mb-2">
+          Status: {bookingData?.status}
+        </p>
+
         {userInfo?.role == UserRoles.CLIENT &&
           bookingData?.status == 'CONFIRMED' && (
             <Button
@@ -154,7 +158,14 @@ const BookingDetailsPage = () => {
               <tr>
                 <td>Due Payment</td>
                 <td>{bookingData?.duePayment}</td>
-                <td>{new Date(bookingData?.duePaymentDate).toDateString()}</td>
+                {bookingData?.duePaymentDate ? (
+                  <td>
+                    {' '}
+                    {new Date(bookingData?.duePaymentDate).toDateString()}
+                  </td>
+                ) : (
+                  <td> </td>
+                )}
                 <td>{bookingData?.duePaymentMethod}</td>
                 <td>{bookingData?.dueTransactionId}</td>
               </tr>

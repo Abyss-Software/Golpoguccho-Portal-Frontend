@@ -75,7 +75,7 @@ function CommonDataTable<T extends Object>({
   }, [darkMode]);
 
   return (
-    <div className="p-2 border-4 border-sky-500">
+    <div className="p-2 ">
       <DataTable
         fixedHeader
         fixedHeaderScrollHeight="400px"

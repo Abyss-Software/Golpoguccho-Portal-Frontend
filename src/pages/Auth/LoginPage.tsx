@@ -12,6 +12,7 @@ import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
 import { notifications } from '@mantine/notifications';
 import { useEffect } from 'react';
 import { UserRoles } from '@/constants/userRoles';
+import { Divider } from '@mantine/core';
 
 export default function LoginPage() {
   const { socialSigninMutation } = useAuthAction(useAuthStore());
@@ -75,14 +76,15 @@ export default function LoginPage() {
   }, [userInfo]);
 
   return (
-    <section className="h-screen flex flex-col md:flex-row justify-center items-center ">
- <div className="w-full h-full p-4 bg-black  flex-1 flex items-center justify-center">
+    <section className="min-h-screen md:h-screen flex flex-col md:flex-row justify-center items-center ">
+      <div className="w-full h-full p-4 bg-black  flex-1 flex items-center justify-center">
         <img
-          className="w-full max-w-md"
+          className="w-[200px] md:w-full md:max-w-md"
           src="https://res.cloudinary.com/dl8vvdyc5/image/upload/v1696765513/Assets/LogoWithMoto.svg"
           alt="Sample image"
         />
       </div>
+
       <div className="w-full bg-backgroundColor h-full p-8 flex-1 flex items-center justify-center">
         <div className="w-full max-w-md">
           <div
@@ -96,14 +98,22 @@ export default function LoginPage() {
             />
             Continue with Google
           </div>
-          <div className="relative flex py-4 items-center">
-            <div className="flex-grow border-t border-gray-400"></div>
-            <span className="flex-shrink mx-4 text-gray-400">OR</span>
-            <div className="flex-grow border-t border-gray-400"></div>
-          </div>
+          <Divider my="sm" label="OR" labelPosition="center" />
           <div className=" flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
             {searchParams.get('register') ? <SignUpForm /> : <LoginForm />}
           </div>
+
+          <p className="mt-4 text-sm">
+            This platform is intended for managing bookings only. Before
+            creating account or initiating a new booking, make sure to contact
+            our support and confirm availability.
+          </p>
+          <p className="mt-4 text-sm">
+            Support:{' '}
+            <span className="text-primaryColor">
+              +8801709295729, +8801927195229
+            </span>
+          </p>
         </div>
       </div>
     </section>

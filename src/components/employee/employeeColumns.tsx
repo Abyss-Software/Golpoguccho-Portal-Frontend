@@ -26,6 +26,11 @@ export const employeeColumns = ({
     sortable: true,
   },
   {
+    name: 'Role',
+    selector: (row: IEmployee) => row.user.role,
+    sortable: true,
+  },
+  {
     name: 'Address',
     selector: (row: IEmployee) => row.address,
     sortable: true,
