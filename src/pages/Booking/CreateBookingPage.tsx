@@ -122,9 +122,6 @@ const CreateBookingPage = () => {
     }
   };
 
-  console.log('errors:', methods.formState.errors);
-  console.log('values:', methods.getValues());
-
   const onSubmit = (data: ICreateBooking) => {
     data.events.map((event) => {
       event.eventTime = convertTime(event.eventTime);

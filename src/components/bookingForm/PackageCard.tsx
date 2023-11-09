@@ -36,7 +36,7 @@ function PackageCard({
         <p className="text-base whitespace-pre-wrap">
           {packageOption.description}
         </p>
-        <h2 className="text-lg font-bold">Price: ${packageOption.price}</h2>
+        <h2 className="text-lg font-bold">Price: BDT {packageOption.price}</h2>
       </div>
     </Paper>
   );

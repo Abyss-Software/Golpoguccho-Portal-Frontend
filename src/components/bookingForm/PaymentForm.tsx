@@ -95,7 +95,6 @@ export default function PaymentForm() {
     }
   }, [watch('advancePaymentMethod')]);
 
-  console.log(getValues('advancePaymentMethod'));
   return (
     <div className=" mx-auto pb-4 space-y-8">
       <div className="bg-primaryColor text-white p-4 rounded-lg mb-10">
@@ -129,7 +128,6 @@ export default function PaymentForm() {
         <SegmentedControl
           className="dark:bg-backgroundColor"
           onChange={(value) => {
-            console.log(value);
             setValue(`advancePaymentMethod`, value);
           }}
           color="green"

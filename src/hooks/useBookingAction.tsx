@@ -111,6 +111,24 @@ function useBookingAction() {
     },
   });
 
+  const setAdditionInfoMutation = useMutation({
+    mutationFn: bookingApi.setAdditionalInfo,
+    onMutate: () => {
+      notifications.show({
+        withBorder: true,
+        id: 'setInfo',
+        loading: true,
+        title: 'Adding booking information...',
+        message: 'Please wait',
+        autoClose: false,
+        withCloseButton: false,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['bookingDetails']);
+    },
+  });
+
   const giveFeedbackMutation = useMutation({
     mutationFn: bookingApi.giveFeedback,
     onMutate: () => {
@@ -138,6 +156,7 @@ function useBookingAction() {
     makeDuePaymentMutation,
     changeStatusMutation,
     setLinkMutation,
+    setAdditionInfoMutation,
     giveFeedbackMutation,
   };
 }

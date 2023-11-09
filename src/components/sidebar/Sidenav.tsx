@@ -1,10 +1,12 @@
 import { Box } from '@mantine/core';
 import { NavLink } from 'react-router-dom';
 import DashboardIcon from 'remixicon-react/Dashboard2LineIcon';
-import BookingIcon from 'remixicon-react/CalendarEventLineIcon';
+import EventsIcon from 'remixicon-react/CalendarEventLineIcon';
+import BookingIcon from 'remixicon-react/Bookmark3LineIcon';
 import EmployeeIcon from 'remixicon-react/TeamLineIcon';
 import PackageIcon from 'remixicon-react/AddBoxLineIcon';
 import PromoIcon from 'remixicon-react/Coupon2LineIcon';
+import ClientIcon from 'remixicon-react/FileUserLineIcon';
 
 const data = [
   { label: 'Dashboard', nav: '/admin/dashboard', icon: <DashboardIcon /> },
@@ -13,7 +15,9 @@ const data = [
     nav: '/admin/Bookings',
     icon: <BookingIcon />,
   },
+  { label: 'Events', nav: '/admin/events', icon: <EventsIcon /> },
   { label: 'Employees', nav: '/admin/employees', icon: <EmployeeIcon /> },
+  { label: 'Clients', nav: '/admin/clients', icon: <ClientIcon /> },
   { label: 'Packages', nav: '/admin/packages', icon: <PackageIcon /> },
   { label: 'Promo Codes', nav: '/admin/promos', icon: <PromoIcon /> },
 ];

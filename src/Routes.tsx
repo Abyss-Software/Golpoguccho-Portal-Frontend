@@ -19,6 +19,8 @@ import EmployeeListPage from './pages/Employees/EmployeeListPage';
 import PromoCodesPage from './pages/PromoCodes/PromoCodesPage';
 import AuthGuard from './components/guard/AuthGuard';
 import { UserRoles } from './constants/userRoles';
+import ClientsListPage from './pages/Clients/ClientsListPage';
+import EventsListPage from './pages/Events/EventsListPage';
 
 export const router = createBrowserRouter([
   {
@@ -100,6 +102,14 @@ export const router = createBrowserRouter([
       {
         path: 'promos',
         element: <PromoCodesPage />,
+      },
+      {
+        path: 'clients',
+        element: <ClientsListPage />,
+      },
+      {
+        path: 'events',
+        element: <EventsListPage />,
       },
     ],
   },

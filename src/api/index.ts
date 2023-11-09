@@ -1,5 +1,6 @@
 import { AuthApi } from './auth.api';
 import { BookingApi } from './booking.api';
+import { ClientApi } from './client.api';
 import { EmployeeApi } from './employee.api';
 import { EventApi } from './event.api';
 
@@ -18,3 +19,4 @@ export const employeeApi = new EmployeeApi();
 export const eventApi = new EventApi();
 export const statsApi = new StatsApi();
 export const recordsApi = new RecordsApi();
+export const clientApi = new ClientApi();

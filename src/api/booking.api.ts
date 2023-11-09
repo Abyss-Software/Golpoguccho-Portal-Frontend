@@ -46,6 +46,11 @@ export class BookingApi {
     return res.data;
   }
 
+  async setAdditionalInfo(data: { bookingId: string; info: string }) {
+    const res = await httpClient.patch('/bookings/info', data);
+    return res.data;
+  }
+
   async giveFeedback(data: {
     bookingId: string;
     review: string;

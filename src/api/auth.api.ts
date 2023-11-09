@@ -4,18 +4,21 @@ import storageUtil from '@/utils/storage.util';
 
 export class AuthApi {
   async login(data: ILogin) {
+    data.email = data.email.toLowerCase();
     const res = await httpClient.post('/auth/login', data);
     storageUtil.setAuthData(res.data.body, data.rememberMe);
     return res.data;
   }
 
   async socialLogin(data: ISocialLogin) {
+    data.email = data.email.toLowerCase();
     const res = await httpClient.post('/auth/social-login', data);
     storageUtil.setAuthData(res.data.body, true);
     return res.data;
   }
 
   async signup(data: ISignup) {
+    data.email = data.email.toLowerCase();
     const res = await httpClient.post('/auth/signup', data);
     return res.data;
   }

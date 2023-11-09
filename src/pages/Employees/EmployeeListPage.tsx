@@ -14,12 +14,15 @@ import { modals } from '@mantine/modals';
 import EmployeeCreationForm from '@/components/employee/EmployeeCreationForm';
 import EmployeeUpdateForm from '@/components/employee/EmployeeUpdateForm';
 import { employeeColumns } from '@/components/employee/employeeColumns';
+import { useAuthStore } from '@/contexts/authContext';
 
 const EmployeeListPage = () => {
   const navigate = useNavigate();
   const handleRowClick = (row: IEmployee) => {
     navigate(`/admin/employees/${row.user.id}`);
   };
+
+  const { userInfo } = useAuthStore();
 
   const {
     fetchEmployees,
@@ -148,14 +151,16 @@ const EmployeeListPage = () => {
     <div>
       <div className="flex justify-between items-center p-4">
         <h1 className="text-2xl ">List of Employees</h1>
-        <Button
-          variant="filled"
-          color="primary"
-          size="md"
-          onClick={handleCreateEmployee}
-        >
-          Add Employee
-        </Button>
+        {userInfo?.role === 'ADMIN' && (
+          <Button
+            variant="filled"
+            color="primary"
+            size="md"
+            onClick={handleCreateEmployee}
+          >
+            Add Employee
+          </Button>
+        )}
       </div>
       <Card withBorder shadow="lg">
         <CommonDataTable<IEmployee>

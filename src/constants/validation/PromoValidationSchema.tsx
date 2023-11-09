@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 export const PromoValidationSchema = z.object({
-  promoCode: z.string().nonempty({ message: 'Promo is required' }),
-  description: z.string().nonempty({ message: 'Description is required' }),
+  promoCode: z.string().min(1, { message: 'Promo is required' }),
+  description: z.string().min(1, { message: 'Description is required' }),
 
   maxUse: z.number().min(1, { message: 'Max Usage must be greater than 0' }),
   discountPercentage: z
@@ -12,5 +12,5 @@ export const PromoValidationSchema = z.object({
     .number()
     .min(1, { message: 'Max Discount must be greater than 0' }),
   expiryDate: z.date().min(new Date(), 'Event date must be in the future'),
-  status: z.string().nonempty({ message: 'Status is required' }),
+  status: z.string().min(1, { message: 'Status is required' }),
 });

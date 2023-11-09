@@ -19,7 +19,7 @@ export const bookingStatusOptions = [
 export const positionOptions = [
   { value: 'MANAGER', label: 'Manager' },
   { value: 'PHOTOGRAPHER', label: 'Photographer' },
-  { value: 'VIDEOGRAPHER', label: 'Videographer' },
+  { value: 'CINEMATOGRAPHER', label: 'Cinematographer' },
   { value: 'DESIGNER', label: 'Designer' },
   { value: 'EDITOR', label: 'Editor' },
   { value: 'ASSISTANT', label: 'Assistant' },

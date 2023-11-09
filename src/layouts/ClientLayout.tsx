@@ -8,6 +8,9 @@ import {
   Group,
   Menu,
   Avatar,
+  Footer,
+  Container,
+  Paper,
 } from '@mantine/core';
 import { Outlet, useNavigate } from 'react-router-dom';
 import SunLineIcon from 'remixicon-react/SunLineIcon';
@@ -109,6 +112,17 @@ export default function ClientLayout() {
       }
     >
       <Outlet />
+      <Paper className="border-t border-dividerColor p-5 bg-backgroundColor">
+        <div className="flex flex-col gap-4 text-center md:flex-row justify-between">
+          <p>© 2023 | Golpoguccho Portal | All rights reserved.</p>
+          <p>
+            Support:{' '}
+            <span className="text-primaryColor">
+              +8801709295729, +8801927195229
+            </span>
+          </p>
+        </div>
+      </Paper>
     </AppShell>
   );
 }

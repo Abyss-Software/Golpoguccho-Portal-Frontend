@@ -98,7 +98,6 @@ export default function DuePaymentForm({
         <h3>Due Payment Method:</h3>
         <SegmentedControl
           onChange={(value) => {
-            console.log(value);
             setValue(`duePaymentMethod`, value);
           }}
           color="green"

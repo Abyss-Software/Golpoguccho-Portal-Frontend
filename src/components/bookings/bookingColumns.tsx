@@ -33,7 +33,8 @@ export const bookingColumns = () => [
   },
   {
     name: 'Created',
-    selector: (row: IBookings) => new Date(row.createdAt).toDateString(),
+    selector: (row: IBookings) =>
+      new Date(row.createdAt).toLocaleDateString().split('T')[0],
     sortable: true,
   },
 ];

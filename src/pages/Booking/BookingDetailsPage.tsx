@@ -1,4 +1,4 @@
-import { Accordion, Button, Table } from '@mantine/core';
+import { Accordion, Button, Table, Textarea } from '@mantine/core';
 
 import { AdminSpecific } from '@/components/bookingDetails/AdminSpecific';
 import { AfterPaymentClient } from '@/components/bookingDetails/AfterPaymentClient';
@@ -9,8 +9,11 @@ import { UserRoles } from '@/constants/userRoles';
 import { modals } from '@mantine/modals';
 import { useAuthStore } from '@/contexts/authContext';
 import useBookingAction from '@/hooks/useBookingAction';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { AiOutlineCheckCircle as CheckIcon } from 'react-icons/ai';
+import { BiErrorCircle as ErrorIcon } from 'react-icons/bi';
+import { notifications } from '@mantine/notifications';
 
 const BookingDetailsPage = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -19,7 +22,8 @@ const BookingDetailsPage = () => {
 
   let { id } = useParams();
 
-  const { fetchBookingById, changeStatusMutation } = useBookingAction();
+  const { fetchBookingById, changeStatusMutation, setAdditionInfoMutation } =
+    useBookingAction();
 
   const { data: bookingData } = fetchBookingById(id!);
 
@@ -32,6 +36,37 @@ const BookingDetailsPage = () => {
         <DuePaymentForm bookingId={bookingId} duePayment={duePayment} />
       ),
     });
+  };
+
+  const [additionalInfo, setAdditionalInfo] = useState(
+    bookingData?.additionalInfo ?? ''
+  );
+  const handleAddInfo = (info: string) => {
+    setAdditionInfoMutation.mutate(
+      { bookingId: bookingData?.id, info },
+      {
+        onSuccess: () => {
+          notifications.update({
+            withBorder: true,
+            id: 'setInfo',
+            color: 'green',
+            title: 'Success',
+            message: 'Booking info Updated',
+            icon: <CheckIcon size="2rem" />,
+          });
+        },
+        onError: (error: any) => {
+          notifications.update({
+            withBorder: true,
+            id: 'setInfo',
+            color: 'red',
+            title: 'Failed',
+            message: error?.response?.data?.message || 'Something went wrong',
+            icon: <ErrorIcon size="2rem" />,
+          });
+        },
+      }
+    );
   };
 
   if (!bookingData)
@@ -88,7 +123,7 @@ const BookingDetailsPage = () => {
         </div>
       </div>
 
-      <div>
+      <div className="mb-4 xl:mb-10">
         <h3 className="text-2xl font-semibold text-primaryColor mb-2 uppercase">
           Events
         </h3>
@@ -104,6 +139,32 @@ const BookingDetailsPage = () => {
           ))}
         </Accordion>
       </div>
+
+      <div className="mb-4 xl:mb-10 ">
+        <h3 className="text-2xl font-semibold text-primaryColor mb-2 uppercase">
+          Additional information
+        </h3>
+        <Textarea
+          size="lg"
+          autosize
+          minRows={2}
+          maxRows={5}
+          placeholder="Booking information"
+          defaultValue={bookingData.additionalInfo}
+          onChange={(e) => setAdditionalInfo(e.currentTarget.value)}
+          disabled={userInfo?.role == UserRoles.CLIENT}
+        />
+        {userInfo?.role != UserRoles.CLIENT && (
+          <Button
+            className="mt-5"
+            size="lg"
+            onClick={() => handleAddInfo(additionalInfo)}
+          >
+            Add Info
+          </Button>
+        )}
+      </div>
+
       <hr className="h-px my-8 mx-96 bg-gray-400 border-0 dark:bg-gray-700" />
       <div className="mb-4 xl:mb-10">
         <h3 className="text-2xl font-semibold text-primaryColor mb-2 uppercase">

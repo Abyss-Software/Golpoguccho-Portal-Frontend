@@ -81,7 +81,7 @@ function PromoForm({
         {...register('maxUse', { valueAsNumber: true })}
         size="md"
         min={0}
-        max={100}
+        max={Number.MAX_SAFE_INTEGER}
         label="Max Use"
         placeholder="Enter Max Use"
         defaultValue={defaultValues?.maxUse}
@@ -93,7 +93,7 @@ function PromoForm({
         {...register('maxDiscount', { valueAsNumber: true })}
         size="md"
         min={0}
-        max={100}
+        max={Number.MAX_SAFE_INTEGER}
         label="Max Discount"
         placeholder="Enter Max Discount"
         defaultValue={defaultValues?.maxDiscount}

@@ -27,7 +27,8 @@ export const promoCodesColumns = ({
   },
   {
     name: 'Expiry Date',
-    selector: (row: IPromoCode) => row.expiry_date,
+    selector: (row: IPromoCode) =>
+      new Date(row.expiry_date).toLocaleDateString().split('T')[0],
     sortable: false,
   },
   {
@@ -37,7 +38,8 @@ export const promoCodesColumns = ({
   },
   {
     name: 'Created At',
-    selector: (row: IPromoCode) => row.createdAt,
+    selector: (row: IPromoCode) =>
+      new Date(row.createdAt).toLocaleDateString().split('T')[0],
     sortable: false,
   },
   {

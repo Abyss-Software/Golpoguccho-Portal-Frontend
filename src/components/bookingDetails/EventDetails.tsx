@@ -41,7 +41,6 @@ export default function EventDetails({
                 <span className="font-bold">Package ID:</span>{' '}
                 {event.package.title}
               </p>
-
               <p>
                 <span className="font-bold">Event Date:</span>{' '}
                 {new Date(event.event_date).toLocaleDateString()}

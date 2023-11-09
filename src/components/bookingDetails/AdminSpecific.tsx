@@ -93,7 +93,7 @@ export const AdminSpecific = ({ bookingData }: any) => {
 
   return (
     <div>
-      <div className="space-y-4">
+      <div className="space-y-4 mb-4 xl:mb-10">
         <p className="text-2xl font-semibold text-primaryColor mb-2 uppercase">
           Booking Status
         </p>

@@ -3,7 +3,7 @@ import User3LineIcon from 'remixicon-react/User3LineIcon';
 import BookmarkLineIcon from 'remixicon-react/BookmarkLineIcon';
 import CalendarEventLineIcon from 'remixicon-react/CalendarEventLineIcon';
 import { useEffect, useState } from 'react';
-import { LoadingOverlay, Button, Card } from '@mantine/core';
+import { LoadingOverlay, Button, Card, Loader } from '@mantine/core';
 import PieChart from '@/components/adminDashboard/PieChart';
 import LineChart from '@/components/adminDashboard/LineChart';
 import useStatAction from '@/hooks/useStatAction';
@@ -154,8 +154,8 @@ const AdminDashboard = () => {
                 {monthlyCounts ? (
                   <LineChart stats={monthlyCounts} />
                 ) : (
-                  <div className="text-center">
-                    <div className="animate-spin rounded-full 2 border-b-2 border-primaryColor"></div>
+                  <div className="mt-2 text-center flex flex-col items-center gap-4">
+                    <Loader size="lg" />
                     <h3 className="text-primaryColor">
                       Select Start Date and End Date
                     </h3>
