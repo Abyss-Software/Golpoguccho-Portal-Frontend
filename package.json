@@ -35,6 +35,8 @@
     "chart.js": "^4.3.2",
     "dayjs": "^1.11.9",
     "embla-carousel-react": "8.0.0-rc11",
+    "mantine-react-table": "^1.3.4",
+    "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-data-table-component": "^7.5.3",

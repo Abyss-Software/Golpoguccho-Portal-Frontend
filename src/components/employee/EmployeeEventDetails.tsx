@@ -33,9 +33,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
           <p className="mb-2">
             <strong>Event Type:</strong> {event.category.title}
           </p>
-          <p className="mb-2">
-            <strong>Package:</strong> {event.package.title}
-          </p>
+
           <p className="mb-2">
             <strong>Start Time:</strong> {event.start_time}
           </p>

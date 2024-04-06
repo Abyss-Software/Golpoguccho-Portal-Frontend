@@ -1,10 +1,4 @@
-import {
-  Route,
-  RouterProvider,
-  Routes,
-  createBrowserRouter,
-  Navigate,
-} from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import ClientLayout from './layouts/ClientLayout';
 import LoginPage from './pages/Auth/LoginPage';
 import ClientDashboard from './pages/dashboard/ClientDashboard';
