@@ -113,7 +113,7 @@ const BookingDetailsPage = () => {
           </p>
           <p>
             <span className="font-bold">Booking Date:</span>{' '}
-            {new Date(bookingData?.createdAt).toLocaleDateString()}
+            {new Date(bookingData?.createdAt).toLocaleDateString('en-GB')}
           </p>
 
           <p>

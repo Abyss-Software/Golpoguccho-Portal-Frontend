@@ -3,6 +3,13 @@ import { Button } from '@mantine/core';
 import { AiFillEdit } from 'react-icons/ai';
 import { BiTrash } from 'react-icons/bi';
 
+const dateSort = (rowA: any, rowB: any) => {
+  let dateA = rowA.createdAt ? new Date(rowA.createdAt).getTime() : 0;
+  let dateB = rowB.createdAt ? new Date(rowB.createdAt).getTime() : 0;
+
+  return dateA > dateB ? 1 : -1;
+};
+
 export const promoCodesColumns = ({
   onPromoUpdate,
   onPromoDelete,
@@ -28,7 +35,7 @@ export const promoCodesColumns = ({
   {
     name: 'Expiry Date',
     selector: (row: IPromoCode) =>
-      new Date(row.expiry_date).toLocaleDateString().split('T')[0],
+      new Date(row.expiry_date).toLocaleDateString('en-GB').split('T')[0],
     sortable: false,
   },
   {
@@ -39,8 +46,10 @@ export const promoCodesColumns = ({
   {
     name: 'Created At',
     selector: (row: IPromoCode) =>
-      new Date(row.createdAt).toLocaleDateString().split('T')[0],
+      new Date(row.createdAt).toLocaleDateString('en-GB').split('T')[0],
     sortable: false,
+    id: 'createdAt',
+    sortFunction: dateSort,
   },
   {
     name: 'Action',

@@ -2,6 +2,13 @@ import { IClient } from '@/interfaces/clients.interface';
 import { Button } from '@mantine/core';
 import { BiTrash } from 'react-icons/bi';
 
+const dateSort = (rowA: any, rowB: any) => {
+  let dateA = rowA.createdAt ? new Date(rowA.createdAt).getTime() : 0;
+  let dateB = rowB.createdAt ? new Date(rowB.createdAt).getTime() : 0;
+
+  return dateA > dateB ? 1 : -1;
+};
+
 export const clientColumns = ({
   onClientDelete,
 }: {
@@ -24,9 +31,11 @@ export const clientColumns = ({
   },
   {
     name: 'Created At',
+    id: 'createdAt',
     selector: (row: IClient) =>
-      new Date(row.createdAt).toLocaleDateString().split('T')[0],
+      new Date(row.createdAt).toLocaleDateString('en-GB').split('T')[0],
     sortable: true,
+    sortFunction: dateSort,
   },
 
   {

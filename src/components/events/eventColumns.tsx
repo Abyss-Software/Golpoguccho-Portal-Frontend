@@ -13,7 +13,8 @@ export const eventColumns = () => [
   },
   {
     name: 'Event Date',
-    selector: (row: IEvent) => new Date(row.event_date).toLocaleDateString(),
+    selector: (row: IEvent) =>
+      new Date(row.event_date).toLocaleDateString('en-GB'),
     sortable: true,
   },
   {

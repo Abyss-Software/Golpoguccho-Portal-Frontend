@@ -3,6 +3,17 @@ import { Button } from '@mantine/core';
 import { BiTrash } from 'react-icons/bi';
 import { IFinancialRecord } from '@/interfaces/financialRecord.interface';
 
+const dateSort = (rowA: any, rowB: any) => {
+  let dateA = rowA.transactionDate
+    ? new Date(rowA.transactionDate).getTime()
+    : 0;
+  let dateB = rowB.transactionDate
+    ? new Date(rowB.transactionDate).getTime()
+    : 0;
+
+  return dateA > dateB ? 1 : -1;
+};
+
 export const financialRecordsColumns = ({
   onRecordDelete,
 }: {
@@ -18,9 +29,10 @@ export const financialRecordsColumns = ({
   {
     name: 'Transaction Date',
     selector: (row: IFinancialRecord) =>
-      new Date(row.transactionDate).toLocaleDateString(),
+      new Date(row.transactionDate).toLocaleDateString('en-GB'),
     sortable: true,
     id: 'transactionDate',
+    sortFunction: dateSort,
   },
   {
     name: 'Type',

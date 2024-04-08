@@ -43,7 +43,7 @@ export default function EventDetails({
               </p>
               <p>
                 <span className="font-bold">Event Date:</span>{' '}
-                {new Date(event.event_date).toLocaleDateString()}
+                {new Date(event.event_date).toLocaleDateString('en-GB')}
               </p>
               <p>
                 <span className="font-bold">Event Time:</span>{' '}

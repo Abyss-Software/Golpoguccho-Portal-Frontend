@@ -4,7 +4,7 @@ export const employeeEventsColumns = () => [
   {
     name: 'Event Date',
     selector: (row: IEmployeeEvent) =>
-      row.event && new Date(row.event.event_date).toLocaleDateString(),
+      row.event && new Date(row.event.event_date).toLocaleDateString('en-GB'),
     sortable: true,
   },
   {

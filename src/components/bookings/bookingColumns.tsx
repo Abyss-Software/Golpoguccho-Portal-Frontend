@@ -1,5 +1,12 @@
 import { IBookings } from '@/interfaces/bookings.interface';
 
+const dateSort = (rowA: any, rowB: any) => {
+  let dateA = rowA.createdAt ? new Date(rowA.createdAt).getTime() : 0;
+  let dateB = rowB.createdAt ? new Date(rowB.createdAt).getTime() : 0;
+
+  return dateA > dateB ? 1 : -1;
+};
+
 export const bookingColumns = () => [
   {
     name: 'Booking Title',
@@ -34,7 +41,9 @@ export const bookingColumns = () => [
   {
     name: 'Created',
     selector: (row: IBookings) =>
-      new Date(row.createdAt).toLocaleDateString().split('T')[0],
+      new Date(row.createdAt).toLocaleDateString('en-GB').split('T')[0],
     sortable: true,
+    id: 'createdAt',
+    sortFunction: dateSort,
   },
 ];

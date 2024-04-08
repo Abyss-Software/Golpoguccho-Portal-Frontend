@@ -37,10 +37,17 @@ export default function EmployeeEventsTable({
         },
       },
       {
+        accessorKey: 'status',
+        header: 'Status',
+        accessorFn: (row: any) =>
+          new Date(row.event.event_date) < new Date()
+            ? 'Completed'
+            : 'Upcoming',
+      },
+      {
         accessorKey: 'event.title',
         header: 'Event Title',
       },
-
       {
         accessorKey: 'event.venue',
         header: 'Venue',

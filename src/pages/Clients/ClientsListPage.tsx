@@ -63,6 +63,7 @@ const ClientsListPage = () => {
           columns={clientColumns({
             onClientDelete: handleDeleteClient,
           })}
+          defaultSortField="createdAt"
         />
       </Card>
     </div>

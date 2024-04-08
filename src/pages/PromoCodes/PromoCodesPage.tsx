@@ -165,6 +165,7 @@ const PromoCodesPage = () => {
               onPromoUpdate: handleUpdatePromo,
               onPromoDelete: handleDeletePromo,
             })}
+            defaultSortField="createdAt"
           />
         )}
       </Card>
