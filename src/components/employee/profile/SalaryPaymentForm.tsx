@@ -87,7 +87,6 @@ function SalaryPaymentForm({ employeeId }: { employeeId: string }) {
         dropdownType="modal"
         size="md"
         label="Transaction Date"
-        placeholder="Date of Transaction"
         onChange={(value) => {
           setValue(`transactionDate`, new Date(value?.toISOString() ?? ''));
         }}
